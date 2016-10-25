@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Wechat" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Wechat" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="WechatEventMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:WechatBaseMessage">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EventCData" nillable="true" type="q1:ArrayOfanyType" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="EventKeyCData" nillable="true" type="q2:ArrayOfanyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WechatEventMessage" nillable="true" type="tns:WechatEventMessage" />
+  <xs:complexType name="WechatBaseMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreateTimeData" type="xs:long" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="FromUserNameCData" nillable="true" type="q3:ArrayOfanyType" />
+      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MsgTypeCData" nillable="true" type="q4:ArrayOfanyType" />
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ToUserNameCData" nillable="true" type="q5:ArrayOfanyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="WechatBaseMessage" nillable="true" type="tns:WechatBaseMessage" />
+  <xs:complexType name="WechatTextMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:WechatBaseMessage">
+        <xs:sequence>
+          <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ContentCData" nillable="true" type="q6:ArrayOfanyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WechatTextMessage" nillable="true" type="tns:WechatTextMessage" />
+  <xs:complexType name="WechatImageMessage">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:WechatBaseMessage">
+        <xs:sequence>
+          <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="MediaIdCData" nillable="true" type="q7:ArrayOfanyType" />
+          <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PicUrlCData" nillable="true" type="q8:ArrayOfanyType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="WechatImageMessage" nillable="true" type="tns:WechatImageMessage" />
+</xs:schema>

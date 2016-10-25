@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="f76f6138-7b13-4c4a-a894-faf292567b7a" ChangeDateTime="07/26/2014 15:53:00">
+    <Property Name="ElementName" Value="[dbo].[WechatMessage].[LogContent]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatMessage]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="partial class WXBotDBDataContext" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="345bddc2-5a97-448a-a629-bd877273b2da" ChangeDateTime="07/26/2014 15:53:04">
+    <Property Name="ElementName" Value="[dbo].[WechatMessage].[partial class WXBotDBDataContext]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatMessage]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FromUserName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e5822197-7400-4408-8400-6bc5be8b2e0d" ChangeDateTime="07/26/2014 15:53:14">
+    <Property Name="ElementName" Value="[dbo].[WechatMessage].[LogTime]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatMessage]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ToUserName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="78ed0851-efce-4682-b105-e415d954f97f" ChangeDateTime="07/26/2014 15:55:43">
+    <Property Name="ElementName" Value="[dbo].[WechatLog].[LogTIme]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatLog]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LogTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2f28905d-71c8-4c45-a6db-f06dbb32c85d" ChangeDateTime="07/27/2014 02:27:42">
+    <Property Name="ElementName" Value="[dbo].[WechatMenu].[ParentButton]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatMenu]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ParentButtonId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4fb2aba6-63d5-4397-ac6f-8cf920c02773" ChangeDateTime="07/27/2014 02:27:44">
+    <Property Name="ElementName" Value="[dbo].[WechatMenu].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatMenu]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ButtonId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4521a233-0f68-448b-9af7-692f96764e3d" ChangeDateTime="07/28/2014 14:15:48">
+    <Property Name="ElementName" Value="[dbo].[WechatConversation].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WechatConversation]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ConversationId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d2961733-04c4-4d3b-b027-f175a520a875" ChangeDateTime="08/18/2014 08:00:37">
+    <Property Name="ElementName" Value="[dbo].[ShuttleBusTimeTable].[Direction]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[ShuttleBusTimeTable]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="JKtoSDC" />
+  </Operation>
+</Operations>

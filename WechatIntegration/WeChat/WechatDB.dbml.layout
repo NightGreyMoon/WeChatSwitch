@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="WechatTeamAssistantDB">
+  <DataContextMoniker Name="/WechatDBDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e75a1da7-48d5-4ae7-8dab-f578f093be83" absoluteBounds="4, 1.375, 2, 1.3862939453125">
+      <DataClassMoniker Name="/WechatDBDataContext/WechatLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="03f7b365-4da9-4d55-83a8-471a2ecce602" absoluteBounds="4.015, 1.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="09b876ba-c968-4ea6-8612-70c5a4afc3cb" absoluteBounds="4, 4.125, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/WechatDBDataContext/WechatMessage" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e26b0a1c-e71e-40a8-9937-37aa62fbbcfb" absoluteBounds="4.015, 4.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b1447239-4584-4f59-ab8f-83e73fab2aa8" absoluteBounds="1.625, 1.375, 2, 1.3862939453125">
+      <DataClassMoniker Name="/WechatDBDataContext/AccessToken" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c2bdabff-d3a2-4041-85d9-d14e4375f0e3" absoluteBounds="1.6400000000000001, 1.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

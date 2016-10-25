@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="SampleSale.TicketDB" EntityNamespace="WechatEntities" Class="WechatDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=nke-win-sql-pe8\sqlexpress,1433;Initial Catalog=SampleSale.TicketDB;Persist Security Info=True;User ID=gcsamplesale" SettingsObjectName="Wechat.Properties.Settings" SettingsPropertyName="WechatDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.WechatLog" Member="WechatLogs">
+    <Type Name="WechatLog">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LogContent" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="LogTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WechatMessage" Member="WechatMessages">
+    <Type Name="WechatMessage">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FromUserName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="ToUserName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CreateTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MsgType" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Direction" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="RawData" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AccessToken" Member="AccessTokens">
+    <Type Name="AccessToken">
+      <Column Name="Id" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AccessTokenData" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ExpireBy" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/Wechat" />
+  <xs:element name="HandleEventMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="arg" nillable="true" type="q1:WechatEventMessage" />
+        <xs:element minOccurs="0" name="rawXml" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleEventMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="HandleEventMessageResult" nillable="true" type="q2:WechatBaseMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleTextMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="arg" nillable="true" type="q3:WechatTextMessage" />
+        <xs:element minOccurs="0" name="rawXml" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleTextMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="HandleTextMessageResult" nillable="true" type="q4:WechatBaseMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleImageMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="arg" nillable="true" type="q5:WechatImageMessage" />
+        <xs:element minOccurs="0" name="rawXml" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleImageMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="HandleImageMessageResult" nillable="true" type="q6:WechatBaseMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleUnknownMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="arg" nillable="true" type="q7:WechatBaseMessage" />
+        <xs:element minOccurs="0" name="rawXml" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HandleUnknownMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Wechat" minOccurs="0" name="HandleUnknownMessageResult" nillable="true" type="q8:WechatBaseMessage" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

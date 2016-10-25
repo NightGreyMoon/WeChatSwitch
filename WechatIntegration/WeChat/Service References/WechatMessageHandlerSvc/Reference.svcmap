@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6cf45dc0-c154-45d8-a531-9f034ea6fe56" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/WechatSvcClient/WechatSvcAdapter/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="1f2fe90e-a39b-40af-9e35-eac7875b08ed" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WechatSvcClient/WechatSvcAdapter/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="39ec1481-f287-4796-9131-744be7ffcd8b" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WechatSvcClient/WechatSvcAdapter/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="c070268b-79eb-47d7-9ed4-61b63da02351" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WechatSvcClient/WechatSvcAdapter/mex" />
+    <MetadataFile FileName="Wechat.xsd" MetadataType="Schema" ID="1a832cfd-e088-44ca-878f-b45795a390db" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WechatSvcClient/WechatSvcAdapter/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="af68e7e8-f109-4d8f-92f9-010a4ad30119" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/WechatSvcClient/WechatSvcAdapter/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
