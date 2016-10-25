@@ -3,3 +3,9 @@
 ################################################################################
 
 *.cache
+/WechatIntegration/WeChat/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+/WechatIntegration/WeChat/obj/Debug
+/WechatIntegration/Wechat.UnitTest/obj/Debug
+/WechatIntegration/WechatMessageTypes/obj/Debug
+/WechatIntegration/WechatSvcAccess/obj/Debug
+/WechatIntegration/.vs/config

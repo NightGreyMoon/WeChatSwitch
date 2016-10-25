@@ -101,6 +101,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="README.txt" />
     <Content Include="WechatDB.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>WechatDB1.designer.cs</LastGenOutput>
