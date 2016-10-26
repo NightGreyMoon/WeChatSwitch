@@ -10,9 +10,7 @@ namespace WebChatSwitch.Web.Controllers
     public class HomeController : Controller
     {
         public ActionResult Index()
-        {
-            UserAccountManager manager = new UserAccountManager();
-            var account = manager.GetUserAccountInfoByOpenId("haobohaobohaobohaobohaobo123");
+        {            
             return View();
         }
 
