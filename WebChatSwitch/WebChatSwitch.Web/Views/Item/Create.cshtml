@@ -52,6 +52,18 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.ItemPhotos, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="hidden" name="Photo1" />
+                <input type="hidden" name="Photo2" />
+                <input type="hidden" name="Photo3" />
+                <span class="btn btn-primary" id="chooseBtn">ChoosePhoto</span>
+                <input type="file" id="upload" accept="*/*" value="Choose a file" style="display:none;" />
+                @*<button class="upload-result" type="button" style="display:none;">Confirm</button>*@
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -66,3 +78,29 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $("#chooseBtn").on("click", function () {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                wx.uploadImage({
+                    localId: localId[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (r) {
+                        var _left = ($(window).width() - $(".zipping").width()) / 2;
+                        $(".zipping").css("left", _left).show();
+                        var serverId = r.serverId; // 返回图片的服务器端ID
+                        $.getJSON("/Weixin/GetWeixinImageBase64?serverId=" + serverId).success(function (json) {
+                            readFile(eval("{" + json + "}"));
+                            $(".zipping").hide();
+                        })
+                    }
+                });
+            }
+        });
+    });
+</script>

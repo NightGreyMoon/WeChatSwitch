@@ -20,5 +20,8 @@ namespace WebChatSwitch.Web.Models
 
         [Display(Name = "Available")]
         public bool Available { get; set; }
+
+        [Display(Name = "Photos")]
+        public List<string> ItemPhotos { get; set; }
     }
 }

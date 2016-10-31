@@ -19,6 +19,10 @@ namespace WebChatSwitch.Web.Controllers
         {
             ItemViewModel vm = new ItemViewModel();
             vm.Available = true;
+            vm.ItemPhotos = new List<string>();
+            vm.ItemPhotos.Add(string.Empty);
+            vm.ItemPhotos.Add(string.Empty);
+            vm.ItemPhotos.Add(string.Empty);
             return View(vm);
         }
     }
