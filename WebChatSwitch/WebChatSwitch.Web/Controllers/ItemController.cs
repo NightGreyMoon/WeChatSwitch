@@ -25,5 +25,24 @@ namespace WebChatSwitch.Web.Controllers
             vm.ItemPhotos.Add(string.Empty);
             return View(vm);
         }
+
+        [HttpPost]
+        public ActionResult Create(ItemViewModel vm)
+        {
+            return View(vm);
+        }
+
+        [HttpPost]
+        public ActionResult CreateItem(string Title, string Description, string Expectation, string Photo1)
+        {
+            if (string.IsNullOrEmpty(Photo1))
+            {
+                return Json(false);
+            }
+            else
+            {
+                return Json(true);
+            }
+        }
     }
 }
