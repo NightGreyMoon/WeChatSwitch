@@ -1,94 +1,142 @@
-﻿body {
+﻿@font-face {
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    src: url('../fonts/NFUNCXBD.eot');
+    src: url('../fonts/NFUNCXBD.eot?#iefix') format('embedded-opentype'), url('../fonts/NFUNCXBD.woff') format('woff'), url('../fonts/NFUNCXBD.ttf') format('truetype'), url('../fonts/NFUNCXBD.svg#SingleMaltaRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    src: url('../fonts/TradeGothicForNike.eot');
+    src: url('../fonts/TradeGothicForNike.eot?#iefix') format('embedded-opentype'), url('../fonts/TradeGothicForNike.woff') format('woff'), url('../fonts/TradeGothicForNike.ttf') format('truetype'), url('../fonts/TradeGothicForNike.svg#SingleMaltaRegular') format('svg');
+}
+
+
+body {
     width: 100%;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
 h1 {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.5em;
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 2em;
     font-weight: bold;
-    margin: 0px 0px 0px 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 0px 0px 0px 0px;
 }
 
 h2 {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.3em;
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 1.5em;
     font-weight: bold;
-    margin: 0px 0px 0px 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 0px 0px 0px 0px;
 }
 
 h3 {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 1.1em;
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 1.2em;
     font-weight: bold;
-    margin: 0px 0px 0px 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 0px 0px 0px 0px;
 }
 
+h4{
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 1em;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0px 0px 0px 0px;
+}
+p,
+span,
 input,
 select,
 textarea {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
     font-size: 100%;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
     max-width: 100%;
+    min-width: 50%;
     max-height: 15px;
 }
 
-.navBar {
-    background-color: #000000;
-    height: 40px;
+input[type=submit]{
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 100%;
+    min-width: 50%;
+    max-height: 35px;
+    min-height: 30px;
+}
+
+.itemList{
+    float: left;
+    margin-left: 3%;
+    margin-right: 3%;
+    padding: 2% 2% 2% 2%;
+    background-color:#ffffff;
+}
+
+.controlForm{
+    float: left;
     width: 100%;
-    padding: 0px 0px 0px 0px;
+}
+
+.controlBlock{
+    float: left;
+    width: 100%;
+}
+
+.controlLabel{
+    float: left;
+    width: 100%;
     margin: 0px 0px 0px 0px;
-    align-self: center;
-    vertical-align: middle;
+    padding: 0px 0px 0px 0px;
 }
 
-.title {
-    color: #ffffff;
-    align-self: center;
-    vertical-align: middle;
-    width: auto;
-}
-
-.returnIcon {
+.controlContent{
     float: left;
-    width: 10%;
-    height: 40px;
-    padding: inherit;
-    margin: inherit;
-    background: url("/Content/icon/returnicon.png");
-    background-repeat: no-repeat;
-    background-size:cover;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
-.navBarContent {
-    width: 75%;
-    height: 100%;
-    float: left;
-    align-self: center;
-    vertical-align: middle;
-    padding-left: 5px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    margin: inherit;
+.item{
+
 }
 
-.userIcon {
-    float: right;
-    width: 10%;
-    height: 40px;
-    background: url("/Content/icon/usericon.png");
-    background-repeat: no-repeat;
-    background-size:cover;
-        padding: inherit;
-    margin: inherit;
+.itemTitle{
+
+}
+
+.itemAuthor{
+
+}
+
+.itemPicture{
+
+}
+
+.itemDescript{
 
 }

@@ -2,46 +2,67 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>View</h2>
-
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>ItemViewModel</h4>
-        <hr />
+    <div class="controlForm">
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <h2>Publish Item</h2>
+            </div>
+        </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="controlBlock">
+            @* @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Title:
+                </p>
+            </div>
+            <div class="controlContent">
                 @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Description:
+                </p>
+            </div>
+            <div class="controlContent">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Expectation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.Expectation, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Expectation:
+                </p>
+            </div>
+            <div class="controlContent">
                 @Html.EditorFor(model => model.Expectation, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Expectation, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Available:
+                </p>
+            </div>
+            <div class="controlContent">
                 <div class="checkbox">
                     <label>
                         @Html.EditorFor(model => model.Available)
@@ -51,9 +72,14 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ItemPhotos, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.ItemPhotos, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Pictures:
+                </p>
+            </div>
+            <div class="controlContent">
                 <input type="hidden" name="Photo1" />
                 <input type="hidden" name="Photo2" />
                 <input type="hidden" name="Photo3" />
@@ -63,9 +89,9 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <div class="controlBlock">
+            <div class="controlContent">
+                <input type="submit" value="Create" />
             </div>
         </div>
     </div>
