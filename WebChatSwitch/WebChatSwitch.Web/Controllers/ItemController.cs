@@ -27,21 +27,15 @@ namespace WebChatSwitch.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(ItemViewModel vm)
-        {
-            return View(vm);
-        }
-
-        [HttpPost]
-        public ActionResult CreateItem(string Title, string Description, string Expectation, string Photo1)
+        public ActionResult Create(string Title, string Description, string Expectation, string Photo1)
         {
             if (string.IsNullOrEmpty(Photo1))
             {
-                return Json(false);
+                return Content("");
             }
             else
             {
-                return Json(true);
+                return Content("true");
             }
         }
     }
