@@ -1,0 +1,132 @@
+﻿@model WebChatSwitch.Web.Models.ItemViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="controlForm">
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <h2>Publish Item</h2>
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="controlBlock">
+            @* @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Title:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Description:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.Expectation, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Expectation:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.EditorFor(model => model.Expectation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Expectation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Available:
+                </p>
+            </div>
+            <div class="controlContent">
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(model => model.Available)
+                        @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="controlBlock">
+            @*@Html.LabelFor(model => model.ItemPhotos, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="controlLabel">
+                <p>
+                    Pictures:
+                </p>
+            </div>
+            <div class="controlContent">
+                <input type="hidden" name="Photo1" />
+                <input type="hidden" name="Photo2" />
+                <input type="hidden" name="Photo3" />
+                <span class="btn btn-primary" id="chooseBtn">ChoosePhoto</span>
+                <input type="file" id="upload" accept="*/*" value="Choose a file" style="display:none;" />
+                @*<button class="upload-result" type="button" style="display:none;">Confirm</button>*@
+            </div>
+        </div>
+
+        <div class="controlBlock">
+            <div class="controlContent">
+                <input type="submit" value="Create" />
+            </div>
+        </div>
+    </div>
+}
+
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $("#chooseBtn").on("click", function () {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                wx.uploadImage({
+                    localId: localId[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (r) {
+                        var _left = ($(window).width() - $(".zipping").width()) / 2;
+                        $(".zipping").css("left", _left).show();
+                        var serverId = r.serverId; // 返回图片的服务器端ID
+                        $.getJSON("/Weixin/GetWeixinImageBase64?serverId=" + serverId).success(function (json) {
+                            readFile(eval("{" + json + "}"));
+                            $(".zipping").hide();
+                        })
+                    }
+                });
+            }
+        });
+    });
+</script>
