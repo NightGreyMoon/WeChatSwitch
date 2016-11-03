@@ -1,0 +1,142 @@
+﻿@font-face {
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    src: url('../fonts/NFUNCXBD.eot');
+    src: url('../fonts/NFUNCXBD.eot?#iefix') format('embedded-opentype'), url('../fonts/NFUNCXBD.woff') format('woff'), url('../fonts/NFUNCXBD.ttf') format('truetype'), url('../fonts/NFUNCXBD.svg#SingleMaltaRegular') format('svg');
+}
+
+@font-face {
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    src: url('../fonts/TradeGothicForNike.eot');
+    src: url('../fonts/TradeGothicForNike.eot?#iefix') format('embedded-opentype'), url('../fonts/TradeGothicForNike.woff') format('woff'), url('../fonts/TradeGothicForNike.ttf') format('truetype'), url('../fonts/TradeGothicForNike.svg#SingleMaltaRegular') format('svg');
+}
+
+
+body {
+    width: 100%;
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+}
+
+h1 {
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 2em;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0px 0px 0px 0px;
+}
+
+h2 {
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0px 0px 0px 0px;
+}
+
+h3 {
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0px 0px 0px 0px;
+}
+
+h4{
+    font-family: 'Futura ND for Nike 365 Cn XBd';
+    font-size: 1em;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0px 0px 0px 0px;
+}
+p,
+span,
+input,
+select,
+textarea {
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 100%;
+    min-width: 50%;
+    max-height: 15px;
+}
+
+input[type=submit]{
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 100%;
+    min-width: 50%;
+    max-height: 35px;
+    min-height: 30px;
+}
+
+.itemList{
+    float: left;
+    margin-left: 3%;
+    margin-right: 3%;
+    padding: 2% 2% 2% 2%;
+    background-color:#ffffff;
+}
+
+.controlForm{
+    float: left;
+    width: 100%;
+}
+
+.controlBlock{
+    float: left;
+    width: 100%;
+}
+
+.controlLabel{
+    float: left;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.controlContent{
+    float: left;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.item{
+
+}
+
+.itemTitle{
+
+}
+
+.itemAuthor{
+
+}
+
+.itemPicture{
+
+}
+
+.itemDescript{
+
+}
