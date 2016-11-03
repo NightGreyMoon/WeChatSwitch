@@ -72,9 +72,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ItemPhotos, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <p>
+                    Photos:
+                </p>
+            </div>
+            <div class="controlContent">
                 <div class="demo-wrap upload-demo am-center" style="display:none;">
                     <div class="upload-msg">
                         Upload a file to start cropping
@@ -96,7 +100,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="controlBlock">
             <label id="info" name="info" class="alert alert-info" style="display:none"></label>
         </div>
     </div>
