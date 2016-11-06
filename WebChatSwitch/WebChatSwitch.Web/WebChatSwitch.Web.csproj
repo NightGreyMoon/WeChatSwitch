@@ -110,9 +110,18 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="ThoughtWorks.QRCode">
+      <HintPath>..\_Reference\ThoughtWorks.QRCode.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Wechat">
+      <HintPath>..\_Reference\Wechat.dll</HintPath>
+    </Reference>
+    <Reference Include="Wechat.MessageTypes">
+      <HintPath>..\_Reference\Wechat.MessageTypes.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
