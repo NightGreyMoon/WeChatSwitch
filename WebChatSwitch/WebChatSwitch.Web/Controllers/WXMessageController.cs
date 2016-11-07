@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Wechat;
 
 namespace WebChatSwitch.Web.Controllers
 {
@@ -166,11 +167,11 @@ namespace WebChatSwitch.Web.Controllers
         //                            sg.EndDate,sg.GifImage as BageImage,b.BgImage,sg.HeaderImage Logo 
         //                    from UserGroup ug,Badge b
         //                    left join SessionGroup sg on b.EventID=sg.EventID and b.GroupCode = sg.GroupCode
-	       //                     where ug.UserProfileID = '{0}'
-	       //                     and ug.EventID is not null and ug.EventID = b.EventID
-	       //                     and ug.GroupCode = b.GroupCode and ug.BadgeGroup = b.BadgeGroup
-	       //                     and convert(varchar(10),getDate(),120) between convert(varchar(10),b.StartDate,120) and convert(varchar(10),b.EndDate,120)+' 23:59:59'
-	       //                     order by b.StartDate";
+        //                     where ug.UserProfileID = '{0}'
+        //                     and ug.EventID is not null and ug.EventID = b.EventID
+        //                     and ug.GroupCode = b.GroupCode and ug.BadgeGroup = b.BadgeGroup
+        //                     and convert(varchar(10),getDate(),120) between convert(varchar(10),b.StartDate,120) and convert(varchar(10),b.EndDate,120)+' 23:59:59'
+        //                     order by b.StartDate";
 
         //        sql = string.Format(sql, profile.UserProfileID);
 
@@ -308,34 +309,24 @@ namespace WebChatSwitch.Web.Controllers
         //    }
         //}
 
-        //public ActionResult JSInit(string currentURL)
-        //{
+        public ActionResult JSInit(string currentURL)
+        {
 
-        //    string jsToken = string.Empty;
-        //    string AccountID = string.Empty;
-        //    using (MeetingLightDB db = new MeetingLightDB())
-        //    {
-        //        var profile = db.WeChatProfiles.FirstOrDefault();
-        //        if (profile != null)
-        //        {
-        //            jsToken = profile.JsTicket;
-        //            AccountID = profile.AccountID;
-        //        }
-        //    }
+            string jsToken = "";
+            string AccountID = ConfigurationManager.AppSettings["AppId"];
 
-
-        //    var nonceStr = "Wm3WZYTPz0wzccnW";
-        //    var timestamp = DateTime.Now.Ticks.ToString();
-        //    var source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL.Split("#".ToArray(), StringSplitOptions.RemoveEmptyEntries)[0]);
-        //    JsInitResponse result = new JsInitResponse()
-        //    {
-        //        appId = AccountID,
-        //        nonceStr = nonceStr,
-        //        signature = WXBizMsgCrypt.GenarateSignature(source),
-        //        timestamp = timestamp
-        //    };
-        //    return Json(result);
-        //}
+            var nonceStr = "Wm3WZYTPz0wzccnW";
+            var timestamp = DateTime.Now.Ticks.ToString();
+            var source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL.Split("#".ToArray(), StringSplitOptions.RemoveEmptyEntries)[0]);
+            JsInitResponse result = new JsInitResponse()
+            {
+                appId = AccountID,
+                nonceStr = nonceStr,
+                signature = Wechat.WeChatCrypter.GenarateSignature(source),
+                timestamp = timestamp
+            };
+            return Json(result);
+        }
 
         //public ActionResult GetWeixinImageBase64(string serverId)
         //{
