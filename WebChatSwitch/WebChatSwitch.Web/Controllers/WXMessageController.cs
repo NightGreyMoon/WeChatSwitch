@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,19 +14,19 @@ namespace WebChatSwitch.Web.Controllers
         {
             if (this.Request.HttpMethod.ToLower() == "get")
             {
-                //var token = ConfigHelper.Read("Token");
-                //var encodingAESKey = ConfigHelper.Read("EncodingAESKey");
-                //var appId = ConfigHelper.Read("AppID");
+                string token = ConfigurationManager.AppSettings["Token"];
+                string encodingAESKey = ConfigurationManager.AppSettings["EncodingAESKey"];
+                string appId = ConfigurationManager.AppSettings["AppID"];
 
-                //var encryptStr = WXBizMsgCrypt.GenarateSignature(token, timestamp, nonce);
-                //if (encryptStr.ToLower() == signature.ToLower())
-                //{
-                return Content(echostr);
-                //}
-                //else
-                //{
-                //    return Content("error");
-                //}
+                string encryptStr = Wechat.WeChatCrypter.GenarateSignature(token, timestamp, nonce);
+                if (encryptStr.ToLower() == signature.ToLower())
+                {
+                    return Content(echostr);
+                }
+                else
+                {
+                    return Content("error");
+                }
             }
             else
             {
