@@ -37,6 +37,15 @@
           <Property Name="Remark" Type="nvarchar" MaxLength="200" />
           <Property Name="Balance" Type="smallint" Nullable="false" />
         </EntityType>
+        <EntityType Name="WechatCache">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token" Type="nvarchar" MaxLength="500" />
+          <Property Name="Ticket" Type="nvarchar" MaxLength="500" />
+          <Property Name="Timestamp" Type="datetime" />
+        </EntityType>
         <Association Name="FK_Item_UserAccount">
           <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="1" />
           <End Role="Item" Type="Self.Item" Multiplicity="*" />
@@ -65,6 +74,7 @@
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemPicture" EntityType="Self.ItemPicture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WechatCache" EntityType="Self.WechatCache" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Item_UserAccount" Association="Self.FK_Item_UserAccount">
             <End Role="UserAccount" EntitySet="UserAccount" />
             <End Role="Item" EntitySet="Item" />
@@ -150,7 +160,17 @@
             <End Role="Item" EntitySet="Items" />
             <End Role="ItemPicture" EntitySet="ItemPictures" />
           </AssociationSet>
+          <EntitySet Name="WechatCaches" EntityType="WebChatSwitchModels.WechatCache" />
         </EntityContainer>
+        <EntityType Name="WechatCache">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Ticket" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -189,6 +209,16 @@
                 <ScalarProperty Name="WeChatNumber" ColumnName="WeChatNumber" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WechatCaches">
+            <EntityTypeMapping TypeName="WebChatSwitchModels.WechatCache">
+              <MappingFragment StoreEntitySet="WechatCache">
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="Ticket" ColumnName="Ticket" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

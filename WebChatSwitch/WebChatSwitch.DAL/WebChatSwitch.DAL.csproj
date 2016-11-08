@@ -61,6 +61,9 @@
     <Compile Include="UserAccount.cs">
       <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="WechatCache.cs">
+      <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="WeChatSwitchModels.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

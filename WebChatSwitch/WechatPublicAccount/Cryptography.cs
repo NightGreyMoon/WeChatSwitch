@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Security.Cryptography;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Wechat
+namespace WechatPublicAccount
 {
     public class Cryptography
     {

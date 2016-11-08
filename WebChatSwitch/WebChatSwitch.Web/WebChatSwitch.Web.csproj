@@ -197,10 +197,6 @@
     <Content Include="App_Data\WebChatSwitch_log.ldf">
       <DependentUpon>WebChatSwitch.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application.html" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application_files\style.css" />
     <Content Include="Content\icon\returnicon.png" />
@@ -212,19 +208,10 @@
     <Content Include="Content\style.css" />
     <Content Include="Content\croppie.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\NFUNCXBD.svg" />
     <Content Include="fonts\TradeGothicForNike.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application_files\browserLink" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application_files\jquery-3.1.1.js.下载" />
     <Content Include="fonts\NFUNCXBD.eot" />
@@ -235,14 +222,12 @@
     <Content Include="fonts\TradeGothicForNike.ttf" />
     <Content Include="fonts\TradeGothicForNike.woff" />
     <None Include="Properties\PublishProfiles\WebChatSwitch - Web Deploy.pubxml" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\croppie.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.1.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.1.0.js" />
+    <Content Include="Scripts\jquery-3.1.0.min.js" />
+    <Content Include="Scripts\jquery-3.1.0.slim.js" />
+    <Content Include="Scripts\jquery-3.1.0.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -254,7 +239,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -289,6 +276,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Item\Create.cshtml" />
+    <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.0.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebChatSwitch.BLL\WebChatSwitch.BLL.csproj">
@@ -299,12 +288,14 @@
       <Project>{3752f42b-4918-4fb2-ac6e-4b84a7dba73d}</Project>
       <Name>WebChatSwitch.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WechatPublicAccount\WechatPublicAccount.csproj">
+      <Project>{9236c2e9-b452-406a-b9a6-4fc3a33bac9c}</Project>
+      <Name>WechatPublicAccount</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\WXMessage\" />

@@ -4,13 +4,15 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Wechat;
+using WebChatSwitch.BLL;
+using WebChatSwitch.DAL;
+using WechatPublicAccount;
 
 namespace WebChatSwitch.Web.Controllers
 {
     public class WXMessageController : Controller
-    {      
-               
+    {
+
         public ActionResult WXCallback(string signature, string timestamp, string nonce, string echostr)
         {
             if (this.Request.HttpMethod.ToLower() == "get")
@@ -19,7 +21,7 @@ namespace WebChatSwitch.Web.Controllers
                 string encodingAESKey = ConfigurationManager.AppSettings["EncodingAESKey"];
                 string appId = ConfigurationManager.AppSettings["AppID"];
 
-                string encryptStr = Wechat.WeChatCrypter.GenarateSignature(token, timestamp, nonce);
+                string encryptStr = WeChatCrypter.GenarateSignature(token, timestamp, nonce);
                 if (encryptStr.ToLower() == signature.ToLower())
                 {
                     return Content(echostr);
@@ -312,21 +314,39 @@ namespace WebChatSwitch.Web.Controllers
         public ActionResult JSInit(string currentURL)
         {
 
-            string jsToken = "";
-            string AccountID = ConfigurationManager.AppSettings["AppId"];
+            string jsToken = string.Empty;
+            string AppId = ConfigurationManager.AppSettings["AppId"];
+            string AppSecret = ConfigurationManager.AppSettings["AppSecret"];
+            WeiXinPublicAccount wxpa = new WeiXinPublicAccount(AppId, AppSecret);
 
-            var nonceStr = "Wm3WZYTPz0wzccnW";
-            var timestamp = DateTime.Now.Ticks.ToString();
-            var source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL.Split("#".ToArray(), StringSplitOptions.RemoveEmptyEntries)[0]);
+            WechatManager manager = new WechatManager();
+            WechatCache cache = manager.GetWechatCache();
+            if (cache == null)
+            {
+                int returnCode = wxpa.WeChatPublicAccount_OnAccessTokenExpired();
+                if (returnCode == 1800)
+                {
+                    cache.Token = wxpa.AccessToken;
+                    cache.Ticket = wxpa.jsapi_ticket;
+                    cache.Timestamp = DateTime.Now;
+                    manager.UpdateWechatCache(cache);
+
+                    jsToken = wxpa.jsapi_ticket;
+                }
+            }
+
+            string nonceStr = "Wm3WZYTPz0wzccnW";
+            string timestamp = DateTime.Now.Ticks.ToString();
+            string source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL.Split("#".ToArray(), StringSplitOptions.RemoveEmptyEntries)[0]);
             JsInitResponse result = new JsInitResponse()
             {
-                appId = AccountID,
+                appId = AppId,
                 nonceStr = nonceStr,
-                signature = Wechat.WeChatCrypter.GenarateSignature(source),
+                signature = WeChatCrypter.GenarateSignature(source),
                 timestamp = timestamp
             };
             return Json(result);
-        }
+        }       
 
         //public ActionResult GetWeixinImageBase64(string serverId)
         //{

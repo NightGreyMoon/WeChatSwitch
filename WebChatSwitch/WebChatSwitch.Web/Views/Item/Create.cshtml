@@ -88,7 +88,7 @@
                 <input type="hidden" name="Photo1" />
                 <input type="hidden" name="Photo2" />
                 <input type="hidden" name="Photo3" />
-                <span class="btn btn-primary" id="chooseBtn">ChoosePhoto</span>
+                <span id="chooseBtn" onclick="chooseImage()">ChoosePhoto</span>
                 <input type="file" id="upload" accept="*/*" value="Choose a file" style="display:none;" />
                 <button class="upload-result" type="button" style="display:none;">Confirm</button>
             </div>
@@ -106,15 +106,6 @@
     </div>
 }
 
-@*<div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>*@
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-@*<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>*@
 <script src="~/Scripts/croppie.min.js"></script>
 <link href="~/Content/croppie.css" rel="stylesheet" />
 <script type="text/javascript">
@@ -188,8 +179,32 @@
         $("[name='Photo1']").val(result.src);
     }
 
+    function chooseImage() {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                var localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                wx.uploadImage({
+                    localId: localId[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                    isShowProgressTips: 1, // 默认为1，显示进度提示
+                    success: function (r) {
+                        var _left = ($(window).width() - $(".zipping").width()) / 2;
+                        $(".zipping").css("left", _left).show();
+                        var serverId = r.serverId; // 返回图片的服务器端ID
+                        $.getJSON("/Weixin/GetWeixinImageBase64?serverId=" + serverId).success(function (json) {
+                            readFile(eval("{" + json + "}"));
+                            $(".zipping").hide();
+                        })
+                    }
+                });
+            }
+        });
+    }
+
     $(function () {
-        demoUpload();
+        //demoUpload();
 
         $('form').submit(function () {
             if ($(this).valid()) {
@@ -224,6 +239,5 @@
             }
             return false;
         });
-
     })
 </script>
