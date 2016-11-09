@@ -221,6 +221,8 @@
     <Content Include="fonts\TradeGothicForNike.eot" />
     <Content Include="fonts\TradeGothicForNike.ttf" />
     <Content Include="fonts\TradeGothicForNike.woff" />
+    <None Include="Properties\PublishProfiles\scrumoffice - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\scrumoffice - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\WebChatSwitch - Web Deploy.pubxml" />
     <Content Include="MP_verify_5jLu8BmHOqekeZAy.txt" />
     <Content Include="Scripts\croppie.min.js" />

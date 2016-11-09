@@ -16,7 +16,7 @@ namespace WebChatSwitch.BLL
 
         public WechatCache GetWechatCache()
         {
-            DateTime compare = DateTime.Now.AddMinutes(-1.5);
+            DateTime compare = DateTime.UtcNow.AddMinutes(-100);
             WechatCache cache = Context.WechatCaches.FirstOrDefault(i => i.Timestamp > compare);
             return cache;
         }
