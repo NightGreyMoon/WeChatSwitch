@@ -20,5 +20,16 @@ namespace WebChatSwitch.BLL
             var userAccount = Context.UserAccounts.Include("Items").Include("Items.ItemPictures").FirstOrDefault(ua => ua.OpenId == openId);
             return userAccount;
         }
+
+        public void SaveUserAccountInfo(UserAccount userAccount)
+        {
+            
+            UserAccount entity = Context.UserAccounts.FirstOrDefault(ua => ua.OpenId == userAccount.OpenId);
+
+
+            entity.Remark = userAccount.Remark;
+
+            Context.SaveChanges();
+        }
     }
 }
