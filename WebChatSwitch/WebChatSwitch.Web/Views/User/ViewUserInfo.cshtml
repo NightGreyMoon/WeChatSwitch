@@ -24,7 +24,7 @@
                     </p>
                 </div>
                 <div class="controlContent">
-                    @Html.Label("lbWeChatAccount",Model.WeChatAccount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.Label("lbWeChatAccount",Model.WeChatNumber, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.Hidden("hideOpenId", Model.OpenId)
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     </p>
                 </div>
                 <div class="controlContent">
-                    @Html.TextBox("txtUserName",Model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.Label("lbUserName",Model.Name, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
             <div class="controlBlock">
@@ -45,7 +45,7 @@
                     </p>
                 </div>
                 <div class="controlContent">
-                    @Html.TextBox("txtNickName",Model.Nickname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.Label("lbNickName",Model.WeChatNickName, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
             <div class="controlBlock">
@@ -55,7 +55,7 @@
                     </p>
                 </div>
                 <div class="controlContent">
-                    @Html.TextArea("txtSelfIntroduction",Model.SelfIntroduction,3,1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextArea("txtSelfIntroduction",Model.Remark, 3,1, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
             <div class="controlBlock">
@@ -65,7 +65,7 @@
                     </p>
                 </div>
                 <div class="controlContent">
-                    @Html.Label("lbSurplusPublishNumber",Model.SurplusPublishNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.Label("lbSurplusPublishNumber",Model.Balance.ToString(), new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
             <div class="controlBlock">
