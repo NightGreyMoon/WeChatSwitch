@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebChatSwitch.BLL;
@@ -28,7 +30,7 @@ namespace WebChatSwitch.Web.Controllers
             vm.ItemPhotos.Add(string.Empty);
             vm.ItemPhotos.Add(string.Empty);
 
-            JsInitResponse response = InitialWechatSDK("http://webchatswitch.azurewebsites.net/Item/Create");
+            JsInitResponse response = InitialWechatSDK("http://scrumoffice.azurewebsites.net/Item/Create");
             ViewBag.appId = response.appId;
             ViewBag.nonceStr = response.nonceStr;
             ViewBag.signature = response.signature;
@@ -69,24 +71,49 @@ namespace WebChatSwitch.Web.Controllers
                 {
                     cache.Token = wxpa.AccessToken;
                     cache.Ticket = wxpa.jsapi_ticket;
-                    cache.Timestamp = DateTime.Now;
-                    manager.UpdateWechatCache(cache);
-
-                    jsToken = wxpa.jsapi_ticket;
+                    cache.Timestamp = DateTime.UtcNow;
+                    manager.UpdateWechatCache(cache);                   
                 }
             }
+            jsToken = cache.Ticket;
 
             string nonceStr = "Wm3WZYTPz0wzccnW";
-            string timestamp = DateTime.Now.Ticks.ToString();
-            string source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL.Split("#".ToArray(), StringSplitOptions.RemoveEmptyEntries)[0]);
+            string timestamp = CreatenTimestamp().ToString();
+
+
+            string source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL);
+            //string signature = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(source, "SHA1");            //string source = "jsapi_ticket=kgt8ON7yVITDhtdwci0qeTQIB0ds82IxTu3pDvW_gUqD60Q9zCrv1YkvovovbWdlJzFtIPryUYqDTrPQ1Sk6ww&noncestr=Wm3WZYTPz0wzccnW&timestamp=1414587457&url=http://webchatswitch.azurewebsites.net/Item/Create";
+
+            //建立SHA1对象
+            SHA1 sha = new SHA1CryptoServiceProvider();
+            //将mystr转换成byte[] 
+            ASCIIEncoding enc = new ASCIIEncoding();            byte[] dataToHash = enc.GetBytes(source);
+            //Hash运算
+            byte[] dataHashed = sha.ComputeHash(dataToHash);
+            //将运算结果转换成string
+            string signature = BitConverter.ToString(dataHashed).Replace("-", "").ToLower();            
+
             JsInitResponse result = new JsInitResponse()
             {
                 appId = AppId,
                 nonceStr = nonceStr,
-                signature = WeChatCrypter.GenarateSignature(source),
+                signature = signature,
                 timestamp = timestamp
             };
+            //string source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL.Split("#".ToArray(), StringSplitOptions.RemoveEmptyEntries)[0]);
+            //JsInitResponse result = new JsInitResponse()
+            //{
+            //    appId = AppId,
+            //    nonceStr = nonceStr,
+            //    signature = WeChatCrypter.GenarateSignature(source),
+            //    timestamp = timestamp
+            //};
             return result;
+        }
+
+        public static long CreatenTimestamp()
+        {
+            return (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
         }
     }
 }

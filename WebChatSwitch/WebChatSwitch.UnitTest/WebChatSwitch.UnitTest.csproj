@@ -62,6 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ItemManagerUnitTest.cs" />
+    <Compile Include="WeChatSignatureUnitTest.cs" />
     <Compile Include="UserAccountManagerUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
