@@ -64,10 +64,8 @@
             </div>
             <div class="controlContent">
                 <div class="checkbox">
-                    <label>
-                        @Html.EditorFor(model => model.Available)
-                        @Html.ValidationMessageFor(model => model.Available, "", new { @class = "text-danger" })
-                    </label>
+                    @Html.RadioButtonFor(model => model.Available, true)<label>Yes</label>
+                    @Html.RadioButtonFor(model => model.Available, false)<label>No</label>
                 </div>
             </div>
         </div>
