@@ -40,15 +40,33 @@ namespace WebChatSwitch.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(string Title, string Description, string Expectation, string Photo1)
+        public ActionResult Create(string Title, string Description, string Expectation, string Available)
         {
-            if (string.IsNullOrEmpty(Photo1))
+            bool result;
+            if (bool.TryParse(Available, out result))
             {
-                return Content("");
+                Item item = new Item()
+                {
+                    Title = Title,
+                    Description = Description,
+                    Expectation = Expectation,
+                    Available = bool.Parse(Available),
+                    PublishedTime = DateTime.Now,
+                    OwnerId = 1
+                };
+                ItemManager manager = new ItemManager();
+                if (manager.SaveNewItem(item))
+                {
+                    return Content("true");
+                }
+                else
+                {
+                    return Content("false");
+                }
             }
             else
             {
-                return Content("true");
+                return Content("false");
             }
         }
 
@@ -72,7 +90,7 @@ namespace WebChatSwitch.Web.Controllers
                     cache.Token = wxpa.AccessToken;
                     cache.Ticket = wxpa.jsapi_ticket;
                     cache.Timestamp = DateTime.UtcNow;
-                    manager.UpdateWechatCache(cache);                   
+                    manager.UpdateWechatCache(cache);
                 }
             }
             jsToken = cache.Ticket;
@@ -96,7 +114,7 @@ namespace WebChatSwitch.Web.Controllers
             //将运算结果转换成string
             string signature = BitConverter.ToString(dataHashed).Replace("-", "").ToLower();
 
-            
+
 
             JsInitResponse result = new JsInitResponse()
             {

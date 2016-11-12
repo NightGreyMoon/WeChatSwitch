@@ -212,19 +212,19 @@
                 var Title = $("[name='Title']").val();
                 var Description = $("[name='Description']").val();
                 var Expectation = $("[name='Expectation']").val();
-                //var Language = $("[name='Language']:checked").val();
+                var Available = $("[name='Available']:checked").val();
                 var Photo1 = $("[name='Photo1']").val();
 
                 $.ajax({
                     url: "Create",
                     method: 'POST',
-                    data: { Title: Title, Description: Description, Expectation: Expectation, Photo1: Photo1 },
+                    data: { Title: Title, Description: Description, Expectation: Expectation, Available: Available },
                     success: function (data) {
                         if (data == true) {
-                            $("[name='info']").text("Has photo");
+                            $("[name='info']").text("Successfully published");
                         }
                         else {
-                            $("[name='info']").text("No photo");
+                            $("[name='info']").text("Failed to publish");
                         }
                     },
                     error: function () {

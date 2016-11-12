@@ -20,5 +20,12 @@ namespace WebChatSwitch.BLL
                 (i.Title.Contains(searchKeyword) || i.Description.Contains(searchKeyword)) && i.Available).ToList();
             return items;
         }
+
+        public bool SaveNewItem(Item item)
+        {
+            Context.Items.Add(item);
+            int result = Context.SaveChanges();
+            return (result == 1);
+        }
     }
 }
