@@ -42,6 +42,15 @@ namespace WebChatSwitch.Web.Controllers
         [HttpPost]
         public ActionResult Create(string Title, string Description, string Expectation, string Available)
         {
+            LogManager logManager = new LogManager();
+            SystemLog log = new SystemLog()
+            {
+                Type = "Log",
+                Content = "Item Create Action called.",
+                Time = DateTime.UtcNow
+            };
+            logManager.AddLog(log);
+
             bool result;
             if (bool.TryParse(Available, out result))
             {
@@ -50,7 +59,7 @@ namespace WebChatSwitch.Web.Controllers
                     Title = Title,
                     Description = Description,
                     Expectation = Expectation,
-                    Available = bool.Parse(Available),
+                    Available = result,
                     PublishedTime = DateTime.Now,
                     OwnerId = 1
                 };
@@ -61,11 +70,25 @@ namespace WebChatSwitch.Web.Controllers
                 }
                 else
                 {
+                    SystemLog dblog = new SystemLog()
+                    {
+                        Type = "Log",
+                        Content = "Failed to save Item to DB.",
+                        Time = DateTime.UtcNow
+                    };
+                    logManager.AddLog(dblog);
                     return Content("false");
                 }
             }
             else
             {
+                SystemLog parseFailLog = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Failed to parse Available.",
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(parseFailLog);
                 return Content("false");
             }
         }

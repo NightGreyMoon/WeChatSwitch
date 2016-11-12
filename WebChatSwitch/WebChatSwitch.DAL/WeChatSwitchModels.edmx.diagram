@@ -11,6 +11,9 @@
         <AssociationConnector Association="WebChatSwitchModels.FK_Item_UserAccount" ManuallyRouted="false" />
         <AssociationConnector Association="WebChatSwitchModels.FK_ItemPicture_Item" ManuallyRouted="false" />
         <EntityTypeShape EntityType="WebChatSwitchModels.WechatCache" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="WebChatSwitchModels.SystemLog" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="WebChatSwitchModels.WechatLog" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="WebChatSwitchModels.WechatMessage" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -220,7 +220,7 @@
                     method: 'POST',
                     data: { Title: Title, Description: Description, Expectation: Expectation, Available: Available },
                     success: function (data) {
-                        if (data == true) {
+                        if (data == 'true') {
                             $("[name='info']").text("Successfully published");
                         }
                         else {

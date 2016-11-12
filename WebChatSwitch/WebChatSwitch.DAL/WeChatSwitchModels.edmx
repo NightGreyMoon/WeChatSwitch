@@ -25,6 +25,15 @@
           <Property Name="PictureUrl" Type="nvarchar" MaxLength="2500" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Content" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserAccount">
           <Key>
             <PropertyRef Name="Id" />
@@ -45,6 +54,26 @@
           <Property Name="Token" Type="nvarchar" MaxLength="500" />
           <Property Name="Ticket" Type="nvarchar" MaxLength="500" />
           <Property Name="Timestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WechatLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogContent" Type="nvarchar(max)" />
+          <Property Name="LogTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WechatMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromUserName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ToUserName" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="MsgType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Direction" Type="nvarchar" MaxLength="50" />
+          <Property Name="RawData" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Item_UserAccount">
           <End Role="UserAccount" Type="Self.UserAccount" Multiplicity="1" />
@@ -73,8 +102,11 @@
         <EntityContainer Name="WebChatSwitchModelsStoreContainer">
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemPicture" EntityType="Self.ItemPicture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemLog" EntityType="Self.SystemLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WechatCache" EntityType="Self.WechatCache" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WechatLog" EntityType="Self.WechatLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WechatMessage" EntityType="Self.WechatMessage" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Item_UserAccount" Association="Self.FK_Item_UserAccount">
             <End Role="UserAccount" EntitySet="UserAccount" />
             <End Role="Item" EntitySet="Item" />
@@ -161,6 +193,9 @@
             <End Role="ItemPicture" EntitySet="ItemPictures" />
           </AssociationSet>
           <EntitySet Name="WechatCaches" EntityType="WebChatSwitchModels.WechatCache" />
+          <EntitySet Name="SystemLogs" EntityType="WebChatSwitchModels.SystemLog" />
+          <EntitySet Name="WechatLogs" EntityType="WebChatSwitchModels.WechatLog" />
+          <EntitySet Name="WechatMessages" EntityType="WebChatSwitchModels.WechatMessage" />
         </EntityContainer>
         <EntityType Name="WechatCache">
           <Key>
@@ -170,6 +205,35 @@
           <Property Name="Token" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Ticket" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SystemLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="WechatLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LogTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="WechatMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromUserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ToUserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="MsgType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RawData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -218,6 +282,38 @@
                 <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
                 <ScalarProperty Name="Ticket" ColumnName="Ticket" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemLogs">
+            <EntityTypeMapping TypeName="WebChatSwitchModels.SystemLog">
+              <MappingFragment StoreEntitySet="SystemLog">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WechatLogs">
+            <EntityTypeMapping TypeName="WebChatSwitchModels.WechatLog">
+              <MappingFragment StoreEntitySet="WechatLog">
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="LogContent" ColumnName="LogContent" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WechatMessages">
+            <EntityTypeMapping TypeName="WebChatSwitchModels.WechatMessage">
+              <MappingFragment StoreEntitySet="WechatMessage">
+                <ScalarProperty Name="RawData" ColumnName="RawData" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="MsgType" ColumnName="MsgType" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ToUserName" ColumnName="ToUserName" />
+                <ScalarProperty Name="FromUserName" ColumnName="FromUserName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

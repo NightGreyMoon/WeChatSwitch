@@ -1,17 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
+using Wechat;
 using WechatPublicAccount;
 
 namespace WebChatSwitch.Web.Controllers
 {
     public class WXMessageController : Controller
     {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            base.OnActionExecuting(filterContext);
+
+            WechatLib.TextMessageHandler = OnHandleTextMessage;
+            WechatLib.EventMessageHandler = OnHandleEventMessage;
+            WechatLib.ImageMessageHandler = OnHandleImageMessage;
+            WechatLib.UnknownMessageHandler = OnHandleUnknownMessage;
+        }
+
 
         public ActionResult WXCallback(string signature, string timestamp, string nonce, string echostr)
         {
@@ -20,6 +33,15 @@ namespace WebChatSwitch.Web.Controllers
                 string token = ConfigurationManager.AppSettings["Token"];
                 string encodingAESKey = ConfigurationManager.AppSettings["EncodingAESKey"];
                 string appId = ConfigurationManager.AppSettings["AppID"];
+
+                LogManager manager = new LogManager();
+                SystemLog log = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "WeChat Verify Message Recived.",
+                    Time = DateTime.UtcNow
+                };
+                manager.AddLog(log);
 
                 string encryptStr = WeChatCrypter.GenarateSignature(token, timestamp, nonce);
                 if (encryptStr.ToLower() == signature.ToLower())
@@ -33,38 +55,48 @@ namespace WebChatSwitch.Web.Controllers
             }
             else
             {
-                return Content("error");
-                //string resp = "";
-                //string sReqData = string.Empty;
-                //using (var bodyStream = new StreamReader(this.Request.InputStream))
-                //{
-                //    bodyStream.BaseStream.Seek(0, SeekOrigin.Begin);
-                //    sReqData = bodyStream.ReadToEnd();
-                //}
+                LogManager manager = new LogManager();
+                SystemLog log = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "WeChat Message Recived.",
+                    Time = DateTime.UtcNow
+                };
+                manager.AddLog(log);
+                //return Content("error");
+                string responseText = "";
+                StreamReader stream = new StreamReader(Request.InputStream);
+                string xml = stream.ReadToEnd();
+                WechatBaseMessage msg = WechatBaseMessage.FromXml<WechatBaseMessage>(xml);
+                WechatLib.WriteMessageLog(msg, WechatLib.MessageDirection.Inbound, xml);
 
-                //using (var reader = new MemoryStream(Encoding.UTF8.GetBytes(sReqData)))
-                //{
-                //    var msg = (TencentMessage)serializer.Deserialize(reader);
-                //    string MessageID = string.Empty;
-                //    if (!string.IsNullOrEmpty(msg.MsgId))
-                //    {
-                //        MessageID = msg.MsgId;
-                //    }
-                //    else
-                //    {
-                //        MessageID = msg.FromUserName + msg.CreateTime;
-                //    }
-                //    ServiceBusMgr.RecieveMessage(MessageID, JsonConvert.SerializeObject(msg));
+                SystemLog log2 = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "WeChat Message Recived." + xml,
+                    Time = DateTime.UtcNow
+                };
+                manager.AddLog(log2);
 
-                //    resp = ProcessWeixinMessage(msg);
-                //}
+                WechatBaseMessage responseMsg = WechatLib.RespondMessage(msg, xml);
 
-                //return new ContentResult
-                //{
-                //    Content = resp,
-                //    ContentType = "text/xml",
-                //    ContentEncoding = System.Text.UTF8Encoding.UTF8
-                //};
+                if (responseMsg != null)
+                {
+                    responseMsg.CreateTime = DateTime.UtcNow;
+                    responseMsg.ToUserName = msg.FromUserName;
+                    responseMsg.FromUserName = msg.ToUserName;
+
+                    responseText = responseMsg.ToXml();
+
+                    WechatLib.WriteMessageLog(responseMsg, WechatLib.MessageDirection.Outbound, responseText);
+                }
+
+                return new ContentResult
+                {
+                    Content = responseText,
+                    ContentType = "text/xml",
+                    ContentEncoding = System.Text.UTF8Encoding.UTF8
+                };
 
                 //decrpt message
                 //int ret = 0;
@@ -102,6 +134,174 @@ namespace WebChatSwitch.Web.Controllers
 
                 //    return;
                 //}
+            }
+        }
+
+        protected WechatBaseMessage OnHandleEventMessage(Wechat.WechatEventMessage arg, string rawXml)
+        {
+            LogManager manager = new LogManager();
+            SystemLog log = new SystemLog()
+            {
+                Type = "Log",
+                Content = "WeChat Event Message Recived.",
+                Time = DateTime.UtcNow
+            };
+            manager.AddLog(log);
+            switch (arg.EventType.ToUpper())
+            {
+                //If the user has not subscribed the service account in the past, then the scan event type is SUBSCRIBE;
+                //Otherwise scan event type is SCAN.
+                case "SUBSCRIBE":
+                case "SCAN":
+                    //if (arg.EventKey.Contains("BIND_USER|"))
+                    //{
+                    //    string userUniqueName = arg.EventKey.Substring(arg.EventKey.IndexOf("BIND_USER|")).Replace("BIND_USER|", "").Trim();
+                    //    using (SampleSalesDatabaseDataContext database = new SampleSalesDatabaseDataContext())
+                    //    {
+                    //        UserBinding binding = database.UserBindings.SingleOrDefault(b => b.WechatOpenId == arg.FromUserName);
+                    //        if (binding == null)
+                    //        {
+                    //            binding = new UserBinding()
+                    //            {
+                    //                WechatOpenId = arg.FromUserName,
+                    //                UserUniqueName = userUniqueName,
+                    //                BindDate = DateTime.Now
+                    //            };
+                    //            database.UserBindings.InsertOnSubmit(binding);
+                    //            database.SubmitChanges();
+
+                    //            WechatLib.WriteLog(string.Format("Bind user success: {0}|{1}", userUniqueName, arg.FromUserName));
+
+                    //            if (PhotoLogic.UserBadgePhotoExists(userUniqueName))
+                    //            {
+                    //                return new WechatTextMessage() { Content = "Welcome to Sample Sales. \r\nUser ID: " + userUniqueName };
+                    //            }
+                    //            else
+                    //            {
+                    //                return new WechatTextMessage() { Content = string.Format("Welcome to Sample Sales.\r\nUser ID: {0}.\r\nPlease take a picture of your security badge and send on Wechat.", userUniqueName) };
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            return new WechatTextMessage() { Content = "User ID: " + binding.UserUniqueName };
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    int sceneId = 0;
+                    //    if (int.TryParse(arg.EventKey, out sceneId))
+                    //    {
+                    //        using (SampleSalesDatabaseDataContext database = new SampleSalesDatabaseDataContext())
+                    //        {
+                    //            SalesEventGroup eventGroup = database.SalesEventGroups.SingleOrDefault(g => g.EventGroupId == sceneId);
+                    //            if (eventGroup != null)
+                    //            {
+                    //                EventAdminBinding adminBinding = new EventAdminBinding()
+                    //                {
+                    //                    EventGroupId = eventGroup.EventGroupId,
+                    //                    WechatOpenId = arg.FromUserName
+                    //                };
+                    //                if (database.EventAdminBindings.FirstOrDefault(eab => eab.EventGroupId == eventGroup.EventGroupId && eab.WechatOpenId == arg.FromUserName) == null)
+                    //                {
+                    //                    database.EventAdminBindings.InsertOnSubmit(adminBinding);
+                    //                    database.SubmitChanges();
+                    //                }
+                    //                return new WechatTextMessage()
+                    //                {
+                    //                    Content = string.Format("You are registered as event admin for Event Group:{0}.",
+                    //                    eventGroup.EventGroupName)
+                    //                };
+                    //            }
+                    //            else
+                    //            {
+                    //                WechatLib.WriteLog("Bind event group admin: invalid event group id:" + arg.EventKey);
+                    //            }
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        return new WechatTextMessage() { Content = "Welcome to Sample Sales." };
+                    //    }
+                    //}
+                    break;
+                //case "CLICK":
+                //    return new WechatTextMessage() { Content = "Service under maintenance." };
+                case "SCANCODE_WAITMSG":
+                    WechatScanMessage posMessage = WechatBaseMessage.FromXml<WechatScanMessage>(rawXml);
+                    return new WechatTextMessage() { Content = posMessage.ScanCodeInfo.ScanType + "|" + posMessage.ScanCodeInfo.ScanResult };
+            }
+            return new WechatTextMessage();
+        }
+
+        protected WechatBaseMessage OnHandleTextMessage(Wechat.WechatTextMessage arg, string rawXml)
+        {
+            LogManager manager = new LogManager();
+            SystemLog log = new SystemLog()
+            {
+                Type = "Log",
+                Content = "WeChat Text Message Recived.",
+                Time = DateTime.UtcNow
+            };
+            manager.AddLog(log);
+
+            if (rawXml.Contains("扫码"))
+            {
+                return new WechatTextMessage()
+                {
+                    Content = "This is test for Scan bar code!"
+                };
+            }
+            return new WechatTextMessage()
+            {
+                Content = "If you have any question please contact GC Sample Sale team. Thank you!"
+            };
+        }
+
+        protected WechatBaseMessage OnHandleImageMessage(Wechat.WechatImageMessage arg, string rawXml)
+        {
+            LogManager manager = new LogManager();
+            SystemLog log = new SystemLog()
+            {
+                Type = "Log",
+                Content = "WeChat Image Message Recived.",
+                Time = DateTime.UtcNow
+            };
+            manager.AddLog(log);
+            return new WechatTextMessage() { Content = "Pphoto recived." };
+
+            //user upload badge photo
+            //using (SampleSalesDatabaseDataContext database = new SampleSalesDatabaseDataContext())
+            //{
+            //    string uniqueName = database.GetUserUniqueNameByOpenId(arg.FromUserName);
+            //    if (!string.IsNullOrWhiteSpace(uniqueName))
+            //    {
+            //        PhotoLogic.DownloadAndUpdateBadgePhoto(uniqueName, arg.PicUr);
+
+            //        WechatLib.WriteLog(string.Format("User photo updated {0}|{1}.", uniqueName, arg.PicUr));
+
+            //        //Participant participant = database.Participants.SingleOrDefault(p => p.UniqueName == uniqueName);
+            //        //if (participant != null)
+            //        //{
+            //        //    participant.PhotoUrl = PhotoLogic.GetUserPhotoUrl(uniqueName);
+            //        //    database.SubmitChanges();
+            //        //}
+
+            //        return new WechatTextMessage() { Content = "User photo updated." };
+            //    }
+            //    else
+            //    {
+            //        WechatLib.WriteLog(string.Format("User not identified. {0}|{1}", uniqueName, arg.FromUserName));
+            //        return new WechatTextMessage() { Content = "Error: User not identified." };
+            //    }
+            //}
+        }
+
+        protected WechatBaseMessage OnHandleUnknownMessage(WechatBaseMessage arg, string rawXml)
+        {
+            using (Wechat.WechatMessageHandlerSvc.WechatSvcClient client = new Wechat.WechatMessageHandlerSvc.WechatSvcClient())
+            {
+                return client.HandleUnknownMessage(arg, rawXml);
             }
         }
 
@@ -346,7 +546,7 @@ namespace WebChatSwitch.Web.Controllers
                 timestamp = timestamp
             };
             return Json(result);
-        }       
+        }
 
         //public ActionResult GetWeixinImageBase64(string serverId)
         //{
@@ -378,5 +578,7 @@ namespace WebChatSwitch.Web.Controllers
         //        return Json("error", JsonRequestBehavior.AllowGet);
         //    }
         //}
+
+
     }
 }

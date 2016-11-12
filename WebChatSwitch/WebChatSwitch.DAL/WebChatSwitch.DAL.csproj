@@ -58,10 +58,19 @@
       <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemLog.cs">
+      <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserAccount.cs">
       <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
     </Compile>
     <Compile Include="WechatCache.cs">
+      <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WechatLog.cs">
+      <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WechatMessage.cs">
       <DependentUpon>WeChatSwitchModels.tt</DependentUpon>
     </Compile>
     <Compile Include="WeChatSwitchModels.Context.cs">

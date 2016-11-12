@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BaseManager.cs" />
     <Compile Include="ItemManager.cs" />
+    <Compile Include="LogManager.cs" />
     <Compile Include="UserAccountManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WechatManager.cs" />

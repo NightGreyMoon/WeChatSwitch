@@ -29,5 +29,8 @@ namespace WebChatSwitch.DAL
         public virtual DbSet<ItemPicture> ItemPictures { get; set; }
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<WechatCache> WechatCaches { get; set; }
+        public virtual DbSet<SystemLog> SystemLogs { get; set; }
+        public virtual DbSet<WechatLog> WechatLogs { get; set; }
+        public virtual DbSet<WechatMessage> WechatMessages { get; set; }
     }
 }
