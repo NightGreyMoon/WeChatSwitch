@@ -137,13 +137,22 @@ namespace WebChatSwitch.Web.Controllers
                 foreach (var serverId in ServerIds)
                 {
                     string referUrl = WeixinDownloadImage(serverId);
-                    SystemLog downlog = new SystemLog()
+                    if (!string.IsNullOrEmpty(referUrl))
                     {
-                        Type = "Log",
-                        Content = "Save image to " + referUrl,
-                        Time = DateTime.UtcNow
+                        SystemLog downlog = new SystemLog()
+                        {
+                            Type = "Log",
+                            Content = "Saved image to " + referUrl,
+                            Time = DateTime.UtcNow
+                        };
+                        logManager.AddLog(downlog);
+                    }
+
+                    ItemPicture pic = new ItemPicture()
+                    {
+                        PictureUrl = referUrl
                     };
-                    logManager.AddLog(downlog);
+                    item.ItemPictures.Add(pic);
                 }
 
                 ItemManager manager = new ItemManager();
@@ -276,7 +285,7 @@ namespace WebChatSwitch.Web.Controllers
             SystemLog log = new SystemLog()
             {
                 Type = "Log",
-                Content = "Token got, Token: " + accessToken,
+                Content = "Token got to get the temp images, Token: " + accessToken,
                 Time = DateTime.UtcNow
             };
             logManager.AddLog(log);
@@ -286,14 +295,63 @@ namespace WebChatSwitch.Web.Controllers
             {
                 var response = HttpClient.Get(string.Format("https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}", accessToken, mediaId));
                 var stream = response.GetResponseStream();
-                Bitmap bitmap = new Bitmap(stream);
-                string basePath = "/UploadPic/";
-                string filename = DateTime.Now.Ticks + ".jpg";
 
-                Bitmap bm2 = new Bitmap(bitmap.Width, bitmap.Height);
-                Graphics g = Graphics.FromImage(bm2);
-                g.DrawImageUnscaled(bitmap, 0, 0);
-                bm2.Save(Server.MapPath(basePath) + filename);
+                byte[] b = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    int count = 0;
+                    do
+                    {
+                        byte[] buf = new byte[1024];
+                        count = stream.Read(buf, 0, 1024);
+                        ms.Write(buf, 0, count);
+                    } while (stream.CanRead && count > 0);
+                    b = ms.ToArray();
+                }
+                stream.Close();
+
+                string filename = DateTime.Now.Ticks + ".jpg";
+                string ftpurl = "ftp://waws-prod-hk1-003.ftp.azurewebsites.windows.net/site/wwwroot/UploadedPic/" + filename;
+                string ftpusername = "scrumoffice\\Haobo";
+                string ftppassword = "DHB482dhb";
+
+                FtpWebRequest ftpClient = (FtpWebRequest)FtpWebRequest.Create(ftpurl);
+                ftpClient.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
+                ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
+                ftpClient.UseBinary = true;
+                ftpClient.KeepAlive = true;
+                System.IO.Stream rs = ftpClient.GetRequestStream();
+                rs.Write(b, 0, b.Length);
+                ftpClient.ContentLength = b.Length;
+                rs.Close();                
+                FtpWebResponse uploadResponse = (FtpWebResponse)ftpClient.GetResponse();
+                string value = uploadResponse.StatusDescription;
+                uploadResponse.Close();
+
+                SystemLog saveLog = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Return response for saving image via ftp: " + value,
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(saveLog);
+
+                //Bitmap bitmap = new Bitmap(stream);
+                string basePath = "/UploadPic/";
+                //string fullName = Server.MapPath(basePath) + filename;
+
+                //SystemLog fileNameLog = new SystemLog()
+                //{
+                //    Type = "Log",
+                //    Content = "Path to save image: " + fullName,
+                //    Time = DateTime.UtcNow
+                //};
+                //logManager.AddLog(fileNameLog);    
+
+                //Bitmap bm2 = new Bitmap(bitmap.Width, bitmap.Height);
+                //Graphics g = Graphics.FromImage(bm2);
+                //g.DrawImageUnscaled(bitmap, 0, 0);
+                //bm2.Save(fullName);
 
                 //返回地址
                 string path = ConfigurationManager.AppSettings["Domain"].ToString();
