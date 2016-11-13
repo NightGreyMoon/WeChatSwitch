@@ -38,7 +38,7 @@ namespace WebChatSwitch.Web.Controllers
                 SystemLog log = new SystemLog()
                 {
                     Type = "Log",
-                    Content = "WeChat Verify Message Recived.",
+                    Content = "WeChat Verify Message Received.",
                     Time = DateTime.UtcNow
                 };
                 manager.AddLog(log);
@@ -59,7 +59,7 @@ namespace WebChatSwitch.Web.Controllers
                 SystemLog log = new SystemLog()
                 {
                     Type = "Log",
-                    Content = "WeChat Message Recived.",
+                    Content = "WeChat Message Received.",
                     Time = DateTime.UtcNow
                 };
                 manager.AddLog(log);
@@ -73,7 +73,7 @@ namespace WebChatSwitch.Web.Controllers
                 SystemLog log2 = new SystemLog()
                 {
                     Type = "Log",
-                    Content = "WeChat Message Recived." + xml,
+                    Content = "WeChat Message Received." + xml,
                     Time = DateTime.UtcNow
                 };
                 manager.AddLog(log2);
@@ -143,7 +143,7 @@ namespace WebChatSwitch.Web.Controllers
             SystemLog log = new SystemLog()
             {
                 Type = "Log",
-                Content = "WeChat Event Message Recived.",
+                Content = "WeChat Event Message Received.",
                 Time = DateTime.UtcNow
             };
             manager.AddLog(log);
@@ -240,7 +240,7 @@ namespace WebChatSwitch.Web.Controllers
             SystemLog log = new SystemLog()
             {
                 Type = "Log",
-                Content = "WeChat Text Message Recived.",
+                Content = "WeChat Text Message Received.",
                 Time = DateTime.UtcNow
             };
             manager.AddLog(log);
@@ -264,11 +264,11 @@ namespace WebChatSwitch.Web.Controllers
             SystemLog log = new SystemLog()
             {
                 Type = "Log",
-                Content = "WeChat Image Message Recived.",
+                Content = "WeChat Image Message Received.",
                 Time = DateTime.UtcNow
             };
             manager.AddLog(log);
-            return new WechatTextMessage() { Content = "Pphoto recived." };
+            return new WechatTextMessage() { Content = "Photo received." };
 
             //user upload badge photo
             //using (SampleSalesDatabaseDataContext database = new SampleSalesDatabaseDataContext())

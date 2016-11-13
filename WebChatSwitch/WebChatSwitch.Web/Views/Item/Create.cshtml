@@ -17,7 +17,6 @@
         </div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="controlBlock">
-            @* @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="controlLabel">
                 <p>
                     Title:
@@ -30,7 +29,6 @@
         </div>
 
         <div class="controlBlock">
-            @*@Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="controlLabel">
                 <p>
                     Description:
@@ -43,7 +41,6 @@
         </div>
 
         <div class="controlBlock">
-            @*@Html.LabelFor(model => model.Expectation, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="controlLabel">
                 <p>
                     Expectation:
@@ -56,7 +53,6 @@
         </div>
 
         <div class="controlBlock">
-            @*@Html.LabelFor(model => model.Available, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="controlLabel">
                 <p>
                     Available:
@@ -87,7 +83,7 @@
                 <input type="hidden" name="Photo2" />
                 <input type="hidden" name="Photo3" />
                 <span id="chooseBtn" onclick="chooseImage()">ChoosePhoto</span>
-                <input type="file" id="upload" accept="*/*" value="Choose a file" style="display:none;" />
+                <div id="img">选择的图片</div>
                 <button class="upload-result" type="button" style="display:none;">Confirm</button>
             </div>
         </div>
@@ -107,103 +103,52 @@
 <script src="~/Scripts/croppie.min.js"></script>
 <link href="~/Content/croppie.css" rel="stylesheet" />
 <script type="text/javascript">
-    function demoUpload() {
-        var $uploadCrop;
-
-        function readFile(input) {
-            $uploadCrop.croppie('bind', {
-                url: input
-            });
-
-            $('.upload-demo').addClass('ready').show();
-            $(".upload-result").show();
-            $("#avatar").hide();
-        }
-
-        $uploadCrop = $('#upload-demo').croppie({
-            exif: true,
-            viewport: {
-                width: 170,
-                height: 170,
-                type: 'square'
-            },
-            boundary: {
-                width: 200,
-                height: 200
-            },
-            showZoom: true
-        });
-
-        $("#chooseBtn").on("click", function () {
-            wx.chooseImage({
-                count: 1, // 默认9
-                sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
-                sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-                success: function (res) {
-                    var localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                    wx.uploadImage({
-                        localId: localId[0], // 需要上传的图片的本地ID，由chooseImage接口获得
-                        isShowProgressTips: 1, // 默认为1，显示进度提示
-                        success: function (r) {
-                            var _left = ($(window).width() - $(".zipping").width()) / 2;
-                            $(".zipping").css("left", _left).show();
-                            var serverId = r.serverId; // 返回图片的服务器端ID
-                            $.getJSON("/Weixin/GetWeixinImageBase64?serverId=" + serverId).success(function (json) {
-                                readFile(eval("{" + json + "}"));
-                                $(".zipping").hide();
-                            })
-                        }
-                    });
-                }
-            });
-        });
-
-        $('.upload-result').on('click', function (ev) {
-            $uploadCrop.croppie('result', {
-                type: 'canvas',
-                size: 'original'
-            }).then(function (resp) {
-                popupResult({
-                    src: resp
-                });
-            });
-        });
-    }
-
-    function popupResult(result) {
-        $("#avatar").attr("src", result.src).show();
-        $(".demo-wrap").hide();
-        $(".upload-result").hide();
-        $("[name='Photo1']").val(result.src);
-    }
+    var images = {
+        localIds: [],
+        serverIds: []
+    };
 
     function chooseImage() {
         wx.chooseImage({
-            count: 1, // 默认9
+            count: 3, // 默认9
             sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
-                var localId = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                wx.uploadImage({
-                    localId: localId[0], // 需要上传的图片的本地ID，由chooseImage接口获得
-                    isShowProgressTips: 1, // 默认为1，显示进度提示
-                    success: function (r) {
-                        var _left = ($(window).width() - $(".zipping").width()) / 2;
-                        $(".zipping").css("left", _left).show();
-                        var serverId = r.serverId; // 返回图片的服务器端ID
-                        $.getJSON("/Weixin/GetWeixinImageBase64?serverId=" + serverId).success(function (json) {
-                            readFile(eval("{" + json + "}"));
-                            $(".zipping").hide();
-                        })
-                    }
+                images.localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                jQuery(function () {
+                    $.each(images.localIds, function (i, n) {
+                        //$("#img").append('<img src="' + n + '" style="width:50px; height:50px;"/> <br />');
+                        alert("uploading photo " + i);
+                        wx.uploadImage({
+                            localId: images.localIds[i],
+                            success: function (res) {
+
+                                alert("uploaded photo " + i);
+                                images.serverIds.push(res.serverId);
+                                $("#img").append('<img src="' + res.localId + '"  style="width:50px; height:50px;"/ /> <br />');
+                                downloadImage(res.serverId);
+                                if (i < length) {
+                                    upload();
+                                }
+
+                                i++;
+                            },
+                            fail: function (res) {
+                                alert(JSON.stringify(res));
+                            }
+                        });
+                    });
+                });
+                jQuery(function () {
+                    $.each(images.serverIds, function (i, n) {
+                        alert("serverId " + i + ":" + images.serverIds[i]);
+                    });
                 });
             }
         });
     }
 
     $(function () {
-        //demoUpload();
-
         $('form').submit(function () {
             if ($(this).valid()) {
                 var btn = $('button:submit');
@@ -218,7 +163,7 @@
                 $.ajax({
                     url: "Create",
                     method: 'POST',
-                    data: { Title: Title, Description: Description, Expectation: Expectation, Available: Available },
+                    data: { Title: Title, Description: Description, Expectation: Expectation, Available: Available, ServerIds: images.serverIds },
                     success: function (data) {
                         if (data == 'true') {
                             $("[name='info']").text("Successfully published");

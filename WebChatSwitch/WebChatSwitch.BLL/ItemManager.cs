@@ -24,8 +24,10 @@ namespace WebChatSwitch.BLL
         public bool SaveNewItem(Item item)
         {
             Context.Items.Add(item);
+            UserAccount account = Context.UserAccounts.First(ua => ua.Id == item.OwnerId);
+            account.Balance = (short)(account.Balance - 1);
             int result = Context.SaveChanges();
-            return (result == 1);
+            return (result > 0);
         }
     }
 }
