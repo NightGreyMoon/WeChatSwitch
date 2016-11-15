@@ -9,7 +9,7 @@ namespace WebChatSwitch.BLL
 {
     public class UserAccountManager : BaseManager
     {
-        
+
         public UserAccountManager()
         {
             Context = new WebChatSwitchEntities();
@@ -26,6 +26,16 @@ namespace WebChatSwitch.BLL
             UserAccount entity = Context.UserAccounts.FirstOrDefault(ua => ua.OpenId == userAccount.OpenId);
             entity.Remark = userAccount.Remark;
             Context.SaveChanges();
+        }
+
+        public int UpdateUserDisplayNameByOpenId(string openId, string name)
+        {
+            UserAccount entity = Context.UserAccounts.FirstOrDefault(ua => ua.OpenId == openId);
+            if (entity == null)
+                return -1;
+            entity.Name = name;
+            int result = Context.SaveChanges();
+            return result;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
 using Wechat;
@@ -13,7 +14,7 @@ using WechatPublicAccount;
 
 namespace WebChatSwitch.Web.Controllers
 {
-    public class WXMessageController : Controller
+    public class WeChatMessageController : Controller
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -25,8 +26,7 @@ namespace WebChatSwitch.Web.Controllers
             WechatLib.UnknownMessageHandler = OnHandleUnknownMessage;
         }
 
-
-        public ActionResult WXCallback(string signature, string timestamp, string nonce, string echostr)
+        public ActionResult WeChaCallback(string signature, string timestamp, string nonce, string echostr)
         {
             if (this.Request.HttpMethod.ToLower() == "get")
             {
@@ -152,6 +152,11 @@ namespace WebChatSwitch.Web.Controllers
                 //If the user has not subscribed the service account in the past, then the scan event type is SUBSCRIBE;
                 //Otherwise scan event type is SCAN.
                 case "SUBSCRIBE":
+                    //TODO Save user information to Table UserAccount
+                    return new WechatTextMessage()
+                    {
+                        Content = "Thanks for subscribing us, please repley your name with 'Name:', e.g. [Name:Jason Ding], for us to remember your name."
+                    };
                 case "SCAN":
                     //if (arg.EventKey.Contains("BIND_USER|"))
                     //{
@@ -240,7 +245,7 @@ namespace WebChatSwitch.Web.Controllers
             SystemLog log = new SystemLog()
             {
                 Type = "Log",
-                Content = "WeChat Text Message Received.",
+                Content = "WeChat Text Message Received. Message: " + rawXml,
                 Time = DateTime.UtcNow
             };
             manager.AddLog(log);
@@ -252,9 +257,42 @@ namespace WebChatSwitch.Web.Controllers
                     Content = "This is test for Scan bar code!"
                 };
             }
+
+            if (rawXml.Contains("Name:"))
+            {
+                WeChatInboundMessage message = ParseXMLMessage(rawXml);
+                string content = message.Content;
+                string name = content.Replace("Name:", "");
+                string fromUerOpenId = message.FromUserName;
+
+                UserAccountManager manage = new UserAccountManager();
+                int result = manage.UpdateUserDisplayNameByOpenId(fromUerOpenId, name);
+                if (result == 1)
+                {
+                    return new WechatTextMessage()
+                    {
+                        Content = string.Format("Got your name and updated it, {0}!", name)
+                    };
+                }
+                else if (result == -1)
+                {
+                    return new WechatTextMessage()
+                    {
+                        Content = string.Format("Can not found your account in our system, {0}!", name)
+                    };
+                }
+                else if (result == 0)
+                {
+                    return new WechatTextMessage()
+                    {
+                        Content = string.Format("Sorry {0}, failed to update your name, please contact support.", name)
+                    };
+                }
+            }
+
             return new WechatTextMessage()
             {
-                Content = "If you have any question please contact GC Sample Sale team. Thank you!"
+                Content = "If you have any question please contact support. Thank you!"
             };
         }
 
@@ -579,6 +617,34 @@ namespace WebChatSwitch.Web.Controllers
         //    }
         //}
 
+        public WeChatInboundMessage ParseXMLMessage(string rawXML)
+        {
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(rawXML);
 
+            XmlNode ToUserName = xmldoc.SelectSingleNode("/xml/ToUserName");
+            XmlNode FromUserName = xmldoc.SelectSingleNode("/xml/FromUserName");
+            XmlNode Content = xmldoc.SelectSingleNode("/xml/Content");
+
+            WeChatInboundMessage message = new WeChatInboundMessage();
+            if (Content != null)
+            {
+                message = new WeChatInboundMessage()
+                {
+                    ToUserName = ToUserName.InnerText,
+                    FromUserName = FromUserName.InnerText,
+                    Content = Content.InnerText
+                };
+            }
+
+            return message;
+        }
+    }
+
+    public class WeChatInboundMessage
+    {
+        public string ToUserName { get; set; }
+        public string FromUserName { get; set; }
+        public string Content { get; set; }
     }
 }
