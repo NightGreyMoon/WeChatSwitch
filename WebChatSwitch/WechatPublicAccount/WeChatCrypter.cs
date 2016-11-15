@@ -6,8 +6,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using WechatPublicAccount;
 
-namespace WechatPublicAccount
+namespace WeChatPublicAccount
 {
     public class WeChatCrypter
     {

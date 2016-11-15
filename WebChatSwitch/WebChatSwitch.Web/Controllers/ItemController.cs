@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
 using WebChatSwitch.Web.Models;
-using WechatPublicAccount;
+using WeChatPublicAccount;
 
 namespace WebChatSwitch.Web.Controllers
 {
@@ -134,7 +127,7 @@ namespace WebChatSwitch.Web.Controllers
 
                 foreach (var serverId in ServerIds)
                 {
-                    string referUrl = WeixinDownloadImage(serverId);
+                    string referUrl = WeChatDownloadImage(serverId);
                     if (!string.IsNullOrEmpty(referUrl))
                     {
                         SystemLog downlog = new SystemLog()

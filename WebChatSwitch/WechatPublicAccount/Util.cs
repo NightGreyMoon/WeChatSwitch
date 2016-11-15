@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
-namespace WechatPublicAccount
+namespace WeChatPublicAccount
 {
     public class Util
     {
@@ -47,6 +48,50 @@ namespace WechatPublicAccount
                 return utcTime.AddHours(utcOffset).ToString(format);
             }
             return "";
+        }
+
+        public static WeChatInboundMessage ParseXMLMessage(string rawXML)
+        {
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(rawXML);
+
+            XmlNode ToUserName = xmldoc.SelectSingleNode("/xml/ToUserName");
+            XmlNode FromUserName = xmldoc.SelectSingleNode("/xml/FromUserName");
+            XmlNode Content = xmldoc.SelectSingleNode("/xml/Content");
+
+            WeChatInboundMessage message = new WeChatInboundMessage();
+            if (Content != null)
+            {
+                message = new WeChatInboundMessage()
+                {
+                    ToUserName = ToUserName.InnerText,
+                    FromUserName = FromUserName.InnerText,
+                    Content = Content.InnerText
+                };
+            }
+
+            return message;
+        }
+
+        public static WeChatInboundMessage ParseEventXMLMessage(string rawXML)
+        {
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(rawXML);
+
+            XmlNode ToUserName = xmldoc.SelectSingleNode("/xml/ToUserName");
+            XmlNode FromUserName = xmldoc.SelectSingleNode("/xml/FromUserName");
+
+            WeChatInboundMessage message = new WeChatInboundMessage();
+            if (FromUserName != null)
+            {
+                message = new WeChatInboundMessage()
+                {
+                    ToUserName = ToUserName.InnerText,
+                    FromUserName = FromUserName.InnerText
+                };
+            }
+
+            return message;
         }
     }
 }

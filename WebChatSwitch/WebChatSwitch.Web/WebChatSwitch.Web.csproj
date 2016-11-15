@@ -298,9 +298,9 @@
       <Project>{3752f42b-4918-4fb2-ac6e-4b84a7dba73d}</Project>
       <Name>WebChatSwitch.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WechatPublicAccount\WechatPublicAccount.csproj">
+    <ProjectReference Include="..\WechatPublicAccount\WeChatPublicAccount.csproj">
       <Project>{9236c2e9-b452-406a-b9a6-4fc3a33bac9c}</Project>
-      <Name>WechatPublicAccount</Name>
+      <Name>WeChatPublicAccount</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

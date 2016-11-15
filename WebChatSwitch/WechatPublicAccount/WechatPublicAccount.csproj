@@ -7,8 +7,8 @@
     <ProjectGuid>{9236C2E9-B452-406A-B9A6-4FC3A33BAC9C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WechatPublicAccount</RootNamespace>
-    <AssemblyName>WechatPublicAccount</AssemblyName>
+    <RootNamespace>WeChatPublicAccount</RootNamespace>
+    <AssemblyName>WeChatPublicAccount</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -48,6 +48,8 @@
     <Compile Include="HttpClient.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="WeChatCrypter.cs" />
+    <Compile Include="WeChatInboundMessage.cs" />
+    <Compile Include="WeChatSubscriber.cs" />
     <Compile Include="WeiXinPublicAccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WeiXinAccount.cs" />

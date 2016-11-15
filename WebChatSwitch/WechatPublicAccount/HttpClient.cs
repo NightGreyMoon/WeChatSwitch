@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace WechatPublicAccount
+namespace WeChatPublicAccount
 {
     public class HttpClient
     {

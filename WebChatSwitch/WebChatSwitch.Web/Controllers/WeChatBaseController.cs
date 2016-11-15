@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
-using WechatPublicAccount;
+using WeChatPublicAccount;
 
 namespace WebChatSwitch.Web.Controllers
 {
@@ -65,7 +66,7 @@ namespace WebChatSwitch.Web.Controllers
             jsToken = cache.Ticket;
 
             string nonceStr = "Wm3WZYTPz0wzccnW";
-            string timestamp = CreatenTimestamp().ToString();
+            string timestamp = Util.CreateTimestamp().ToString();
 
 
             string source = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", jsToken, nonceStr, timestamp, currentURL);
@@ -103,16 +104,7 @@ namespace WebChatSwitch.Web.Controllers
             return result;
         }
 
-        public static long CreatenTimestamp()
-        {
-            return (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
-        }
-
-        //获取临时素材
-        //https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID 
-
-        //微信下载图片
-        public string WeixinDownloadImage(string mediaId)
+        public string GetAccessToken()
         {
             string accessToken = string.Empty;
             string AppId = ConfigurationManager.AppSettings["AppId"];
@@ -134,6 +126,16 @@ namespace WebChatSwitch.Web.Controllers
                 }
             }
             accessToken = cache.Token;
+            return accessToken;
+        }
+
+        //获取临时素材
+        //https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID 
+
+        //微信下载图片
+        public string WeChatDownloadImage(string mediaId)
+        {
+            string accessToken = GetAccessToken();
 
             LogManager logManager = new LogManager();
             SystemLog log = new SystemLog()
@@ -147,7 +149,7 @@ namespace WebChatSwitch.Web.Controllers
             string result = string.Empty;
             try
             {
-                var response = WechatPublicAccount.HttpClient.Get(string.Format("https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}", accessToken, mediaId));
+                var response = WeChatPublicAccount.HttpClient.Get(string.Format("https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}", accessToken, mediaId));
                 var stream = response.GetResponseStream();
 
                 byte[] b = null;
@@ -222,6 +224,73 @@ namespace WebChatSwitch.Web.Controllers
                 logManager.AddLog(exLog);
             }
             return result;
+        }
+
+        public bool WeChatGetUserBasicInfoByOpenId(string openId)
+        {
+            bool inserted = false;
+            LogManager logManager = new LogManager();
+            try
+            {
+                string accessToken = GetAccessToken();
+                SystemLog log = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Token got to get the base information for subscriber, Token: " + accessToken,
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(log);
+
+                var response = WeChatPublicAccount.HttpClient.Get(string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}", accessToken, openId));
+                var stream = response.GetResponseStream();
+                StreamReader streamReader = new StreamReader(response.GetResponseStream());
+                string responseContent = streamReader.ReadToEnd();
+                response.Close();
+                streamReader.Close();
+
+                SystemLog reLog = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Got the response for base information of new subscriber, Response Content: " + responseContent,
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(reLog);
+
+                JObject jo = JObject.Parse(responseContent);
+                string nickname = jo.Properties().FirstOrDefault(pr => pr.Name == "nickname").Value.ToString();
+                string language = jo.Properties().FirstOrDefault(pr => pr.Name == "language").Value.ToString();
+                string city = jo.Properties().FirstOrDefault(pr => pr.Name == "city").Value.ToString();
+                string province = jo.Properties().FirstOrDefault(pr => pr.Name == "province").Value.ToString();
+
+                UserAccount ua = new UserAccount()
+                {
+                    WeChatNickName = nickname,
+                    OpenId = openId,
+                    Balance = 0
+                };
+
+                SystemLog uaLog = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Got the base information for subscriber, openId: " + openId + "; nickname: " + nickname,
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(uaLog);
+
+                UserAccountManager uaManager = new UserAccountManager();
+                inserted = uaManager.InsertUserAccountByOpenId(ua);
+            }
+            catch (Exception ex)
+            {
+                SystemLog log = new SystemLog()
+                {
+                    Type = "Exception",
+                    Content = "Exception occured to create account for new subscriber, Message: " + ex.Message,
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(log);
+            }
+            return inserted;
         }
 
         #region override
