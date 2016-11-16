@@ -16,14 +16,14 @@ namespace WebChatSwitch.BLL
 
         public List<Item> GetAvailableItems(string searchKeyword)
         {
-            var items = Context.Items.Include("ItemPictures").Where(i =>
+            var items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i =>
                 (i.Title.Contains(searchKeyword) || i.Description.Contains(searchKeyword)) && i.Available).ToList();
             return items;
         }
 
         public List<Item> GetAllAvailableItems()
         {
-            var items = Context.Items.Include("ItemPictures").Where(i => i.Available).ToList();
+            var items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available).ToList();
             return items;
         }
 

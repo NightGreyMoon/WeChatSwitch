@@ -5,51 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="controlForm">
-        <div class="searchArea">
-            @using (Html.BeginForm("List", "Item", FormMethod.Get))
+    <div class="searchArea">
+        @using (Html.BeginForm("List", "Item", FormMethod.Get))
             {   <div class="searchText">
-                    @Html.TextBox("searchString","", new { htmlAttributes = new { @class = "txtSearch" } })
-                </div>
-                <div class="searchButton">
-                    <input type="submit" value="Search" class="submitSearch"/>
-                </div>
-            }
+            @Html.TextBox("searchString", "", new { htmlAttributes = new { @class = "txtSearch" } })
         </div>
+            <div class="searchButton">
+                <input type="submit" value="Search" class="submitSearch" />
+            </div>
+        }
+    </div>
 
     <div class="searchResult">
-            @{
-                if (Model.Count() == 0)
+        @{
+            if (Model.Count() == 0)
+            {
+                <div class="item">
+                    <p>
+                        No User Accounts
+                    </p>
+                </div>
+            }
+            else
+            {
+                foreach (var item in Model)
                 {
                     <div class="item">
-                        <p>
-                            No User Accounts
-                        </p>
+                        <div class="itemAuthor">
+                            @Html.DisplayFor(modelItem => item.PublishUser)
+                        </div>
+                        <div class="itemTitle">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </div>
+                        <div class="itemPicture">
+                            @foreach (var pic in item.ItemPhotos)
+                            {
+                                <img src=@pic alt="Alternate Text" />
+                            }
+                        </div>
+                        <div class="itemDescript">
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </div>
+                        <div class="itemExpectation">
+                            @Html.DisplayFor(modelItem => item.Expectation)
+                        </div>
+
                     </div>
                 }
-                else
-                {
-                    foreach (var item in Model)
-                    {
-                        <div class="item">
-                            <div class="itemAuthor">
-                                @Html.DisplayFor(modelItem => item.PublishUser)
-                            </div>
-                            <div class="itemTitle">
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </div>
-                            <div class="itemPicture">
-
-                            </div>
-                            <div class="itemDescript">
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </div>
-                            <div class="itemExpectation">
-                                @Html.DisplayFor(modelItem => item.Expectation)
-                            </div>
-
-                        </div>
-                    }
-                }
             }
+        }
     </div>
 </div>

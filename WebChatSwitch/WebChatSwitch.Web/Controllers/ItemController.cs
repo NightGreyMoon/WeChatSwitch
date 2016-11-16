@@ -179,9 +179,9 @@ namespace WebChatSwitch.Web.Controllers
         public ActionResult ListView(string searchString)
         {
             ItemManager manager = new ItemManager();
-            ItemViewModel vm = new ItemViewModel();
+
             List<ItemViewModel> itemList = new List<ItemViewModel>();
-            List<Item> items = new List<Item>();
+            List<Item> items;
             if (!string.IsNullOrEmpty(searchString))
             {
                 items = manager.GetAvailableItems(searchString);
@@ -190,19 +190,20 @@ namespace WebChatSwitch.Web.Controllers
             {
                 items = manager.GetAllAvailableItems();
             }
-            foreach (var i in items)
+            foreach (var item in items)
             {
-                vm.Available = true;
+                ItemViewModel vm = new ItemViewModel();
+                vm.Available = item.Available;
                 List<string> photoes = new List<string>();
-                foreach (ItemPicture ip in i.ItemPictures)
+                foreach (ItemPicture ip in item.ItemPictures)
                 {
                     photoes.Add(ip.PictureUrl);
                 }
                 vm.ItemPhotos = photoes;
-                vm.PublishUser = i.UserAccount.Name;
-                vm.Title = i.Title;
-                vm.Description = i.Description;
-                vm.Expectation = i.Expectation;
+                vm.PublishUser = item.UserAccount.Name;
+                vm.Title = item.Title;
+                vm.Description = item.Description;
+                vm.Expectation = item.Expectation;
                 itemList.Add(vm);
             }
             return View(itemList);
