@@ -60,10 +60,20 @@
             </div>
             <div class="controlContent">
                     <div>
-                        @Html.RadioButtonFor(model => model.Available, true)<p>Yes</p>
+                        <div>
+                            @Html.RadioButtonFor(model => model.Available, true)
+                        </div>
+                        <div>
+                            <p>Yes</p>
+                        </div>
                     </div>
                     <div>
-                        @Html.RadioButtonFor(model => model.Available, false)<p>No</p>
+                        <div>
+                            @Html.RadioButtonFor(model => model.Available, false)
+                        </div>
+                        <div>
+                            <p>No</p>
+                        </div>
                     </div>
             </div>
         </div>
@@ -85,7 +95,7 @@
                 <input type="hidden" name="Photo2" />
                 <input type="hidden" name="Photo3" />
                 <span id="chooseBtn" onclick="chooseImage()">ChoosePhoto</span>
-                <div id="img">选择的图片</div>
+                <div id="img" class="imageList">选择的图片</div>
                 <button class="upload-result" type="button" style="display:none;">Confirm</button>
             </div>
         </div>
@@ -127,6 +137,7 @@
                                 //alert("localIds count: " + res);
                                 //alert("uploaded photo " + i);
                                 images.serverIds.push(res.serverId);
+                                $("#img").empty();
                                 $("#img").append('<img src="' + res.localId + '"  style="width:50px; height:50px;"/ /> <br />');
                                 downloadImage(res.serverId);
                                 if (i < length) {
