@@ -193,7 +193,7 @@ namespace WebChatSwitch.Web.Controllers
                 logManager.AddLog(saveLog);
 
                 //Bitmap bitmap = new Bitmap(stream);
-                string basePath = "/UploadPic/";
+                string basePath = "/UploadedPic/";
                 //string fullName = Server.MapPath(basePath) + filename;
 
                 //SystemLog fileNameLog = new SystemLog()
