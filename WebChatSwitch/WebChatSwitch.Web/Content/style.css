@@ -73,7 +73,6 @@ textarea {
     margin-bottom: 5px;
     max-width: 100%;
     min-width: 50%;
-    max-height: 15px;
 }
 
 input[type=submit]{
@@ -85,8 +84,6 @@ input[type=submit]{
     margin-bottom: 5px;
     max-width: 100%;
     min-width: 50%;
-    max-height: 35px;
-    min-height: 30px;
 }
 
 .context{
@@ -138,27 +135,86 @@ input[type=submit]{
     padding: 0px 0px 0px 0px;
 }
 
+.searchArea{
+    width: auto;
+    padding: 5px 5px 5px 5px;
+}
+
+.searchResult{
+    width: auto;
+    margin-top: 20px;
+    padding: 0px 0px 0px 0px;
+    margin: 5px 5px 5px 5px;
+}
+
+.searchText{
+    float: left;
+    width: 70%;
+}
+
+.searchText input[type=text]{
+    width:90%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+    margin : 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.searchButton{
+    float: left;
+    width: 30%;
+}
+
+.searchButton input[type=submit]{
+    width:90%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+    font-weight: bold;
+    margin : 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
 .item{
+    float: left;
+    width: 95%;
+    border-color: #908d8d;
+    border-width: 1px;
+    border-style: solid;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 5px 5px 5px;
+}
+
+.itemTitle{
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+}
+
+.itemAuthor{
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.itemPicture{
     float: left;
     width: 100%;
 }
 
-.itemTitle{
-
-}
-
-.itemAuthor{
-
-}
-
-.itemPicture{
-
-}
-
 .itemDescript{
-
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
 }
 
 .itemExpectation{
-
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 100%;
 }
