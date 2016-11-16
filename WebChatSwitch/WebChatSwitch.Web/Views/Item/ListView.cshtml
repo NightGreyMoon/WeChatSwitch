@@ -6,13 +6,13 @@
 }
 <div class="controlForm">
     <div class="searchArea">
-        @using (Html.BeginForm("List", "Item", FormMethod.Get))
+        @using (Html.BeginForm("ListView", "Item", FormMethod.Get))
             {   <div class="searchText">
             @Html.TextBox("searchString", "", new { htmlAttributes = new { @class = "txtSearch" } })
         </div>
-            <div class="searchButton">
-                <input type="submit" value="Search" class="submitSearch" />
-            </div>
+        <div class="searchButton">
+            <input type="submit" value="Search" class="submitSearch" />
+        </div>
         }
     </div>
 
@@ -40,7 +40,7 @@
                         <div class="itemPicture">
                             @foreach (var pic in item.ItemPhotos)
                             {
-                                <img src=@pic alt="Alternate Text" />
+                                <img src=@pic alt="Alternate Text" width="100" />
                             }
                         </div>
                         <div class="itemDescript">
