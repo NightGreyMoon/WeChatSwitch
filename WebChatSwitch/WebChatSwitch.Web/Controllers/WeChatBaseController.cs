@@ -210,7 +210,7 @@ namespace WebChatSwitch.Web.Controllers
                 //bm2.Save(fullName);
 
                 //返回地址
-                string path = ConfigurationManager.AppSettings["Domain"].ToString();
+                string path = @"ftp://scrumoffice%5CHaobo:DHB482dhb@waws-prod-hk1-003.ftp.azurewebsites.windows.net/site/wwwroot";
                 result = path + basePath + filename;
             }
             catch (Exception ex)
