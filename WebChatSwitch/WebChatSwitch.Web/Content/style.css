@@ -208,8 +208,12 @@ input[type=submit]{
 }
 
 .itemPicture img{
-    width: 25%;
+    float:left;
+    width: 28%;
     height: 80px;
+    margin : 3px 3px 3px 3px;
+    padding: 0px 0px 0px 0px;
+
 }
 
 .itemDescript{
