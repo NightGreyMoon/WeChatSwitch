@@ -139,7 +139,8 @@ input[type=submit]{
 }
 
 .item{
-
+    float: left;
+    width: 100%;
 }
 
 .itemTitle{
@@ -155,5 +156,9 @@ input[type=submit]{
 }
 
 .itemDescript{
+
+}
+
+.itemExpectation{
 
 }

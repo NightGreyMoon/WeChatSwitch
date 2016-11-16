@@ -16,18 +16,18 @@
         {
             <p>
                 @Html.TextBox("searchString")
-                <input type="submit" value="Search" /> 
+                <input type="submit" value="Search" />
             </p>
         }
     </div>
 </div>
 
 <div class="controlForm">
-    <div class="controlBlock">
+    <div class="controlContent">
         @{
             if (Model.Count() == 0)
             {
-                <div class="controlContent">
+                <div class="item">
                     <p>
                         No User Accounts
                     </p>
@@ -37,19 +37,23 @@
             {
                 foreach (var item in Model)
                 {
-                    <div class="controlContent">
-                        <p>
+                    <div class="item">
+                        <div class="itemAuthor">
                             @Html.DisplayFor(modelItem => item.PublishUser)
-                        </p>
-                        <p>
+                        </div>
+                        <div class="itemTitle">
                             @Html.DisplayFor(modelItem => item.Title)
-                        </p>
-                        <p>
+                        </div>
+                        <div class="itemPicture">
+                            
+                        </div>
+                        <div class="itemDescript">
                             @Html.DisplayFor(modelItem => item.Description)
-                        </p>
-                        <p>
+                        </div>
+                        <div class="itemExpectation">
                             @Html.DisplayFor(modelItem => item.Expectation)
-                        </p>
+                        </div>
+
                     </div>
                 }
             }
