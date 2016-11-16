@@ -59,14 +59,12 @@
                 </p>
             </div>
             <div class="controlContent">
-                <div class="checkbox">
                     <div>
                         @Html.RadioButtonFor(model => model.Available, true)<p>Yes</p>
                     </div>
                     <div>
                         @Html.RadioButtonFor(model => model.Available, false)<p>No</p>
                     </div>
-                </div>
             </div>
         </div>
 
@@ -119,15 +117,15 @@
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
                 images.localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                alert("uploading photo " + images.localIds.count);
                 jQuery(function () {
                     $.each(images.localIds, function (i, n) {
                         //$("#img").append('<img src="' + n + '" style="width:50px; height:50px;"/> <br />');
-                        alert("uploading photo " + i);
                         wx.uploadImage({
                             localId: images.localIds[i],
                             success: function (res) {
-
-                                alert("uploaded photo " + i);
+                                //alert("localIds count: " + res);
+                                //alert("uploaded photo " + i);
                                 images.serverIds.push(res.serverId);
                                 $("#img").append('<img src="' + res.localId + '"  style="width:50px; height:50px;"/ /> <br />');
                                 downloadImage(res.serverId);
@@ -143,11 +141,11 @@
                         });
                     });
                 });
-                jQuery(function () {
-                    $.each(images.serverIds, function (i, n) {
-                        alert("serverId " + i + ":" + images.serverIds[i]);
-                    });
-                });
+                //jQuery(function () {
+                //    $.each(images.serverIds, function (i, n) {
+                //        alert("serverId " + i + ":" + images.serverIds[i]);
+                //    });
+                //});
             }
         });
     }
