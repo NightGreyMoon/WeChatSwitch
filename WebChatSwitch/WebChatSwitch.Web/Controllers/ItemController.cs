@@ -208,6 +208,5 @@ namespace WebChatSwitch.Web.Controllers
             }
             return View(itemList);
         }
-
     }
 }

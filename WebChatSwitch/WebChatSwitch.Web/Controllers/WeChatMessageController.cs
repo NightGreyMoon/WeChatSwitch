@@ -283,7 +283,7 @@ namespace WebChatSwitch.Web.Controllers
             {
                 WeChatInboundMessage message = Util.ParseXMLMessage(rawXml);
                 string content = message.Content;
-                string name = content.Replace("Name:", "");
+                string name = content.Replace("Name:", "").Trim();
                 string fromUerOpenId = message.FromUserName;
 
                 UserAccountManager manage = new UserAccountManager();
@@ -292,7 +292,7 @@ namespace WebChatSwitch.Web.Controllers
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Got your name and updated it, {0}! Please reply your WeChat Number with 'wxNo:' before it.", name)
+                        Content = string.Format("Got your name and updated it, {0}! Please reply your WeChat Id or Mobile Number with 'wxId:' before it, so that others like your posted item could contact you.", name)
                     };
                 }
                 else if (result == -1)
@@ -310,11 +310,11 @@ namespace WebChatSwitch.Web.Controllers
                     };
                 }
             }
-            else if (rawXml.Contains("wxNo:"))
+            else if (rawXml.Contains("wxId:"))
             {
                 WeChatInboundMessage message = Util.ParseXMLMessage(rawXml);
                 string content = message.Content;
-                string wcNo = content.Replace("wxNo:", "");
+                string wcNo = content.Replace("wxId:", "").Trim();
                 string fromUerOpenId = message.FromUserName;
 
                 UserAccountManager manage = new UserAccountManager();
