@@ -125,6 +125,13 @@ input[type=submit]{
     padding: 0px 0px 0px 0px;
 }
 
+.controlContent div {
+    float : left;
+    width : 40%;
+    margin : 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
 .item{
 
 }

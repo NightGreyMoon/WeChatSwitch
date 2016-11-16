@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
-using WebChatSwitch.Web.Models;
 
 namespace WebChatSwitch.Web.Controllers
 {
-    public class UserController : Controller
+    public class UserController : WeChatBaseController
     {
         // GET: User
         public ActionResult ViewUserInfo()
@@ -17,30 +12,32 @@ namespace WebChatSwitch.Web.Controllers
             //todo get date form database
             UserAccountManager manager = new UserAccountManager();
 
-            UserAccount userInfo = manager.GetUserAccountInfoByOpenId("");
-            userInfo.WeChatNumber = "";
-            userInfo.OpenId = "";               //get open id
-            userInfo.Name = "";             
-            userInfo.WeChatNickName = "";             
-            userInfo.Remark = "";     
-            userInfo.Balance = 1; 
+            UserAccount userInfo = manager.GetUserAccountInfoByOpenId(CurrentUser.OpenId);
+            userInfo.WeChatNumber = userInfo.WeChatNumber;
+            userInfo.OpenId = CurrentUser.OpenId;               //get open id
+            userInfo.Name = userInfo.Name;             
+            userInfo.WeChatNickName = userInfo.WeChatNickName;             
+            userInfo.Remark = userInfo.Remark;     
+            userInfo.Balance = userInfo.Balance; 
 
-            return View();
+            return View(userInfo);
         }
 
         public ActionResult SaveUserInfo()
         {
             UserAccount userInfo = new UserAccount();
+            if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
+            {
+                userInfo.OpenId = Request.Form["hideOpenId"];
+                userInfo.WeChatNumber = Request.Form["lbWeChatAccount"];
+                userInfo.Name = Request.Form["lbUserName"];
+                userInfo.WeChatNickName = Request.Form["txtNickName"];
+                userInfo.Remark = Request.Form["txtSelfIntroduction"];
+                userInfo.Balance = short.Parse(Request.Form["lbSurplusPublishNumber"]);
 
-            userInfo.OpenId = Request.Form["hideOpenId"];
-            userInfo.WeChatNumber = Request.Form["lbWeChatAccount"];
-            userInfo.Name = Request.Form["txtUserName"];
-            userInfo.WeChatNickName = Request.Form["txtNickName"];
-            userInfo.Remark = Request.Form["txtSelfIntroduction"];
-            userInfo.Balance = short.Parse(Request.Form["lbSurplusPublishNumber"]);
-
-            //todo save entity to database
-
+                UserAccountManager manager = new UserAccountManager();
+                manager.SaveUserAccountInfo(userInfo);
+            }
 
             return View(userInfo);
         }

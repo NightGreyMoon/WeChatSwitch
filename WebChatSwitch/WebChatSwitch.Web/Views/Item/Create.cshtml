@@ -60,8 +60,12 @@
             </div>
             <div class="controlContent">
                 <div class="checkbox">
-                    @Html.RadioButtonFor(model => model.Available, true)<label>Yes</label>
-                    @Html.RadioButtonFor(model => model.Available, false)<label>No</label>
+                    <div>
+                        @Html.RadioButtonFor(model => model.Available, true)<p>Yes</p>
+                    </div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.Available, false)<p>No</p>
+                    </div>
                 </div>
             </div>
         </div>
