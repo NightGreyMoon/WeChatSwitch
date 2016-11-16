@@ -21,6 +21,12 @@ namespace WebChatSwitch.BLL
             return items;
         }
 
+        public List<Item> GetAllAvailableItems()
+        {
+            var items = Context.Items.Include("ItemPictures").Where(i => i.Available).ToList();
+            return items;
+        }
+
         public bool SaveNewItem(Item item)
         {
             Context.Items.Add(item);

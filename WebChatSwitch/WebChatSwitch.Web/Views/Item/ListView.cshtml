@@ -1,0 +1,59 @@
+﻿@model List<WebChatSwitch.Web.Models.ItemViewModel>
+
+@{
+    ViewBag.Title = "ListView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="controlForm">
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <h2>View Items</h2>
+        </div>
+    </div>
+    <div class="controlBlock">
+        @using (Html.BeginForm("List", "Item", FormMethod.Get))
+        {
+            <p>
+                @Html.TextBox("searchString")
+                <input type="submit" value="Search" /> 
+            </p>
+        }
+    </div>
+</div>
+
+<div class="controlForm">
+    <div class="controlBlock">
+        @{
+            if (Model.Count() == 0)
+            {
+                <div class="controlContent">
+                    <p>
+                        No User Accounts
+                    </p>
+                </div>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div class="controlContent">
+                        <p>
+                            @Html.DisplayFor(modelItem => item.PublishUser)
+                        </p>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </p>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </p>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.Expectation)
+                        </p>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+

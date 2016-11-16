@@ -23,5 +23,8 @@ namespace WebChatSwitch.Web.Models
 
         [Display(Name = "Photos")]
         public List<string> ItemPhotos { get; set; }
+
+        [Display(Name = "PublishUser")]
+        public string PublishUser { get; set; }
     }
 }

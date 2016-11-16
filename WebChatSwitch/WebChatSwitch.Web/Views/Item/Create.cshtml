@@ -127,31 +127,36 @@
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
             success: function (res) {
                 images.localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                alert("uploading photo " + images.localIds.count);
-                jQuery(function () {
-                    $.each(images.localIds, function (i, n) {
-                        //$("#img").append('<img src="' + n + '" style="width:50px; height:50px;"/> <br />');
-                        wx.uploadImage({
-                            localId: images.localIds[i],
-                            success: function (res) {
-                                //alert("localIds count: " + res);
-                                //alert("uploaded photo " + i);
-                                images.serverIds.push(res.serverId);
-                                $("#img").empty();
-                                $("#img").append('<img src="' + res.localId + '"  style="width:50px; height:50px;"/ /> <br />');
-                                downloadImage(res.serverId);
-                                if (i < length) {
-                                    upload();
-                                }
+                var i = 0;
+                var length = images.localIds.length;
 
-                                i++;
-                            },
-                            fail: function (res) {
-                                alert(JSON.stringify(res));
+                var upload = function () {
+                    //alert("uploading photo, localId: " + images.localIds[i]);
+                    wx.uploadImage({
+                        localId: images.localIds[i],
+                        success: function (res) {
+
+                            var serverId = res.serverId; // 返回图片的服务器端ID
+                            //alert("uploaded photo, serverId: " + res.serverId);
+                            images.serverIds.push(res.serverId);
+                            $("#img").append('<img src="' + res.localId + '"  style="width:50px; height:50px;"/ /> <br />');
+                            //downloadImage(res.serverId);
+
+                            //如果还有照片，继续上传
+                            i++;
+                            if (i < length) {
+                                //alert("continue uploading");
+                                upload();
                             }
-                        });
+                        },
+                        fail: function (res) {
+                            alert(JSON.stringify(res));
+                        }
                     });
-                });
+                };
+
+                upload();
+
                 //jQuery(function () {
                 //    $.each(images.serverIds, function (i, n) {
                 //        alert("serverId " + i + ":" + images.serverIds[i]);
@@ -171,7 +176,6 @@
                 var Description = $("[name='Description']").val();
                 var Expectation = $("[name='Expectation']").val();
                 var Available = $("[name='Available']:checked").val();
-                var Photo1 = $("[name='Photo1']").val();
 
                 $.ajax({
                     url: "Create",

@@ -288,6 +288,7 @@
     <Content Include="Scripts\jquery-3.1.0.min.map" />
     <Content Include="Views\User\ViewUserInfo.cshtml" />
     <Content Include="Views\User\ViewMyItem.cshtml" />
+    <Content Include="Views\Item\ListView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebChatSwitch.BLL\WebChatSwitch.BLL.csproj">

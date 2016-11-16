@@ -175,5 +175,38 @@ namespace WebChatSwitch.Web.Controllers
                 return Content("false");
             }
         }
+
+        public ActionResult ListView(string searchString)
+        {
+            ItemManager manager = new ItemManager();
+            ItemViewModel vm = new ItemViewModel();
+            List<ItemViewModel> itemList = new List<ItemViewModel>();
+            List<Item> items = new List<Item>();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                items = manager.GetAvailableItems(searchString);
+            }
+            else
+            {
+                items = manager.GetAllAvailableItems();
+            }
+            foreach (var i in items)
+            {
+                vm.Available = true;
+                List<string> photoes = new List<string>();
+                foreach (ItemPicture ip in i.ItemPictures)
+                {
+                    photoes.Add(ip.PictureUrl);
+                }
+                vm.ItemPhotos = photoes;
+                vm.PublishUser = i.UserAccount.Name;
+                vm.Title = i.Title;
+                vm.Description = i.Description;
+                vm.Expectation = i.Expectation;
+                itemList.Add(vm);
+            }
+            return View(itemList);
+        }
+
     }
 }
