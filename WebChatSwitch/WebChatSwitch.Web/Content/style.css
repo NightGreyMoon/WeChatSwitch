@@ -190,14 +190,15 @@ input[type=submit]{
     float: left;
     width: 100%;
     font-family:  'Futura ND for Nike 365 Cn XBd';
-    font-size: 100%;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 .itemAuthor{
     float: left;
     width: 100%;
     font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 100%;
+    font-size: 1em;
     font-weight: bold;
 }
 
