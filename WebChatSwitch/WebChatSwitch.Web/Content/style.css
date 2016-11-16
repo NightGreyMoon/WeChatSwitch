@@ -101,6 +101,8 @@ input[type=submit]{
 .controlForm{
     float: left;
     width: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 .controlBlock{
@@ -144,7 +146,7 @@ input[type=submit]{
     width: auto;
     margin-top: 20px;
     padding: 0px 0px 0px 0px;
-    margin: 5px 5px 5px 5px;
+    margin : 0px 0px 0px 0px;
 }
 
 .searchText{
@@ -177,18 +179,17 @@ input[type=submit]{
 .item{
     float: left;
     width: 95%;
-    border-color: #908d8d;
-    border-width: 1px;
-    border-style: solid;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    border-bottom-color: #bababa;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin: 5px 5px 5px 5px;
     padding: 5px 5px 5px 5px;
 }
 
 .itemTitle{
     float: left;
     width: 100%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-family:  'Futura ND for Nike 365 Cn XBd';
     font-size: 100%;
 }
 
@@ -203,6 +204,12 @@ input[type=submit]{
 .itemPicture{
     float: left;
     width: 100%;
+    text-overflow:clip;
+}
+
+.itemPicture img{
+    width: 25%;
+    height: 80px;
 }
 
 .itemDescript{
