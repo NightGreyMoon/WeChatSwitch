@@ -28,5 +28,8 @@ namespace WebChatSwitch.Web.Models
 
         [Display(Name = "PublishUser")]
         public string PublishUser { get; set; }
+
+        [Display(Name = "PublishUserOpenId")]
+        public string PublishUserOpenId { get; set; }
     }
 }

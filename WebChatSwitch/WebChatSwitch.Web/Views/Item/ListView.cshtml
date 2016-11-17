@@ -32,7 +32,7 @@
                 {
                     <div class="item">
                         <div class="itemAuthor">
-                            @Html.DisplayFor(modelItem => item.PublishUser)
+                            @Html.ActionLink(item.PublishUser, "ViewUserInfo", "User", new { openid = item.PublishUserOpenId }, new { display = "in-lilne" })
                         </div>
                         <div class="itemTitle">
                             @Html.DisplayFor(modelItem => item.Title)
