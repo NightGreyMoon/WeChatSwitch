@@ -59,22 +59,22 @@
                 </p>
             </div>
             <div class="controlContent">
+                <div>
                     <div>
-                        <div>
-                            @Html.RadioButtonFor(model => model.Available, true)
-                        </div>
-                        <div>
-                            <p>Yes</p>
-                        </div>
+                        @Html.RadioButtonFor(model => model.Available, true)
                     </div>
                     <div>
-                        <div>
-                            @Html.RadioButtonFor(model => model.Available, false)
-                        </div>
-                        <div>
-                            <p>No</p>
-                        </div>
+                        <p>Yes</p>
                     </div>
+                </div>
+                <div>
+                    <div>
+                        @Html.RadioButtonFor(model => model.Available, false)
+                    </div>
+                    <div>
+                        <p>No</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -96,7 +96,6 @@
                 <input type="hidden" name="Photo3" />
                 <input type="button" id="chooseBtn" onclick="chooseImage()">ChoosePhoto</input>
                 <div id="img" class="imageList">Don't have upload any Photo</div>
-                <button class="upload-result" type="button" style="display:none;">Confirm</button>
             </div>
         </div>
 
@@ -121,6 +120,11 @@
     };
 
     function chooseImage() {
+        images = {
+            localIds: [],
+            serverIds: []
+        };
+
         wx.chooseImage({
             count: 3, // 默认9
             sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
@@ -131,13 +135,13 @@
                 var length = images.localIds.length;
                 $("#img").empty();
                 var upload = function () {
-                    //alert("uploading photo, localId: " + images.localIds[i]);
+                    alert("uploading photo, localId: " + images.localIds[i]);
                     wx.uploadImage({
                         localId: images.localIds[i],
                         success: function (res) {
 
                             var serverId = res.serverId; // 返回图片的服务器端ID
-                            //alert("uploaded photo, serverId: " + res.serverId);
+                            alert("uploaded photo, serverId: " + res.serverId);
                             images.serverIds.push(res.serverId);
                             $("#img").append('<img src="' + res.localId + '"  />');
                             //downloadImage(res.serverId);
@@ -145,7 +149,7 @@
                             //如果还有照片，继续上传
                             i++;
                             if (i < length) {
-                                //alert("continue uploading");
+                                alert("continue uploading");
                                 upload();
                             }
                         },
