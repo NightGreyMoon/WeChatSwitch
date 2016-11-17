@@ -1,7 +1,7 @@
 ﻿@model WebChatSwitch.Web.Models.ItemViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Publish";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -135,13 +135,13 @@
                 var length = images.localIds.length;
                 $("#img").empty();
                 var upload = function () {
-                    alert("uploading photo, localId: " + images.localIds[i]);
+                    //alert("uploading photo, localId: " + images.localIds[i]);
                     wx.uploadImage({
                         localId: images.localIds[i],
                         success: function (res) {
 
                             var serverId = res.serverId; // 返回图片的服务器端ID
-                            alert("uploaded photo, serverId: " + res.serverId);
+                            //alert("uploaded photo, serverId: " + res.serverId);
                             images.serverIds.push(res.serverId);
                             $("#img").append('<img src="' + res.localId + '"  />');
                             //downloadImage(res.serverId);
@@ -149,7 +149,7 @@
                             //如果还有照片，继续上传
                             i++;
                             if (i < length) {
-                                alert("continue uploading");
+                                //alert("continue uploading");
                                 upload();
                             }
                         },
@@ -187,7 +187,8 @@
                     data: { Title: Title, Description: Description, Expectation: Expectation, Available: Available, ServerIds: images.serverIds },
                     success: function (data) {
                         if (data == 'true') {
-                            $("[name='info']").text("Successfully published");
+                            //$("[name='info']").text("Successfully published");
+                            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://scrumoffice.azurewebsites.net/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect";
                         }
                         else {
                             $("[name='info']").text("Failed to publish");
