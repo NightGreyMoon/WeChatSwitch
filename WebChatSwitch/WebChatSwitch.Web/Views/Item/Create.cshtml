@@ -188,7 +188,7 @@
                     success: function (data) {
                         if (data == 'true') {
                             //$("[name='info']").text("Successfully published");
-                            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://scrumoffice.azurewebsites.net/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect";
+                            window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://wechatswitch.azurewebsites.net/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect";
                         }
                         else {
                             $("[name='info']").text("Failed to publish");
