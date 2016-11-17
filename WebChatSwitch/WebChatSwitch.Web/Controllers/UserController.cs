@@ -60,11 +60,11 @@ namespace WebChatSwitch.Web.Controllers
                 
                 List<Item> items;
                 LogManager logManager = new LogManager();
-                SystemLog log = new SystemLog();
-                log.Type = "Log";
-                log.Content = $"[View My Item] User Id: { CurrentUser.Id}; Oped Id: { CurrentUser.OpenId}";
-                log.Time = DateTime.UtcNow;
-                logManager.AddLog(log);
+                //SystemLog log = new SystemLog();
+                //log.Type = "Log";
+                //log.Content = $"[View My Item] User Id: { CurrentUser.Id}; Oped Id: { CurrentUser.OpenId}";
+                //log.Time = DateTime.UtcNow;
+                //logManager.AddLog(log);
                 items = manager.GetMyItems(CurrentUser.Id);
                 foreach (var item in items)
                 {
