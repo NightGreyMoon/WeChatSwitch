@@ -17,7 +17,7 @@ namespace WebChatSwitch.BLL
         public List<Item> GetAvailableItems(string searchKeyword)
         {
             var items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i =>
-                (i.Title.Contains(searchKeyword) || i.Description.Contains(searchKeyword)) && i.Available).ToList();
+                (i.Title.Contains(searchKeyword) || i.Description.Contains(searchKeyword)) && i.Available).OrderByDescending(i => i.PublishedTime).ToList();
             return items;
         }
 
@@ -29,7 +29,7 @@ namespace WebChatSwitch.BLL
 
         public List<Item> GetMyItems(int userId)
         {
-            List<Item> items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available && i.OwnerId == userId).ToList();
+            List<Item> items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available && i.OwnerId == userId).OrderByDescending(i => i.PublishedTime).ToList();
 
             return items;
         }
@@ -37,7 +37,7 @@ namespace WebChatSwitch.BLL
         public void SoldOut(int id)
         {
             Item item = Context.Items.FirstOrDefault(p => p.Id == id);
-            if(item != null)
+            if (item != null)
             {
                 item.Available = false;
                 Context.SaveChanges();
