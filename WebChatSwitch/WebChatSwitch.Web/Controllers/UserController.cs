@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
@@ -55,6 +56,11 @@ namespace WebChatSwitch.Web.Controllers
 
             List<ItemViewModel> itemList = new List<ItemViewModel>();
             List<Item> items;
+            LogManager logManager = new LogManager();
+            SystemLog log = new SystemLog();
+            log.Content = $"User Id: { CurrentUser.Id}; Oped Id: { CurrentUser.OpenId}";
+            log.Time = DateTime.UtcNow;
+            logManager.AddLog(log);
             items = manager.GetMyItems(CurrentUser.Id);
             foreach (var item in items)
             {

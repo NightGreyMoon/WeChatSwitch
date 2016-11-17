@@ -50,7 +50,7 @@ h3 {
     padding: 0px 0px 0px 0px;
 }
 
-h4{
+h4 {
     font-family: 'Futura ND for Nike 365 Cn XBd';
     font-size: 1em;
     font-weight: bold;
@@ -60,6 +60,7 @@ h4{
     margin-bottom: 5px;
     padding: 0px 0px 0px 0px;
 }
+
 p,
 span,
 input,
@@ -75,108 +76,108 @@ textarea {
     min-width: 50%;
 }
 
-input[type=submit]{
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    max-width: 100%;
-    min-width: 50%;
-}
+    input[type=submit] {
+        font-family: 'Trade Gothic for Nike 365 BdCn';
+        font-size: 100%;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        max-width: 100%;
+        min-width: 50%;
+    }
 
-.context{
+.context {
     width: 100%;
 }
 
-.itemList{
+.itemList {
     float: left;
     margin-left: 3%;
     margin-right: 3%;
     padding: 2% 2% 2% 2%;
-    background-color:#ffffff;
+    background-color: #ffffff;
 }
 
-.controlForm{
+.controlForm {
     float: left;
     width: 100%;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
 }
 
-.controlBlock{
+.controlBlock {
     float: left;
     width: 100%;
 }
 
-.controlLabel{
-    float: left;
-    width: 100%;
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-}
-
-.controlContent{
+.controlLabel {
     float: left;
     width: 100%;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
 }
 
-.controlContent div {
-    float : left;
-    margin : 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-}
-
-.imageList{
+.controlContent {
     float: left;
     width: 100%;
-    margin : 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
 }
 
-.searchArea{
+    .controlContent div {
+        float: left;
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
+
+.imageList {
+    float: left;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.searchArea {
     width: auto;
     padding: 5px 5px 5px 5px;
 }
 
-.searchResult{
+.searchResult {
     width: auto;
     margin-top: 20px;
     padding: 0px 0px 0px 0px;
-    margin : 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
-.searchText{
+.searchText {
     float: left;
     width: 70%;
 }
 
-.searchText input[type=text]{
-    width:90%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 100%;
-    margin : 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-}
+    .searchText input[type=text] {
+        width: 90%;
+        font-family: 'Trade Gothic for Nike 365 BdCn';
+        font-size: 100%;
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
 
-.searchButton{
+.searchButton {
     float: left;
     width: 30%;
 }
 
-.searchButton input[type=submit]{
-    width:90%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 100%;
-    font-weight: bold;
-    margin : 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-}
+    .searchButton input[type=submit] {
+        width: 90%;
+        font-family: 'Trade Gothic for Nike 365 BdCn';
+        font-size: 100%;
+        font-weight: bold;
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+    }
 
-.item{
+.item {
     float: left;
     width: 95%;
     border-bottom-color: #bababa;
@@ -186,15 +187,15 @@ input[type=submit]{
     padding: 5px 5px 5px 5px;
 }
 
-.itemTitle{
+.itemTitle {
     float: left;
     width: 100%;
-    font-family:  'Futura ND for Nike 365 Cn XBd';
+    font-family: 'Futura ND for Nike 365 Cn XBd';
     font-size: 1.1em;
     font-weight: bold;
 }
 
-.itemAuthor{
+.itemAuthor {
     float: left;
     width: 100%;
     font-family: 'Trade Gothic for Nike 365 BdCn';
@@ -202,45 +203,86 @@ input[type=submit]{
     font-weight: bold;
 }
 
-.itemPicture{
+.itemPicture {
     float: left;
     width: 100%;
-    text-overflow:clip;
+    text-overflow: clip;
 }
 
-.itemPicture img{
-    float:left;
-    width: 28%;
-    height: 80px;
-    margin : 3px 3px 3px 3px;
+    .itemPicture img {
+        float: left;
+        width: 28%;
+        height: 80px;
+        margin: 3px 3px 3px 3px;
+        padding: 0px 0px 0px 0px;
+    }
+
+.itemDescript {
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 0.9em;
+}
+
+.itemExpectation {
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 0.9em;
+}
+
+.itemOpetion {
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 0.9em;
+}
+
+    .itemOpetion input[type=button] {
+        float: right;
+        min-width: 50px;
+        font-family: 'Trade Gothic for Nike 365 BdCn';
+        font-size: 0.9em;
+    }
+
+.bottomMenu {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    min-width: 100%;
+    min-height: 30px;
+    background-color: #000000;
     padding: 0px 0px 0px 0px;
-
+    margin: 0px 0px 0px 0px;
 }
 
-.itemDescript{
-    float: left;
-    width: 100%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 0.9em;
-}
+    .bottomMenu ul {
+        list-style: none;
+        min-width: 100%;
+        min-height: 30px;
+        padding: 0px 0px 0px 0px;
+        margin: 0px 0px 0px 0px;
+    }
 
-.itemExpectation{
-    float: left;
-    width: 100%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 0.9em;
-}
+        .bottomMenu ul li {
+            float: left;
+            min-width: 25%;
+            min-height: 30px;
+            padding: 0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
+        }
 
-.itemOpetion{
-    float: left;
-    width: 100%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 0.9em;
-}
-
-.itemOpetion input[type=button]{
-    float: right;
-    min-width: 50px;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 0.9em;
-}
+            .bottomMenu ul li div {
+                float: left;
+                min-width: 100%;
+                min-height: 30px;
+                font-family: 'Futura ND for Nike 365 Cn XBd';
+                font-size: 1.1em;
+                font-weight: bold;
+                text-align: center;
+                vertical-align: middle;
+                color: #ffffff;
+                border-color: #ffffff;
+                border-width: 1px;
+                border-style: solid;
+            }
