@@ -14,10 +14,17 @@ namespace WebChatSwitch.Web.Controllers
         // GET: User
         public ActionResult ViewUserInfo()
         {
+            string queryOpenId = Request.QueryString["openid"];
+
             //todo get date form database
             UserAccountManager manager = new UserAccountManager();
 
-            UserAccount userInfo = manager.GetUserAccountInfoByOpenId(CurrentUser.OpenId);
+            if (string.IsNullOrWhiteSpace(queryOpenId))
+            {
+                queryOpenId = CurrentUser.OpenId;
+            }
+
+            UserAccount userInfo = manager.GetUserAccountInfoByOpenId(queryOpenId);
             userInfo.WeChatNumber = userInfo.WeChatNumber;
             userInfo.OpenId = CurrentUser.OpenId;               //get open id
             userInfo.Name = userInfo.Name;             
