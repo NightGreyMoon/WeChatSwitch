@@ -10,11 +10,11 @@
     @Html.AntiForgeryToken()
 
     <div class="controlForm">
-        <div class="controlBlock">
+        @*<div class="controlBlock">
             <div class="controlLabel">
                 <h2>Publish Item</h2>
             </div>
-        </div>
+        </div>*@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="controlBlock">
             <div class="controlLabel">
