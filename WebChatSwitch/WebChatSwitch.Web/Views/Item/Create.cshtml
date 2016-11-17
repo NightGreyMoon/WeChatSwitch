@@ -95,7 +95,7 @@
                 <input type="hidden" name="Photo2" />
                 <input type="hidden" name="Photo3" />
                 <span id="chooseBtn" onclick="chooseImage()">ChoosePhoto</span>
-                <div id="img" class="imageList">Chosen Photos:</div>
+                <div id="img" class="imageList">Don't have upload any Photo</div>
                 <button class="upload-result" type="button" style="display:none;">Confirm</button>
             </div>
         </div>
@@ -129,7 +129,7 @@
                 images.localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
                 var i = 0;
                 var length = images.localIds.length;
-
+                $("#img").empty();
                 var upload = function () {
                     //alert("uploading photo, localId: " + images.localIds[i]);
                     wx.uploadImage({
