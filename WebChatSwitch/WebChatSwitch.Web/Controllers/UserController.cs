@@ -11,7 +11,7 @@ namespace WebChatSwitch.Web.Controllers
 {
     public class UserController : WeChatBaseController
     {
-        // GET: User
+        #region ViewUserInfo
         public ActionResult ViewUserInfo()
         {
             string queryOpenId = Request.QueryString["openid"];
@@ -34,26 +34,9 @@ namespace WebChatSwitch.Web.Controllers
 
             return View(userInfo);
         }
+        #endregion
 
-        public ActionResult SaveUserInfo()
-        {
-            UserAccount userInfo = new UserAccount();
-            if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
-            {
-                userInfo.OpenId = Request.Form["hideOpenId"];
-                userInfo.WeChatNumber = Request.Form["lbWeChatAccount"];
-                userInfo.Name = Request.Form["lbUserName"];
-                userInfo.WeChatNickName = Request.Form["txtNickName"];
-                userInfo.Remark = Request.Form["txtSelfIntroduction"];
-                userInfo.Balance = short.Parse(Request.Form["lbSurplusPublishNumber"]);
-
-                UserAccountManager manager = new UserAccountManager();
-                manager.SaveUserAccountInfo(userInfo);
-            }
-
-            return View(userInfo);
-        }
-
+        #region ViewMyItem
         public ActionResult ViewMyItem()
         {
             string url = Request.Url.ToString();
@@ -175,5 +158,102 @@ namespace WebChatSwitch.Web.Controllers
 
             return Json("Succeed");
         }
+        #endregion
+
+
+        #region ViewEditMyInfo
+
+        public ActionResult ViewEditMyInfo()
+        {
+            string url = Request.Url.ToString();
+            string code = Request.Params["code"];
+            //判断是否有OpenId
+            if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
+            {
+                LogManager logManager = new LogManager();
+                SystemLog log = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = string.Format("Get url and code, url:{0}, code:{1}", url, code),
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(log);
+
+
+                string appId = ConfigurationManager.AppSettings["AppID"];
+                string appSecret = ConfigurationManager.AppSettings["AppSecret"];
+
+                var client = new System.Net.WebClient();
+                client.Encoding = System.Text.Encoding.UTF8;
+
+                var requestUrl = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", appId, appSecret, code);
+                var data = client.DownloadString(requestUrl);
+
+                var serializer = new JavaScriptSerializer();
+                var obj = serializer.Deserialize<Dictionary<string, string>>(data);
+                string openId;
+                if (!obj.TryGetValue("openid", out openId))
+                {
+                    SystemLog failLog = new SystemLog()
+                    {
+                        Type = "Log",
+                        Content = string.Format("Can not Get openId"),
+                        Time = DateTime.UtcNow
+                    };
+                    logManager.AddLog(failLog);
+                }
+                else
+                {
+                    SystemLog resultLog = new SystemLog()
+                    {
+                        Type = "Log",
+                        Content = string.Format("Get openId, openId:{0}", openId),
+                        Time = DateTime.UtcNow
+                    };
+                    logManager.AddLog(resultLog);
+
+                    UserAccountManager uaManager = new UserAccountManager();
+                    UserAccount account = uaManager.GetUserAccountInfoByOpenId(openId);
+
+                    CurrentUser = new LoginUser() { Id = account.Id, OpenId = openId };
+                }
+            }
+            return View();
+        }
+
+        public ActionResult GetMyInfo()
+        {
+            UserAccount userInfo = new UserAccount();
+            UserAccountManager manager = new UserAccountManager();
+            userInfo = manager.GetUserAccountInfoByOpenId(CurrentUser.OpenId);
+            return Json(userInfo, JsonRequestBehavior.AllowGet); 
+        }
+
+        public ActionResult SaveMyInfo()
+        {
+            string opedId = Request.Form["OpenId"];
+            string weChatAccount = Request.Form["WeChatAccount"];
+            string name = Request.Form["Name"];
+            string remark = Request.Form["SelfIntroduction"];
+
+            UserAccount userInfo = new UserAccount();
+            if (!string.IsNullOrWhiteSpace(opedId))
+            {
+                userInfo.OpenId = opedId;
+                userInfo.WeChatNumber = weChatAccount;
+                userInfo.Name = name;
+                userInfo.Remark = remark;
+
+                UserAccountManager manager = new UserAccountManager();
+                manager.SaveUserAccountInfo(userInfo);
+            }
+
+            return Json("Save succeed!");
+        }
+        #endregion
+
+
+
+
     }
 }

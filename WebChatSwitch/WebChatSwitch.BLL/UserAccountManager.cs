@@ -24,7 +24,8 @@ namespace WebChatSwitch.BLL
         public void SaveUserAccountInfo(UserAccount userAccount)
         {
             UserAccount entity = Context.UserAccounts.FirstOrDefault(ua => ua.OpenId == userAccount.OpenId);
-            entity.WeChatNickName = userAccount.WeChatNickName;
+            entity.WeChatNumber = userAccount.WeChatNumber;
+            entity.Name = userAccount.Name;
             entity.Remark = userAccount.Remark;
             Context.SaveChanges();
         }

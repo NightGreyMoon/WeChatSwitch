@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "ViewEditMyInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        GetMyInfo()
+    });
+
+    function GetMyInfo() {
+        var option = {
+            url: '/User/GetMyInfo',
+            type: 'GET',
+            chche: false,
+            dataType: 'json',
+            data: "", //发送服务器数据
+            success: function (data) {  //成功事件
+                $("#hidnOpenId").val(data.OpenId);
+                $("#txtWeChatAccount").val(data.WeChatNumber);
+                $("#txtName").val(data.Name);
+                $("#lbNickName").html(data.WeChatNickName);
+                $("#txtAreaSelfIntroduction").html(data.Remark);
+                $("#lbSurplusPublishNumber").html(data.Balance);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { //发送失败事件
+                alert(errorThrown);
+            }
+        };
+        //进行异步传输
+        $.ajax(option);
+
+    }
+
+    function SaveMyInfo() {
+        var openId = $("#hidnOpenId").val();
+        var strWeChatAccount = $("#txtWeChatAccount").val();
+        var strName = $("#txtName").val();
+        var strSelfintroduction = $("#txtAreaSelfIntroduction").html();
+
+        if (strWeChatAccount == undefined || strWeChatAccount == null || strWeChatAccount == "") {
+            alert("Your WeChat Account or Mobile Number is required!");
+            return;
+        }
+
+        if (strName == undefined || strName == null || strName == "") {
+            alert("Your Name is required!");
+            return;
+        }
+
+        var jsonData = jQuery.parseJSON('{ "OpenId": "' + openId + '", "WeChatAccount" : "' + strWeChatAccount + '", "Name" : "' + strName + '", "SelfIntroduction" : "' + strSelfintroduction + '" }')
+
+        var option = {
+            url: '/User/SaveMyInfo',
+            type: 'POST',
+            chche: false,
+            dataType: 'json',
+            data: jsonData, //发送服务器数据
+            success: function (data) {  //成功事件
+                alert("Save succeed!");
+                GetMyInfo();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { //发送失败事件
+                alert(errorThrown);
+            }
+        };
+        //进行异步传输
+        $.ajax(option);
+    }
+
+</script>
+<h2>Edit My Info</h2>
+
+<div class="controlForm">
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <h2>Edit My Info</h2>
+        </div>
+    </div>
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <p>
+                WeChat Account Or Mobile Number:
+            </p>
+        </div>
+        <div class="controlContent">
+            <input type="text" id="txtWeChatAccount" />
+            <input type="hidden" id="hideOpenId" />
+        </div>
+    </div>
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <p>
+                Name:
+            </p>
+        </div>
+        <div class="controlContent">
+            <input type="text" id="txtName" />
+        </div>
+    </div>
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <p>
+                Nick Name:
+            </p>
+        </div>
+        <div class="controlContent">
+            <label id="lbNickName"></label>
+        </div>
+    </div>
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <p>
+                Self-introduction:
+            </p>
+        </div>
+        <div class="controlContent">
+            <textarea id="txtAreaSelfIntroduction" cols="1" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="controlBlock">
+        <div class="controlLabel">
+            <p>
+                Surplus Publish Number:
+            </p>
+        </div>
+        <div class="controlContent">
+            <label id="lbSurplusPublishNumber"></label>
+        </div>
+    </div>
+    <div class="controlBlock">
+        <div>
+            <input type="button" value="Save" onclick="SaveMyInfo()" />
+        </div>
+    </div>
+</div>

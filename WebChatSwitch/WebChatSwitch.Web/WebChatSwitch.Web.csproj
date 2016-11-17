@@ -288,6 +288,7 @@
     <Content Include="Views\User\ViewUserInfo.cshtml" />
     <Content Include="Views\User\ViewMyItem.cshtml" />
     <Content Include="Views\Item\ListView.cshtml" />
+    <Content Include="Views\User\ViewEditMyInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WebChatSwitch.BLL\WebChatSwitch.BLL.csproj">
