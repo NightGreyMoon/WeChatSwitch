@@ -201,6 +201,7 @@ namespace WebChatSwitch.Web.Controllers
                 }
                 vm.ItemPhotos = photoes;
                 vm.PublishUser = item.UserAccount.Name;
+                vm.PublishUserOpenId = item.UserAccount.OpenId;
                 vm.Title = item.Title;
                 vm.Description = item.Description;
                 vm.Expectation = item.Expectation;
