@@ -7,75 +7,64 @@
 
 
 <div class="context">
-    @using (Html.BeginForm("SaveUserInfo", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-        <div class="controlForm">
-            <div class="controlBlock">
-                <div class="controlLabel">
-                    <h2>User Info</h2>
-                </div>
-            </div>
-            <div class="controlBlock">
-                <div class="controlLabel">
-                    <p>
-                        WeChat Account:
-                    </p>
-                </div>
-                <div class="controlContent">
-                    @Html.Label("lbWeChatAccount",Model.WeChatNumber, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.Hidden("hideOpenId", Model.OpenId)
-                </div>
-            </div>
-            <div class="controlBlock">
-                <div class="controlLabel">
-                    <p>
-                        Name:
-                    </p>
-                </div>
-                <div class="controlContent">
-                    @Html.Label("lbUserName",Model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="controlBlock">
-                <div class="controlLabel">
-                    <p>
-                        Nick Name:
-                    </p>
-                </div>
-                <div class="controlContent">
-                    @Html.TextBox("txtNickName",Model.WeChatNickName, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="controlBlock">
-                <div class="controlLabel">
-                    <p>
-                        Self-introduction:
-                    </p>
-                </div>
-                <div class="controlContent">
-                    @Html.TextArea("txtSelfIntroduction",Model.Remark, 3,1, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="controlBlock">
-                <div class="controlLabel">
-                    <p>
-                        Surplus Publch Number:
-                    </p>
-                </div>
-                <div class="controlContent">
-                    @Html.Label("lbSurplusPublishNumber",Model.Balance.ToString(), new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-            </div>
-            <div class="controlBlock">
-                <div class="controlContent">
-                    <input type="submit" value="Save" />
-                </div>
-            </div>
-            <div class="controlBlock">
-                <label id="info" name="info" class="alert alert-info" style="display:none"></label>
+    <div class="controlForm">
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <h2>User Info</h2>
             </div>
         </div>
-    }
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <p>
+                    WeChat Account:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.Label("lbWeChatAccount", Model.WeChatNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.Hidden("hideOpenId", Model.OpenId)
+            </div>
+        </div>
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <p>
+                    Name:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.Label("lbUserName", Model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <p>
+                    Nick Name:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.Label("txtNickName", Model.WeChatNickName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <p>
+                    Self-introduction:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.Label("txtSelfIntroduction", Model.Remark, 3, 1, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="controlBlock">
+            <div class="controlLabel">
+                <p>
+                    Surplus Publch Number:
+                </p>
+            </div>
+            <div class="controlContent">
+                @Html.Label("lbSurplusPublishNumber", Model.Balance.ToString(), new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+    </div>
 </div>
