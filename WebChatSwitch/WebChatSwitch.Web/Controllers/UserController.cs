@@ -52,33 +52,46 @@ namespace WebChatSwitch.Web.Controllers
 
         public ActionResult GetMyItem()
         {
-            ItemManager manager = new ItemManager();
-
             List<ItemViewModel> itemList = new List<ItemViewModel>();
-            List<Item> items;
-            LogManager logManager = new LogManager();
-            SystemLog log = new SystemLog();
-            log.Content = $"User Id: { CurrentUser.Id}; Oped Id: { CurrentUser.OpenId}";
-            log.Time = DateTime.UtcNow;
-            logManager.AddLog(log);
-            items = manager.GetMyItems(CurrentUser.Id);
-            foreach (var item in items)
+
+            try
             {
-                ItemViewModel vm = new ItemViewModel();
-                vm.Id = item.Id;
-                vm.Available = item.Available;
-                List<string> photoes = new List<string>();
-                foreach (ItemPicture ip in item.ItemPictures)
+                ItemManager manager = new ItemManager();
+                
+                List<Item> items;
+                LogManager logManager = new LogManager();
+                SystemLog log = new SystemLog();
+                log.Content = $"[View My Item] User Id: { CurrentUser.Id}; Oped Id: { CurrentUser.OpenId}";
+                log.Time = DateTime.UtcNow;
+                logManager.AddLog(log);
+                items = manager.GetMyItems(CurrentUser.Id);
+                foreach (var item in items)
                 {
-                    photoes.Add(ip.PictureUrl);
+                    ItemViewModel vm = new ItemViewModel();
+                    vm.Id = item.Id;
+                    vm.Available = item.Available;
+                    List<string> photoes = new List<string>();
+                    foreach (ItemPicture ip in item.ItemPictures)
+                    {
+                        photoes.Add(ip.PictureUrl);
+                    }
+                    vm.ItemPhotos = photoes;
+                    vm.PublishUser = item.UserAccount.Name;
+                    vm.Title = item.Title;
+                    vm.Description = item.Description;
+                    vm.Expectation = item.Expectation;
+                    itemList.Add(vm);
                 }
-                vm.ItemPhotos = photoes;
-                vm.PublishUser = item.UserAccount.Name;
-                vm.Title = item.Title;
-                vm.Description = item.Description;
-                vm.Expectation = item.Expectation;
-                itemList.Add(vm);
             }
+            catch(Exception ex)
+            {
+                LogManager logManager = new LogManager();
+                SystemLog log = new SystemLog();
+                log.Content = $"[View My Item] Page Error: { ex.Message }";
+                log.Time = DateTime.UtcNow;
+                logManager.AddLog(log);
+            }
+            
             return Json(itemList,JsonRequestBehavior.AllowGet);
         }
 
