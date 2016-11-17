@@ -65,7 +65,8 @@ p,
 span,
 input,
 select,
-textarea {
+textarea,
+label {
     font-family: 'Trade Gothic for Nike 365 BdCn';
     font-size: 100%;
     margin-left: 10px;
