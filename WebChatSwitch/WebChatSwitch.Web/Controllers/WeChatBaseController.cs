@@ -167,8 +167,8 @@ namespace WebChatSwitch.Web.Controllers
                 stream.Close();
 
                 string filename = DateTime.Now.Ticks + ".jpg";
-                string ftpurl = "ftp://waws-prod-hk1-003.ftp.azurewebsites.windows.net/site/wwwroot/UploadedPic/" + filename;
-                string ftpusername = "scrumoffice\\Haobo";
+                string ftpurl = "ftp://waws-prod-hk1-015.ftp.azurewebsites.windows.net/site/wwwroot/UploadedPic/" + filename;
+                string ftpusername = "WeChatSwitch\\Haobo";
                 string ftppassword = "DHB482dhb";
 
                 FtpWebRequest ftpClient = (FtpWebRequest)FtpWebRequest.Create(ftpurl);
@@ -210,7 +210,7 @@ namespace WebChatSwitch.Web.Controllers
                 //bm2.Save(fullName);
 
                 //返回地址
-                string path = @"http://scrumoffice.azurewebsites.net";
+                string path = @"http://wechatswitch.azurewebsites.net";
                 result = path + basePath + filename;
             }
             catch (Exception ex)

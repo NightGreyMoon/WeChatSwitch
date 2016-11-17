@@ -23,7 +23,7 @@ namespace WebChatSwitch.BLL
 
         public List<Item> GetAllAvailableItems()
         {
-            var items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available).ToList();
+            var items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available).OrderByDescending(i => i.PublishedTime).ToList();
             return items;
         }
 

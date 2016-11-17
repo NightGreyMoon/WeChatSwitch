@@ -230,6 +230,8 @@
     <None Include="Properties\PublishProfiles\WebChatSwitch - Web Deploy.pubxml" />
     <Content Include="MP_verify_5jLu8BmHOqekeZAy.txt" />
     <Content Include="Scripts\croppie.min.js" />
+    <None Include="Properties\PublishProfiles\WeChatSwitch - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\WeChatSwitch - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
