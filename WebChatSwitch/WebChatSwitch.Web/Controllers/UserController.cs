@@ -61,6 +61,7 @@ namespace WebChatSwitch.Web.Controllers
                 List<Item> items;
                 LogManager logManager = new LogManager();
                 SystemLog log = new SystemLog();
+                log.Type = "Log";
                 log.Content = $"[View My Item] User Id: { CurrentUser.Id}; Oped Id: { CurrentUser.OpenId}";
                 log.Time = DateTime.UtcNow;
                 logManager.AddLog(log);
@@ -87,6 +88,7 @@ namespace WebChatSwitch.Web.Controllers
             {
                 LogManager logManager = new LogManager();
                 SystemLog log = new SystemLog();
+                log.Type = "Log";
                 log.Content = $"[View My Item] Page Error: { ex.Message }";
                 log.Time = DateTime.UtcNow;
                 logManager.AddLog(log);
