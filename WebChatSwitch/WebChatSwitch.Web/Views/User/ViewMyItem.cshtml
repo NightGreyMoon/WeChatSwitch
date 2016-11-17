@@ -1,9 +1,86 @@
-﻿
+﻿@model List<WebChatSwitch.Web.Models.ItemViewModel>
+
 @{
     ViewBag.Title = "ViewMyItem";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="context">
-    
+<script>
+    $(document).ready(function () {
+        GetMyItem();
+    });
+
+    function GetMyItem(){
+        var option = {
+            url: '/User/GetMyItem',
+            type: 'GET',
+            chche: false,
+            dataType: 'json',
+            data: "", //发送服务器数据
+            success: function (data) {  //成功事件
+                $("#myItemList").empty();
+                if (data == null || data == undefined || data.Count == 0) {
+                    GetEmptyView();
+                }
+                $.each(data, function (i, item) {
+                    CreateItem(data[i].Id, data[i].PublishUser, data[i].Title, data[i].ItemPhotos, data[i].Description, data[i].Expectation);
+                });
+
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { //发送失败事件
+                $("#myItemList").empty();
+                GetEmptyView();
+            }
+        };
+        //进行异步传输
+        $.ajax(option);
+    }
+
+    function GetEmptyView() {
+        $("#myItemList").append("<div class='item'><p>No Items</p></div>");
+    }
+
+    function CreateItem(id, publishUser, title, itemPotos, description, expectation) {
+        var item = $("<div class='item'></div>");
+
+        item.append("<div class='itemAuthor'>" + publishUser + "</div>");
+        item.append("<div class='itemTitle'>" + title + "</div>");
+        var pictureList = $("<div class='itemPicture'></div>");
+        $.each(itemPotos, function (i, item) {
+            pictureList.append("<img src=" + itemPotos[i] + " />");
+        });
+        item.append(pictureList);
+        item.append("<div class='itemDescript'>" + description + "</div>");
+        item.append("<div class='itemExpectation'>" + expectation + "</div>");
+        item.append("<div class='itemOpetion'><input type='button' value='Sold Out' onclick='SoldOutItem(" + id + ")'/></div>");
+
+        $("#myItemList").append(item);
+    }
+
+    function SoldOutItem(id) {
+
+        var obj = jQuery.parseJSON('{ "id": "' + id + '" }')
+
+        var option = {
+            url: '/User/SoldOut',
+            type: 'PUT',
+            chche: false,
+            dataType: 'json',
+            data: obj, //发送服务器数据
+            success: function (data) {  //成功事件
+                GetMyItem();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) { //发送失败事件
+                alert("Sold Out faild!");
+            }
+        };
+        //进行异步传输
+        $.ajax(option);
+    }
+
+</script>
+
+<div class="controlForm">
+    <div id="myItemList" class="searchResult">
+    </div>
 </div>

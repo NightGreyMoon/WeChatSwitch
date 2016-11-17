@@ -1,6 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
+using WebChatSwitch.Web.Models;
 
 namespace WebChatSwitch.Web.Controllers
 {
@@ -40,6 +42,55 @@ namespace WebChatSwitch.Web.Controllers
             }
 
             return View(userInfo);
+        }
+
+        public ActionResult ViewMyItem()
+        {
+            return View();
+        }
+
+        public ActionResult GetMyItem()
+        {
+            ItemManager manager = new ItemManager();
+
+            List<ItemViewModel> itemList = new List<ItemViewModel>();
+            List<Item> items;
+            items = manager.GetMyItems(CurrentUser.Id);
+            foreach (var item in items)
+            {
+                ItemViewModel vm = new ItemViewModel();
+                vm.Id = item.Id;
+                vm.Available = item.Available;
+                List<string> photoes = new List<string>();
+                foreach (ItemPicture ip in item.ItemPictures)
+                {
+                    photoes.Add(ip.PictureUrl);
+                }
+                vm.ItemPhotos = photoes;
+                vm.PublishUser = item.UserAccount.Name;
+                vm.Title = item.Title;
+                vm.Description = item.Description;
+                vm.Expectation = item.Expectation;
+                itemList.Add(vm);
+            }
+            return Json(itemList,JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SoldOut()
+        {
+            string id = Request.Form["id"];
+
+            int intId;
+
+            if(!int.TryParse(id,out intId))
+            {
+                return Json("Id not number");
+            }
+
+            ItemManager manager = new ItemManager();
+            manager.SoldOut(intId);
+
+            return Json("Succeed");
         }
     }
 }

@@ -27,6 +27,23 @@ namespace WebChatSwitch.BLL
             return items;
         }
 
+        public List<Item> GetMyItems(int userId)
+        {
+            List<Item> items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available && i.OwnerId == userId).ToList();
+
+            return items;
+        }
+
+        public void SoldOut(int id)
+        {
+            Item item = Context.Items.FirstOrDefault(p => p.Id == id);
+            if(item != null)
+            {
+                item.Available = false;
+                Context.SaveChanges();
+            }
+        }
+
         public bool SaveNewItem(Item item)
         {
             Context.Items.Add(item);

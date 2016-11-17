@@ -230,3 +230,17 @@ input[type=submit]{
     font-family: 'Trade Gothic for Nike 365 BdCn';
     font-size: 0.9em;
 }
+
+.itemOpetion{
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 0.9em;
+}
+
+.itemOpetion input[type=button]{
+    float: right;
+    min-width: 50px;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 0.9em;
+}
