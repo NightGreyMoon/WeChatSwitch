@@ -27,10 +27,10 @@ namespace WebChatSwitch.Web.Controllers
             UserAccount userInfo = manager.GetUserAccountInfoByOpenId(queryOpenId);
             userInfo.WeChatNumber = userInfo.WeChatNumber;
             userInfo.OpenId = CurrentUser.OpenId;               //get open id
-            userInfo.Name = userInfo.Name;             
-            userInfo.WeChatNickName = userInfo.WeChatNickName;             
-            userInfo.Remark = userInfo.Remark;     
-            userInfo.Balance = userInfo.Balance; 
+            userInfo.Name = userInfo.Name;
+            userInfo.WeChatNickName = userInfo.WeChatNickName;
+            userInfo.Remark = userInfo.Remark;
+            userInfo.Balance = userInfo.Balance;
 
             return View(userInfo);
         }
@@ -119,7 +119,7 @@ namespace WebChatSwitch.Web.Controllers
             try
             {
                 ItemManager manager = new ItemManager();
-                
+
                 List<Item> items;
                 LogManager logManager = new LogManager();
                 //SystemLog log = new SystemLog();
@@ -146,7 +146,7 @@ namespace WebChatSwitch.Web.Controllers
                     itemList.Add(vm);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogManager logManager = new LogManager();
                 SystemLog log = new SystemLog();
@@ -155,8 +155,8 @@ namespace WebChatSwitch.Web.Controllers
                 log.Time = DateTime.UtcNow;
                 logManager.AddLog(log);
             }
-            
-            return Json(itemList,JsonRequestBehavior.AllowGet);
+
+            return Json(itemList, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SoldOut()
@@ -165,7 +165,7 @@ namespace WebChatSwitch.Web.Controllers
 
             int intId;
 
-            if(!int.TryParse(id,out intId))
+            if (!int.TryParse(id, out intId))
             {
                 return Json("Id not number");
             }
