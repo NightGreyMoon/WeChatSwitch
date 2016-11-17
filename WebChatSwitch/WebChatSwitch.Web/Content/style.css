@@ -115,6 +115,8 @@ label {
 .controlLabel {
     float: left;
     width: 100%;
+    font-size: 1em;
+    color: #808080;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
 }
@@ -122,6 +124,7 @@ label {
 .controlContent {
     float: left;
     width: 100%;
+    font-size: 1.2em;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
 }
