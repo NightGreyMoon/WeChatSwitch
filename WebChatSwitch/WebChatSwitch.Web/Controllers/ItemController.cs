@@ -95,7 +95,6 @@ namespace WebChatSwitch.Web.Controllers
             return View(vm);
         }
 
-        
         [HttpPost]
         public ActionResult Create(string Title, string Description, string Expectation, string Available, string[] ServerIds)
         {

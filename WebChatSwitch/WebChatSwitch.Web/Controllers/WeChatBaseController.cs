@@ -13,7 +13,6 @@ using System.Web.Mvc;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
 using WeChatPublicAccount;
-using System.Web.Script.Serialization;
 
 namespace WebChatSwitch.Web.Controllers
 {
@@ -27,63 +26,7 @@ namespace WebChatSwitch.Web.Controllers
                 {
                     return Session["LoginUser"] as LoginUser;
                 }
-                else
-                {
-                    string url = Request.Url.ToString();
-                    string code = Request.Params["code"];
-                    //判断是否有OpenId
-                    if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
-                    {
-                        LogManager logManager = new LogManager();
-                        SystemLog log = new SystemLog()
-                        {
-                            Type = "Log",
-                            Content = string.Format("Get url and code, url:{0}, code:{1}", url, code),
-                            Time = DateTime.UtcNow
-                        };
-                        logManager.AddLog(log);
-
-
-                        string appId = ConfigurationManager.AppSettings["AppID"];
-                        string appSecret = ConfigurationManager.AppSettings["AppSecret"];
-
-                        WebClient client = new WebClient();
-                        client.Encoding = Encoding.UTF8;
-
-                        string requestUrl = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", appId, appSecret, code);
-                        var data = client.DownloadString(requestUrl);
-
-                        JavaScriptSerializer serializer = new JavaScriptSerializer();
-                        Dictionary<string,string> obj = serializer.Deserialize<Dictionary<string, string>>(data);
-                        string openId;
-                        if (!obj.TryGetValue("openid", out openId))
-                        {
-                            SystemLog failLog = new SystemLog()
-                            {
-                                Type = "Log",
-                                Content = string.Format("Can not Get openId"),
-                                Time = DateTime.UtcNow
-                            };
-                            logManager.AddLog(failLog);
-                        }
-                        else
-                        {
-                            SystemLog resultLog = new SystemLog()
-                            {
-                                Type = "Log",
-                                Content = string.Format("Get openId, openId:{0}", openId),
-                                Time = DateTime.UtcNow
-                            };
-                            logManager.AddLog(resultLog);
-
-                            UserAccountManager uaManager = new UserAccountManager();
-                            UserAccount account = uaManager.GetUserAccountInfoByOpenId(openId);
-
-                            Session["LoginUser"] = new LoginUser() { Id = account.Id, OpenId = openId };
-                        }
-                    }
-                    return Session["LoginUser"] as LoginUser;
-                }
+                return null;
             }
 
             set
@@ -206,14 +149,8 @@ namespace WebChatSwitch.Web.Controllers
             string result = string.Empty;
             try
             {
-                HttpWebResponse response = WeChatPublicAccount.HttpClient.Get(string.Format("https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}", accessToken, mediaId));
-
-                //原始图片流
-                Stream originalImageStream = response.GetResponseStream();
-                //缩小后的图片流
-                Stream resizeImageStream = ImageUtil.ResizeImage(originalImageStream, 90, 80);
-
-
+                var response = WeChatPublicAccount.HttpClient.Get(string.Format("https://api.weixin.qq.com/cgi-bin/media/get?access_token={0}&media_id={1}", accessToken, mediaId));
+                var stream = response.GetResponseStream();
 
                 byte[] b = null;
                 using (MemoryStream ms = new MemoryStream())
@@ -222,29 +159,24 @@ namespace WebChatSwitch.Web.Controllers
                     do
                     {
                         byte[] buf = new byte[1024];
-                        count = originalImageStream.Read(buf, 0, 1024);
+                        count = stream.Read(buf, 0, 1024);
                         ms.Write(buf, 0, count);
-                    } while (originalImageStream.CanRead && count > 0);
+                    } while (stream.CanRead && count > 0);
                     b = ms.ToArray();
                 }
-                originalImageStream.Close();
+                stream.Close();
 
-                //Time Ticks
-                string timeTicks = DateTime.Now.Ticks.ToString();
-                //原始图片文件名
-                string originalImageFileName = timeTicks + ".jpg";
-                //缩小后的图片文件名
-                string resizeImageFIleName = timeTicks + ".jpg";
-                string ftpurl = "ftp://waws-prod-hk1-015.ftp.azurewebsites.windows.net/site/wwwroot/UploadedPic/" + originalImageFileName;
+                string filename = DateTime.Now.Ticks + ".jpg";
+                string ftpurl = "ftp://waws-prod-hk1-015.ftp.azurewebsites.windows.net/site/wwwroot/UploadedPic/" + filename;
                 string ftpusername = "WeChatSwitch\\Haobo";
                 string ftppassword = "DHB482dhb";
 
-                FtpWebRequest ftpClient = (FtpWebRequest)WebRequest.Create(ftpurl);
+                FtpWebRequest ftpClient = (FtpWebRequest)FtpWebRequest.Create(ftpurl);
                 ftpClient.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
                 ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
                 ftpClient.UseBinary = true;
                 ftpClient.KeepAlive = true;
-                Stream rs = ftpClient.GetRequestStream();
+                System.IO.Stream rs = ftpClient.GetRequestStream();
                 rs.Write(b, 0, b.Length);
                 ftpClient.ContentLength = b.Length;
                 rs.Close();
@@ -279,7 +211,7 @@ namespace WebChatSwitch.Web.Controllers
 
                 //返回地址
                 string path = @"http://wechatswitch.azurewebsites.net";
-                result = path + basePath + originalImageFileName;
+                result = path + basePath + filename;
             }
             catch (Exception ex)
             {
