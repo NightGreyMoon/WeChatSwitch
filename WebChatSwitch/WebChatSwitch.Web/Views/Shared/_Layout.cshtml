@@ -57,10 +57,10 @@
     </div>
     <div id="bottomMenu" class="bottomMenu">
         <ul>
-            <li><div onclick="location.href = 'http://wechatswitch.azurewebsites.net/'">Home</div></li>
-            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://wechatswitch.azurewebsites.net/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Publish</div></li>
-            <li><div onclick="location.href = 'http://wechatswitch.azurewebsites.net/Item/ListView'">List</div></li>
-            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://wechatswitch.azurewebsites.net/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Me</div></li>
+            <li><div onclick="location.href = '@System.Configuration.ConfigurationManager.AppSettings["Domain"]/'">Home</div></li>
+            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Publish</div></li>
+            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/ListView&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">List</div></li>
+            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Me</div></li>
         </ul>
     </div>
 </body>

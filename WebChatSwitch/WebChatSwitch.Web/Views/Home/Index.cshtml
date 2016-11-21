@@ -5,18 +5,19 @@
 <div class="jumbotron">
     <h1>纯技术资料共享平台</h1>
     <p class="lead">我们不生产任何技术资料、非技术资料，我们只是资料的搬运工。</p>
+    <p class="lead">请不要利用该平台从事任何商业活动！</p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
         <h2>Publish Item</h2>
         <p>You can publish available item via this link.</p>
-        <p><a class="btn btn-default" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://wechatswitch.azurewebsites.net/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Check Item List</h2>
         <p>You can check available item list via this link.</p>
-        <p><a class="btn btn-default" href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=http://wechatswitch.azurewebsites.net/Item/ListView&response_type=code&scope=snsapi_base&state=create#wechat_redirect">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/ListView">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Contact Support</h2>

@@ -23,6 +23,10 @@ namespace WebChatSwitch.Web.Controllers
         {
             get
             {
+#if DEBUG
+                LoginUser user = new LoginUser() { Id = 2, OpenId = "oZgK_wQsus9-MdIOmEbi14hWi1js" };
+                return user;
+#endif
                 if (Session["LoginUser"] != null)
                 {
                     return Session["LoginUser"] as LoginUser;
@@ -54,7 +58,7 @@ namespace WebChatSwitch.Web.Controllers
                         var data = client.DownloadString(requestUrl);
 
                         JavaScriptSerializer serializer = new JavaScriptSerializer();
-                        Dictionary<string,string> obj = serializer.Deserialize<Dictionary<string, string>>(data);
+                        Dictionary<string, string> obj = serializer.Deserialize<Dictionary<string, string>>(data);
                         string openId;
                         if (!obj.TryGetValue("openid", out openId))
                         {
@@ -210,11 +214,6 @@ namespace WebChatSwitch.Web.Controllers
 
                 //原始图片流
                 Stream originalImageStream = response.GetResponseStream();
-                //缩小后的图片流
-                Stream resizeImageStream = ImageUtil.ResizeImage(originalImageStream, 90, 80);
-
-
-
                 byte[] b = null;
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -227,19 +226,15 @@ namespace WebChatSwitch.Web.Controllers
                     } while (originalImageStream.CanRead && count > 0);
                     b = ms.ToArray();
                 }
-                originalImageStream.Close();
 
-                //Time Ticks
-                string timeTicks = DateTime.Now.Ticks.ToString();
-                //原始图片文件名
-                string originalImageFileName = timeTicks + ".jpg";
-                //缩小后的图片文件名
-                string resizeImageFIleName = timeTicks + ".jpg";
-                string ftpurl = "ftp://waws-prod-hk1-015.ftp.azurewebsites.windows.net/site/wwwroot/UploadedPic/" + originalImageFileName;
-                string ftpusername = "WeChatSwitch\\Haobo";
-                string ftppassword = "DHB482dhb";
+                string fileName = DateTime.Now.Ticks + ".jpg";
+                string rootPath = ConfigurationManager.AppSettings["ftpRootFolderPath"];
+                string ftpUrl = rootPath + "/" + ConfigurationManager.AppSettings["photoFolder"] + "/" + fileName;
+                string ftpUrlForResized = rootPath + "/" + ConfigurationManager.AppSettings["resizedPhotoFolder"] + "/" + fileName;
+                string ftpusername = ConfigurationManager.AppSettings["ftpUsername"];
+                string ftppassword = ConfigurationManager.AppSettings["ftpPassword"];
 
-                FtpWebRequest ftpClient = (FtpWebRequest)WebRequest.Create(ftpurl);
+                FtpWebRequest ftpClient = (FtpWebRequest)WebRequest.Create(ftpUrl);
                 ftpClient.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
                 ftpClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
                 ftpClient.UseBinary = true;
@@ -251,17 +246,55 @@ namespace WebChatSwitch.Web.Controllers
                 FtpWebResponse uploadResponse = (FtpWebResponse)ftpClient.GetResponse();
                 string value = uploadResponse.StatusDescription;
                 uploadResponse.Close();
+                originalImageStream.Close();
 
                 SystemLog saveLog = new SystemLog()
                 {
                     Type = "Log",
-                    Content = "Return response for saving image via ftp: " + value,
+                    Content = "Return response for saving image via ftp: " + value + "; jpg saved to " + ftpUrl,
                     Time = DateTime.UtcNow
                 };
                 logManager.AddLog(saveLog);
 
+                //缩小后的图片流
+                MemoryStream msForResized = new MemoryStream(b);
+                Stream resizeImageStream = ImageUtil.ResizeImage(msForResized, 90, 80);
+                byte[] bForResized = null;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    int count = 0;
+                    do
+                    {
+                        byte[] buf = new byte[1024];
+                        count = resizeImageStream.Read(buf, 0, 1024);
+                        ms.Write(buf, 0, count);
+                    } while (resizeImageStream.CanRead && count > 0);
+                    bForResized = ms.ToArray();
+                }
+                FtpWebRequest ftpClientForResized = (FtpWebRequest)WebRequest.Create(ftpUrlForResized);
+                ftpClientForResized.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
+                ftpClientForResized.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
+                ftpClientForResized.UseBinary = true;
+                ftpClientForResized.KeepAlive = true;
+                Stream rsForResized = ftpClientForResized.GetRequestStream();
+                rsForResized.Write(bForResized, 0, bForResized.Length);
+                ftpClientForResized.ContentLength = bForResized.Length;
+                rsForResized.Close();
+                FtpWebResponse uploadResponseForResized = (FtpWebResponse)ftpClientForResized.GetResponse();
+                string valueForResized = uploadResponseForResized.StatusDescription;
+                uploadResponseForResized.Close();
+
+                SystemLog saveLogForResized = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Return response for saving image via ftp: " + valueForResized + "; jpg saved to " + ftpUrlForResized,
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(saveLogForResized);
+
+
+                resizeImageStream.Close();
                 //Bitmap bitmap = new Bitmap(stream);
-                string basePath = "/UploadedPic/";
                 //string fullName = Server.MapPath(basePath) + filename;
 
                 //SystemLog fileNameLog = new SystemLog()
@@ -277,9 +310,8 @@ namespace WebChatSwitch.Web.Controllers
                 //g.DrawImageUnscaled(bitmap, 0, 0);
                 //bm2.Save(fullName);
 
-                //返回地址
-                string path = @"http://wechatswitch.azurewebsites.net";
-                result = path + basePath + originalImageFileName;
+                //返回file name
+                return fileName;
             }
             catch (Exception ex)
             {
@@ -333,6 +365,7 @@ namespace WebChatSwitch.Web.Controllers
                 UserAccount ua = new UserAccount()
                 {
                     WeChatNickName = nickname,
+                    Name = nickname,
                     OpenId = openId,
                     Balance = 0
                 };
