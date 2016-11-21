@@ -56,3 +56,23 @@
         }
     </div>
 </div>
+
+<script>
+    $(function () {
+        $("img").click(function () {
+            var imgArray = [];
+            var curImageSrc = $(this).attr('src');
+            var oParent = $(this).parent();
+            if (curImageSrc && !oParent.attr('href')) {
+                oParent.find('img').each(function (index, el) {
+                    var itemSrc = $(this).attr('src');
+                    imgArray.push(itemSrc);
+                });
+                wx.previewImage({
+                    current: curImageSrc,
+                    urls: imgArray
+                });
+            }
+        });
+    })
+</script>

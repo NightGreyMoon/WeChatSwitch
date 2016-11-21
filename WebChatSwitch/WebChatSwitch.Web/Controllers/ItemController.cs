@@ -236,8 +236,14 @@ namespace WebChatSwitch.Web.Controllers
                 }
             }
 
-            ItemManager manager = new ItemManager();
+            JsInitResponse response = InitialWechatSDK(url);
+            ViewBag.appId = response.appId;
+            ViewBag.nonceStr = response.nonceStr;
+            ViewBag.signature = response.signature;
+            ViewBag.timestamp = response.timestamp;
 
+
+            ItemManager manager = new ItemManager();
             List<ItemViewModel> itemList = new List<ItemViewModel>();
             List<Item> items;
             if (!string.IsNullOrEmpty(searchString))
@@ -265,6 +271,7 @@ namespace WebChatSwitch.Web.Controllers
                 vm.Expectation = item.Expectation;
                 itemList.Add(vm);
             }
+
             return View(itemList);
         }
     }
