@@ -145,7 +145,6 @@ label {
     .imageList img {
         float: left;
         width: 28%;
-        height: 80px;
         margin: 3px 3px 3px 3px;
         padding: 0px 0px 0px 0px;
     }
@@ -228,11 +227,10 @@ label {
 
     .itemPicture img {
         float: left;
-        width: 90px;
-        height: 80px;
+        width: 30%;
         margin: 3px 3px 3px 3px;
         padding: 0px 0px 0px 0px;
-        display:inline;
+        display: inline;
     }
 
 .itemDescript {

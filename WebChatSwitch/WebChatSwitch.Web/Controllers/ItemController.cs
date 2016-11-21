@@ -95,7 +95,7 @@ namespace WebChatSwitch.Web.Controllers
             return View(vm);
         }
 
-        
+
         [HttpPost]
         public ActionResult Create(string Title, string Description, string Expectation, string Available, string[] ServerIds)
         {
@@ -128,13 +128,16 @@ namespace WebChatSwitch.Web.Controllers
 
                 foreach (var serverId in ServerIds)
                 {
-                    string referUrl = WeChatDownloadImage(serverId);
-                    if (!string.IsNullOrEmpty(referUrl))
+                    string fileName = WeChatDownloadImage(serverId);
+                    string rootPath = ConfigurationManager.AppSettings["Domain"];
+                    string ftpUrl = rootPath + "/" + ConfigurationManager.AppSettings["photoFolder"] + "/" + fileName;
+                    string ftpUrlForResized = rootPath + "/" + ConfigurationManager.AppSettings["resizedPhotoFolder"] + "/" + fileName;
+                    if (!string.IsNullOrEmpty(ftpUrl))
                     {
                         SystemLog downlog = new SystemLog()
                         {
                             Type = "Log",
-                            Content = "Saved image to " + referUrl,
+                            Content = "Saved image to " + ftpUrl,
                             Time = DateTime.UtcNow
                         };
                         logManager.AddLog(downlog);
@@ -142,7 +145,7 @@ namespace WebChatSwitch.Web.Controllers
 
                     ItemPicture pic = new ItemPicture()
                     {
-                        PictureUrl = referUrl
+                        PictureUrl = ftpUrl
                     };
                     item.ItemPictures.Add(pic);
                 }
