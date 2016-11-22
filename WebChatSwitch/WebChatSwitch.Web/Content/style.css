@@ -89,6 +89,8 @@ label {
         min-width: 50%;
     }
 
+
+
 .context {
     width: 100%;
 }
@@ -217,6 +219,16 @@ label {
     font-family: 'Trade Gothic for Nike 365 BdCn';
     font-size: 1em;
     font-weight: bold;
+    color:#000000;
+}   
+
+.itemAuthor a {
+    float: left;
+    width: 100%;
+    font-family: 'Trade Gothic for Nike 365 BdCn';
+    font-size: 1em;
+    font-weight: bold;
+    color:#000000;
 }
 
 .itemPicture {
