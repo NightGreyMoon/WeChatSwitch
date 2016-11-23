@@ -4,14 +4,14 @@
     ViewBag.Title = "Item List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="controlForm">
+<div class="controlForm controlFormItemList">
     <div class="searchArea">
         @using (Html.BeginForm("ListView", "Item", FormMethod.Get))
             {   <div class="searchText">
             @Html.TextBox("searchString", "", new { htmlAttributes = new { @class = "txtSearch" } })
         </div>
         <div class="searchButton">
-            <input type="submit" value="Search" class="submitSearch" />
+            <input type="submit" value="" class="submitSearch" />
         </div>
         }
     </div>
@@ -37,7 +37,7 @@
                         <div class="itemTitle">
                             @Html.DisplayFor(modelItem => item.Title)
                         </div>
-                        <div class="itemPicture">
+                        <div class="imageList">
                             @foreach (var pic in item.ItemPhotos)
                             {
                                 <img src='@pic' />

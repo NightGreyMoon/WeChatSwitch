@@ -110,6 +110,11 @@ label {
     padding: 0px 0px 0px 0px;
 }
 
+.controlFormItemList {
+    background-color: #b7b7b7;
+    text-align: center;
+}
+
 .controlBlock {
     float: left;
     width: 100%;
@@ -158,23 +163,25 @@ label {
 
 .searchArea {
     width: auto;
+    height: 30px;
     padding: 5px 5px 5px 5px;
+    background-color: #ffffff;
 }
 
 .searchResult {
     width: auto;
-    margin-top: 20px;
+    height: auto;
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
 }
 
 .searchText {
     float: left;
-    width: 70%;
+    width: 90%;
 }
 
     .searchText input[type=text] {
-        width: 90%;
+        width: 100%;
         font-family: 'Trade Gothic for Nike 365 BdCn';
         font-size: 100%;
         margin: 0px 0px 0px 0px;
@@ -183,26 +190,30 @@ label {
 
 .searchButton {
     float: left;
-    width: 30%;
+    width: 10%;
 }
 
     .searchButton input[type=submit] {
-        width: 90%;
-        font-family: 'Trade Gothic for Nike 365 BdCn';
-        font-size: 100%;
-        font-weight: bold;
+        background-image: url(/Content/icon/searchicon.jpg);
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-clip:content-box;
+        background-origin: content-box;
+        width: 100%;
         margin: 0px 0px 0px 0px;
         padding: 0px 0px 0px 0px;
     }
 
 .item {
     float: left;
-    width: 95%;
+    width: 100%;
     border-bottom-color: #bababa;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    margin: 5px 5px 5px 5px;
+    margin: 0px 0px 5px 0px;
     padding: 5px 5px 5px 5px;
+    background-color: #ffffff;
+    text-align: left;
 }
 
 .itemTitle {
@@ -210,7 +221,6 @@ label {
     width: 100%;
     font-family: 'Futura ND for Nike 365 Cn XBd';
     font-size: 1.1em;
-    font-weight: bold;
 }
 
 .itemAuthor {
@@ -230,20 +240,6 @@ label {
     font-weight: bold;
     color:#000000;
 }
-
-.itemPicture {
-    float: left;
-    width: 100%;
-    text-overflow: clip;
-}
-
-    .itemPicture img {
-        float: left;
-        width: 30%;
-        margin: 3px 3px 3px 3px;
-        padding: 0px 0px 0px 0px;
-        display: inline;
-    }
 
 .itemDescript {
     float: left;

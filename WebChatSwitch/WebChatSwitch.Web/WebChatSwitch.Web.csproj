@@ -205,6 +205,7 @@
     <Content Include="Content\icon\Home Page - My ASP.NET Application.html" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application_files\style.css" />
     <Content Include="Content\icon\returnicon.png" />
+    <Content Include="Content\icon\searchicon.jpg" />
     <Content Include="Content\icon\usericon.jpg" />
     <Content Include="Content\icon\usericon.png" />
     <Content Include="Content\large.css" />
