@@ -89,8 +89,6 @@ label {
         min-width: 50%;
     }
 
-
-
 .context {
     width: 100%;
 }
@@ -110,8 +108,8 @@ label {
     padding: 0px 0px 0px 0px;
 }
 
-.controlFormItemList {
-    background-color: #b7b7b7;
+.controlForm-Gray {
+    background-color: #dcdcdc;
     text-align: center;
 }
 
