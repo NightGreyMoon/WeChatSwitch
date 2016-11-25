@@ -26,57 +26,17 @@ namespace WebChatSwitch.Web.Controllers
         public ActionResult Create()
         {
             string url = Request.Url.ToString();
-            string code = Request.Params["code"];
             //判断是否有OpenId
             if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
             {
                 LogManager logManager = new LogManager();
                 SystemLog log = new SystemLog()
                 {
-                    Type = "Log",
-                    Content = string.Format("Get url and code, url:{0}, code:{1}", url, code),
+                    Type = "Error",
+                    Content = string.Format("Failed to get OpenId, requested url:{0}", url),
                     Time = DateTime.UtcNow
                 };
                 logManager.AddLog(log);
-
-
-                string appId = ConfigurationManager.AppSettings["AppID"];
-                string appSecret = ConfigurationManager.AppSettings["AppSecret"];
-
-                var client = new System.Net.WebClient();
-                client.Encoding = System.Text.Encoding.UTF8;
-
-                var requestUrl = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", appId, appSecret, code);
-                var data = client.DownloadString(requestUrl);
-
-                var serializer = new JavaScriptSerializer();
-                var obj = serializer.Deserialize<Dictionary<string, string>>(data);
-                string openId;
-                if (!obj.TryGetValue("openid", out openId))
-                {
-                    SystemLog failLog = new SystemLog()
-                    {
-                        Type = "Log",
-                        Content = string.Format("Can not Get openId"),
-                        Time = DateTime.UtcNow
-                    };
-                    logManager.AddLog(failLog);
-                }
-                else
-                {
-                    SystemLog resultLog = new SystemLog()
-                    {
-                        Type = "Log",
-                        Content = string.Format("Get openId, openId:{0}", openId),
-                        Time = DateTime.UtcNow
-                    };
-                    logManager.AddLog(resultLog);
-
-                    UserAccountManager uaManager = new UserAccountManager();
-                    UserAccount account = uaManager.GetUserAccountInfoByOpenId(openId);
-
-                    CurrentUser = new LoginUser() { Id = account.Id, OpenId = openId };
-                }
             }
 
             ItemViewModel vm = new ItemViewModel();
@@ -94,7 +54,6 @@ namespace WebChatSwitch.Web.Controllers
 
             return View(vm);
         }
-
 
         [HttpPost]
         public ActionResult Create(string Title, string Description, string Expectation, string Available, string[] ServerIds)
@@ -183,57 +142,17 @@ namespace WebChatSwitch.Web.Controllers
         public ActionResult ListView(string searchString)
         {
             string url = Request.Url.ToString();
-            string code = Request.Params["code"];
             //判断是否有OpenId
             if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
             {
                 LogManager logManager = new LogManager();
                 SystemLog log = new SystemLog()
                 {
-                    Type = "Log",
-                    Content = string.Format("Get url and code, url:{0}, code:{1}", url, code),
+                    Type = "Error",
+                    Content = string.Format("Failed to get OpenId, requested url:{0}", url),
                     Time = DateTime.UtcNow
                 };
                 logManager.AddLog(log);
-
-
-                string appId = ConfigurationManager.AppSettings["AppID"];
-                string appSecret = ConfigurationManager.AppSettings["AppSecret"];
-
-                var client = new System.Net.WebClient();
-                client.Encoding = System.Text.Encoding.UTF8;
-
-                var requestUrl = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code", appId, appSecret, code);
-                var data = client.DownloadString(requestUrl);
-
-                var serializer = new JavaScriptSerializer();
-                var obj = serializer.Deserialize<Dictionary<string, string>>(data);
-                string openId;
-                if (!obj.TryGetValue("openid", out openId))
-                {
-                    SystemLog failLog = new SystemLog()
-                    {
-                        Type = "Log",
-                        Content = string.Format("Can not Get openId"),
-                        Time = DateTime.UtcNow
-                    };
-                    logManager.AddLog(failLog);
-                }
-                else
-                {
-                    SystemLog resultLog = new SystemLog()
-                    {
-                        Type = "Log",
-                        Content = string.Format("Get openId, openId:{0}", openId),
-                        Time = DateTime.UtcNow
-                    };
-                    logManager.AddLog(resultLog);
-
-                    UserAccountManager uaManager = new UserAccountManager();
-                    UserAccount account = uaManager.GetUserAccountInfoByOpenId(openId);
-
-                    CurrentUser = new LoginUser() { Id = account.Id, OpenId = openId };
-                }
             }
 
             JsInitResponse response = InitialWechatSDK(url);
@@ -241,7 +160,6 @@ namespace WebChatSwitch.Web.Controllers
             ViewBag.nonceStr = response.nonceStr;
             ViewBag.signature = response.signature;
             ViewBag.timestamp = response.timestamp;
-
 
             ItemManager manager = new ItemManager();
             List<ItemViewModel> itemList = new List<ItemViewModel>();

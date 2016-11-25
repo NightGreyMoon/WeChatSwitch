@@ -33,20 +33,21 @@ namespace WebChatSwitch.Web.Controllers
                 }
                 else
                 {
-                    string url = Request.Url.ToString();
-                    string code = Request.Params["code"];
-                    //判断是否有OpenId
-                    if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
+                    LogManager logManager = new LogManager();
+                    logManager.AddLog(new SystemLog() { Type = "Log", Content = "Start to get OpenId", Time = DateTime.UtcNow });
+                    try
                     {
-                        LogManager logManager = new LogManager();
+                        string url = Request.Url.ToString();
+                        string code = Request.Params["code"];
+                        //判断是否有OpenId
+
                         SystemLog log = new SystemLog()
                         {
                             Type = "Log",
-                            Content = string.Format("Get url and code, url:{0}, code:{1}", url, code),
+                            Content = string.Format("Getting OpenId, got url and code, url:{0}, code:{1}", url, code),
                             Time = DateTime.UtcNow
                         };
                         logManager.AddLog(log);
-
 
                         string appId = ConfigurationManager.AppSettings["AppID"];
                         string appSecret = ConfigurationManager.AppSettings["AppSecret"];
@@ -64,8 +65,8 @@ namespace WebChatSwitch.Web.Controllers
                         {
                             SystemLog failLog = new SystemLog()
                             {
-                                Type = "Log",
-                                Content = string.Format("Can not Get openId"),
+                                Type = "Error",
+                                Content = string.Format("Can not Get openId, wx response data:{0}", data),
                                 Time = DateTime.UtcNow
                             };
                             logManager.AddLog(failLog);
@@ -85,6 +86,10 @@ namespace WebChatSwitch.Web.Controllers
 
                             Session["LoginUser"] = new LoginUser() { Id = account.Id, OpenId = openId };
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        logManager.AddLog(new SystemLog() { Type = "Exception", Content = "Exception occured during getting OpenId" + ex.Message, Time = DateTime.UtcNow });
                     }
                     return Session["LoginUser"] as LoginUser;
                 }
@@ -144,8 +149,6 @@ namespace WebChatSwitch.Web.Controllers
             byte[] dataHashed = sha.ComputeHash(dataToHash);
             //将运算结果转换成string
             string signature = BitConverter.ToString(dataHashed).Replace("-", "").ToLower();
-
-
 
             JsInitResponse result = new JsInitResponse()
             {
@@ -227,6 +230,14 @@ namespace WebChatSwitch.Web.Controllers
                     b = ms.ToArray();
                 }
 
+                SystemLog imageLog = new SystemLog()
+                {
+                    Type = "Log",
+                    Content = "Successfully got image from WeChat Server.",
+                    Time = DateTime.UtcNow
+                };
+                logManager.AddLog(imageLog);
+
                 string fileName = DateTime.Now.Ticks + ".jpg";
                 string rootPath = ConfigurationManager.AppSettings["ftpRootFolderPath"];
                 string ftpUrl = rootPath + "/" + ConfigurationManager.AppSettings["photoFolder"] + "/" + fileName;
@@ -256,44 +267,44 @@ namespace WebChatSwitch.Web.Controllers
                 };
                 logManager.AddLog(saveLog);
 
-                //缩小后的图片流
-                MemoryStream msForResized = new MemoryStream(b);
-                Stream resizeImageStream = ImageUtil.ResizeImage(msForResized, 90, 80);
-                byte[] bForResized = null;
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    int count = 0;
-                    do
-                    {
-                        byte[] buf = new byte[1024];
-                        count = resizeImageStream.Read(buf, 0, 1024);
-                        ms.Write(buf, 0, count);
-                    } while (resizeImageStream.CanRead && count > 0);
-                    bForResized = ms.ToArray();
-                }
-                FtpWebRequest ftpClientForResized = (FtpWebRequest)WebRequest.Create(ftpUrlForResized);
-                ftpClientForResized.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
-                ftpClientForResized.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
-                ftpClientForResized.UseBinary = true;
-                ftpClientForResized.KeepAlive = true;
-                Stream rsForResized = ftpClientForResized.GetRequestStream();
-                rsForResized.Write(bForResized, 0, bForResized.Length);
-                ftpClientForResized.ContentLength = bForResized.Length;
-                rsForResized.Close();
-                FtpWebResponse uploadResponseForResized = (FtpWebResponse)ftpClientForResized.GetResponse();
-                string valueForResized = uploadResponseForResized.StatusDescription;
-                uploadResponseForResized.Close();
+                ////缩小后的图片流
+                //MemoryStream msForResized = new MemoryStream(b);
+                //Stream resizeImageStream = ImageUtil.ResizeImage(msForResized, 90, 80);
+                //byte[] bForResized = null;
+                //using (MemoryStream ms = new MemoryStream())
+                //{
+                //    int count = 0;
+                //    do
+                //    {
+                //        byte[] buf = new byte[1024];
+                //        count = resizeImageStream.Read(buf, 0, 1024);
+                //        ms.Write(buf, 0, count);
+                //    } while (resizeImageStream.CanRead && count > 0);
+                //    bForResized = ms.ToArray();
+                //}
+                //FtpWebRequest ftpClientForResized = (FtpWebRequest)WebRequest.Create(ftpUrlForResized);
+                //ftpClientForResized.Credentials = new System.Net.NetworkCredential(ftpusername, ftppassword);
+                //ftpClientForResized.Method = System.Net.WebRequestMethods.Ftp.UploadFile;
+                //ftpClientForResized.UseBinary = true;
+                //ftpClientForResized.KeepAlive = true;
+                //Stream rsForResized = ftpClientForResized.GetRequestStream();
+                //rsForResized.Write(bForResized, 0, bForResized.Length);
+                //ftpClientForResized.ContentLength = bForResized.Length;
+                //rsForResized.Close();
+                //FtpWebResponse uploadResponseForResized = (FtpWebResponse)ftpClientForResized.GetResponse();
+                //string valueForResized = uploadResponseForResized.StatusDescription;
+                //uploadResponseForResized.Close();
 
-                SystemLog saveLogForResized = new SystemLog()
-                {
-                    Type = "Log",
-                    Content = "Return response for saving image via ftp: " + valueForResized + "; jpg saved to " + ftpUrlForResized,
-                    Time = DateTime.UtcNow
-                };
-                logManager.AddLog(saveLogForResized);
+                //SystemLog saveLogForResized = new SystemLog()
+                //{
+                //    Type = "Log",
+                //    Content = "Return response for saving image via ftp: " + valueForResized + "; jpg saved to " + ftpUrlForResized,
+                //    Time = DateTime.UtcNow
+                //};
+                //logManager.AddLog(saveLogForResized);
 
 
-                resizeImageStream.Close();
+                //resizeImageStream.Close();
                 //Bitmap bitmap = new Bitmap(stream);
                 //string fullName = Server.MapPath(basePath) + filename;
 

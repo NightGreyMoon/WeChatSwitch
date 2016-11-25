@@ -232,6 +232,7 @@
     <Content Include="Scripts\croppie.min.js" />
     <None Include="Properties\PublishProfiles\WeChatSwitch - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WeChatSwitch - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\WeChatSwitch-Test - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
