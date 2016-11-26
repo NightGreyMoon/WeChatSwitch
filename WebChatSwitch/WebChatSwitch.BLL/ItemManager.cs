@@ -16,8 +16,22 @@ namespace WebChatSwitch.BLL
 
         public List<Item> GetAvailableItems(string searchKeyword)
         {
-            var items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i =>
-                (i.Title.Contains(searchKeyword) || i.Description.Contains(searchKeyword)) && i.Available).OrderByDescending(i => i.PublishedTime).ToList();
+            List<Item> items = new List<Item>();
+            if (searchKeyword.IndexOf(' ') == -1)
+            {
+                items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i =>
+                    (i.Title.Contains(searchKeyword) || i.Description.Contains(searchKeyword)) && i.Available).OrderByDescending(i => i.PublishedTime).ToList();
+            }
+            else
+            {
+                string[] keywords = searchKeyword.Split(' ');
+                items = Context.Items.Include("ItemPictures").Include("UserAccount").Where(i => i.Available &&
+                        (
+                            keywords.Any(keyword => i.Title.Contains(keyword)) ||
+                            keywords.Any(keyword => i.Description.Contains(keyword))
+                        )
+                    ).OrderByDescending(i => i.PublishedTime).ToList();
+            }
             return items;
         }
 

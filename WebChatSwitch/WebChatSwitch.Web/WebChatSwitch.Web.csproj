@@ -202,8 +202,13 @@
     <Content Include="App_Data\WebChatSwitch_log.ldf">
       <DependentUpon>WebChatSwitch.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\icon\barbg.png" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application.html" />
     <Content Include="Content\icon\Home Page - My ASP.NET Application_files\style.css" />
+    <Content Include="Content\icon\menu_add.png" />
+    <Content Include="Content\icon\menu_home.png" />
+    <Content Include="Content\icon\menu_list.png" />
+    <Content Include="Content\icon\menu_me.png" />
     <Content Include="Content\icon\returnicon.png" />
     <Content Include="Content\icon\searchicon.jpg" />
     <Content Include="Content\icon\usericon.jpg" />

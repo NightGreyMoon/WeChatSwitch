@@ -44,12 +44,8 @@
                             }
                         </div>
                         <div class="itemDescript">
-                            @Html.DisplayFor(modelItem => item.Description)
+                            @Html.DisplayFor(modelItem => item.Description)  @Html.DisplayFor(modelItem => item.Expectation)
                         </div>
-                        <div class="itemExpectation">
-                            @Html.DisplayFor(modelItem => item.Expectation)
-                        </div>
-
                     </div>
                 }
             }

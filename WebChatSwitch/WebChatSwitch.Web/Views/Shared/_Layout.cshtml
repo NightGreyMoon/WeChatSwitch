@@ -6,6 +6,51 @@
     <link rel="stylesheet" href="~/Content/style.css" />
     <link rel="stylesheet" media="(max-width: 400px)" href="~/Content/small.css" />
     <title>@ViewBag.Title - 纯技术资料共享</title>
+    <style type="text/css">
+        .ct_menu {
+            width: 100%;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            bottom: 0;
+            background: url("../Content/icon/barbg.png") repeat-x top center;
+            background-size: contain;
+            padding: 5px 0;
+            border-top: 1px solid #313131;
+        }
+
+            .ct_menu ul, ct_menu li {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .ct_menu ul {
+                overflow: hidden;
+            }
+
+                .ct_menu ul li {
+                    float: left;
+                    width: 25%;
+                    text-align: center;
+                    font-size: 12px;
+                }
+
+                    .ct_menu ul li img {
+                        width: 20%;
+                        position: relative;
+                        margin-bottom: 5px;
+                    }
+
+                    .ct_menu ul li a:link,
+                    .ct_menu ul li a:visited,
+                    .ct_menu ul li a:hover {
+                        color: #FFF;
+                        text-decoration: none;
+                        display: block;
+                        font-family: 'Futura ND for Nike 365 Cn XBd';
+                    }
+    </style>
 </head>
 <body>
     @Scripts.Render("~/bundles/jquery")
@@ -55,12 +100,32 @@
     <div class="container body-content" style="height:100%; position:absolute;top: 0px; left:0px; float:left;">
         @RenderBody()
     </div>
-    <div id="bottomMenu" class="bottomMenu">
+    <div id="bottomMenu" class="ct_menu">
         <ul>
-            <li><div onclick="location.href = '@System.Configuration.ConfigurationManager.AppSettings["Domain"]/'">Home</div></li>
-            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Publish</div></li>
-            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/ListView&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">List</div></li>
-            <li><div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Me</div></li>
+            <li>
+                @*<div onclick="location.href = '@System.Configuration.ConfigurationManager.AppSettings["Domain"]/'">Home</div>*@
+                <a href='@System.Configuration.ConfigurationManager.AppSettings["Domain"]/'>
+                    <img src="~/Content/icon/menu_home.png" /><br />Home
+                </a>
+            </li>
+            <li>
+                <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect'>
+                    <img src="~/Content/icon/menu_add.png" /><br />Publish
+                </a>
+                @*<div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/Create&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Publish</div>*@
+            </li>
+            <li>
+                <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/ListView&response_type=code&scope=snsapi_base&state=create#wechat_redirect'>
+                    <img src="~/Content/icon/menu_list.png" /><br />List
+                </a>
+                @*<div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/Item/ListView&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">List</div>*@
+            </li>
+            <li>
+                <a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect'>
+                    <img src="~/Content/icon/menu_me.png" /><br />Me
+                </a>
+                @*<div onclick="location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx25c7164abf77f19c&redirect_uri=@System.Configuration.ConfigurationManager.AppSettings["Domain"]/User/ViewMyItem&response_type=code&scope=snsapi_base&state=create#wechat_redirect'">Me</div>*@
+            </li>
         </ul>
     </div>
 </body>

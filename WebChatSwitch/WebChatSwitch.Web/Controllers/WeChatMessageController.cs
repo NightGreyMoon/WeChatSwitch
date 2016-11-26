@@ -167,14 +167,16 @@ namespace WebChatSwitch.Web.Controllers
                     {
                         return new WechatTextMessage()
                         {
-                            Content = "Thanks for subscribing us, please repley your name with 'Name:' for us to remember your name, e.g. [Name:Jason Ding]."
+                            Content = "Thanks for subscribing us, please repley your name with 'Name:' for us to remember your name, e.g. [Name:Jason Ding]. || " +
+                            "感谢关注此公众号，请以文字消息回复您的姓名，系统将把它作为对您的称呼显示在您发布的物品的上面，注意加上英文前缀'Name:'，如[Name:Jason Ding]。"
                         };
                     }
                     else
                     {
                         return new WechatTextMessage()
                         {
-                            Content = "Thanks for subscribing us, but we failed to create account for you, please contact support."
+                            Content = "Thanks for subscribing us, but we failed to create account for you, please contact support. || " +
+                            "感谢关注此公众号，创建账号失败，可能因为已有账号，请联系系统支持。"
                         };
                     }
                 case "SCAN":
@@ -292,21 +294,22 @@ namespace WebChatSwitch.Web.Controllers
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Got your name and updated it, {0}! Please reply your WeChat Id or Mobile Number with 'wxId:' before it, so that others like your posted item could contact you.", name)
+                        Content = string.Format("Got your name and updated it, {0}! Please reply your WeChat Id or Mobile Number with 'wxId:' before it, so that others like your posted item could contact you. || " +
+                        "成功保存您的姓名，{1}！请以文字消息回复您的微信号或手机号，以便对您发布的物品感兴趣的人与您联系。注意加上英文前缀'wxId:'，如[wxId:12345678901]。", name, name)
                     };
                 }
                 else if (result == -1)
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Can not found your account in our system, {0}!", name)
+                        Content = string.Format("Can not found your account in our system, {0}! || 系统找不到您的账号，{1}！", name, name)
                     };
                 }
                 else if (result == 0)
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Sorry {0}, failed to update your name, please contact support.", name)
+                        Content = string.Format("Sorry {0}, failed to update your name, please contact support. || 抱歉，{1}，未能更新您的姓名，请联系系统支持！", name, name)
                     };
                 }
             }
@@ -323,21 +326,21 @@ namespace WebChatSwitch.Web.Controllers
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Got your WeChat Number and updated it!")
+                        Content = string.Format("Got your WeChat Number and updated it, good to go! || 成功保存您的微信号/手机号，赶紧发布您的闲置物品吧！")
                     };
                 }
                 else if (result == -1)
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Can not found your account in our system!")
+                        Content = string.Format("Can not found your account in our system! || 系统找不到您的账号！")
                     };
                 }
                 else if (result == 0)
                 {
                     return new WechatTextMessage()
                     {
-                        Content = string.Format("Sorry, failed to update your WeChat Number, please contact support.")
+                        Content = string.Format("Sorry, failed to update your WeChat Number, please contact support. || 抱歉，未能更新您的微信号/手机号，请联系系统支持！")
                     };
                 }
             }

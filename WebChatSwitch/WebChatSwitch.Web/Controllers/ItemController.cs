@@ -186,7 +186,7 @@ namespace WebChatSwitch.Web.Controllers
                 vm.PublishUserOpenId = item.UserAccount.OpenId;
                 vm.Title = item.Title;
                 vm.Description = item.Description;
-                vm.Expectation = item.Expectation;
+                vm.Expectation = string.IsNullOrEmpty(item.Expectation) ? null : " | " + item.Expectation;
                 itemList.Add(vm);
             }
 

@@ -149,9 +149,11 @@ label {
 
     .imageList img {
         float: left;
-        width: 28%;
+        width:expression(document.body.clientHeight>100?"28%":"auto"); 
         margin: 3px 3px 3px 3px;
         padding: 0px 0px 0px 0px;
+        max-height: 100px;
+        overflow: hidden;
     }
 
     .imageList p {
@@ -196,10 +198,10 @@ label {
         background-image: url(/Content/icon/searchicon.jpg);
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        background-clip:content-box;
+        background-clip: content-box;
         background-origin: content-box;
         width: 23px;
-        height:23px;
+        height: 23px;
         margin: 0px 0px 0px 0px;
         padding: 0px 0px 0px 0px;
     }
@@ -229,17 +231,17 @@ label {
     font-family: 'Trade Gothic for Nike 365 BdCn';
     font-size: 1em;
     font-weight: bold;
-    color:#000000;
-}   
-
-.itemAuthor a {
-    float: left;
-    width: 100%;
-    font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 1em;
-    font-weight: bold;
-    color:#000000;
+    color: #000000;
 }
+
+    .itemAuthor a {
+        float: left;
+        width: 100%;
+        font-family: 'Trade Gothic for Nike 365 BdCn';
+        font-size: 1em;
+        font-weight: bold;
+        color: #000000;
+    }
 
 .itemDescript {
     float: left;
