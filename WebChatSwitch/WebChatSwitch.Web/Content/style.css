@@ -149,10 +149,11 @@ label {
 
     .imageList img {
         float: left;
-        width:expression(document.body.clientHeight>100?"28%":"auto"); 
+        width: expression(document.body.clientHeight>100?"28%":"auto");
         margin: 3px 3px 3px 3px;
         padding: 0px 0px 0px 0px;
         max-height: 100px;
+        max-width: 30%;
         overflow: hidden;
     }
 
