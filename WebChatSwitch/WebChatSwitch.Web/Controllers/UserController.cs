@@ -6,6 +6,7 @@ using System.Web.Script.Serialization;
 using WebChatSwitch.BLL;
 using WebChatSwitch.DAL;
 using WebChatSwitch.Web.Models;
+using WeChatPublicAccount;
 
 namespace WebChatSwitch.Web.Controllers
 {
@@ -14,6 +15,12 @@ namespace WebChatSwitch.Web.Controllers
         #region ViewUserInfo
         public ActionResult ViewUserInfo()
         {
+            string url = Request.Url.ToString();
+            JsInitResponse response = InitialWechatSDK(url);
+            ViewBag.appId = response.appId;
+            ViewBag.nonceStr = response.nonceStr;
+            ViewBag.signature = response.signature;
+            ViewBag.timestamp = response.timestamp;
             string queryOpenId = Request.QueryString["openid"];
 
             //todo get date form database
@@ -40,6 +47,11 @@ namespace WebChatSwitch.Web.Controllers
         public ActionResult ViewMyItem()
         {
             string url = Request.Url.ToString();
+            JsInitResponse response = InitialWechatSDK(url);
+            ViewBag.appId = response.appId;
+            ViewBag.nonceStr = response.nonceStr;
+            ViewBag.signature = response.signature;
+            ViewBag.timestamp = response.timestamp;
             string code = Request.Params["code"];
             //判断是否有OpenId
             if (CurrentUser == null || string.IsNullOrWhiteSpace(CurrentUser.OpenId))
@@ -125,6 +137,12 @@ namespace WebChatSwitch.Web.Controllers
 
         public ActionResult ViewEditMyInfo()
         {
+            string url = Request.Url.ToString();
+            JsInitResponse response = InitialWechatSDK(url);
+            ViewBag.appId = response.appId;
+            ViewBag.nonceStr = response.nonceStr;
+            ViewBag.signature = response.signature;
+            ViewBag.timestamp = response.timestamp;
             return View();
         }
 
@@ -133,7 +151,7 @@ namespace WebChatSwitch.Web.Controllers
             UserAccount userInfo = new UserAccount();
             UserAccountManager manager = new UserAccountManager();
             userInfo = manager.GetUserAccountInfoByOpenId(CurrentUser.OpenId);
-            return Json(userInfo, JsonRequestBehavior.AllowGet); 
+            return Json(userInfo, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SaveMyInfo()
@@ -158,9 +176,5 @@ namespace WebChatSwitch.Web.Controllers
             return Json("Save succeed!");
         }
         #endregion
-
-
-
-
     }
 }

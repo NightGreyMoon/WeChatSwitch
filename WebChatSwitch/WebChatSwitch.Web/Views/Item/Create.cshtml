@@ -135,7 +135,7 @@
                 var length = images.localIds.length;
                 $("#img").empty();
                 var upload = function () {
-                    //alert("uploading photo, localId: " + images.localIds[i]);
+                    //alert("uploading photo, localId: " + images.localIds[i].toString());
                     wx.uploadImage({
                         localId: images.localIds[i],
                         success: function (res) {
@@ -144,6 +144,7 @@
                             //alert("uploaded photo, serverId: " + res.serverId);
                             images.serverIds.push(res.serverId);
                             $("#img").append('<img src="' + res.localId + '"  />');
+                            //alert('<img src="' + res.localId + '" />');
                             //downloadImage(res.serverId);
 
                             //如果还有照片，继续上传
