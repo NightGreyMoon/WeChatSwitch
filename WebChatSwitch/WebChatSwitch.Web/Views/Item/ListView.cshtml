@@ -31,16 +31,16 @@
                 foreach (var item in Model)
                 {
                     <div class="item">
-                        <div class="itemAuthor">
-                            @Html.ActionLink(item.PublishUser, "ViewUserInfo", "User", new { openid = item.PublishUserOpenId }, new { display = "in-lilne" })
-                        </div>
                         <div class="itemTitle">
                             @Html.DisplayFor(modelItem => item.Title)
+                        </div>
+                        <div class="itemAuthor">
+                            @Html.ActionLink(item.PublishUser, "ViewUserInfo", "User", new { openid = item.PublishUserOpenId }, new { display = "in-lilne" })
                         </div>
                         <div class="imageList">
                             @foreach (var pic in item.ItemPhotos)
                             {
-                                <img src='@pic' />
+                                <img src='@pic' style="height:90px;" />
                             }
                         </div>
                         <div class="itemDescript">

@@ -143,6 +143,7 @@ label {
 
 .imageList {
     float: left;
+    padding-left: 4px;
     width: 100%;
     text-overflow: clip;
 }
@@ -192,6 +193,7 @@ label {
 
 .searchButton {
     float: left;
+    margin-left: 8px;
     width: auto;
 }
 
@@ -201,8 +203,8 @@ label {
         background-repeat: no-repeat;
         background-clip: content-box;
         background-origin: content-box;
-        width: 23px;
-        height: 23px;
+        width: 22px;
+        height: 22px;
         margin: 0px 0px 0px 0px;
         padding: 0px 0px 0px 0px;
     }
@@ -210,11 +212,11 @@ label {
 .item {
     float: left;
     width: 100%;
-    border-bottom-color: #bababa;
+    border-bottom-color: #bdbdbd;
     border-bottom-width: 1px;
     border-bottom-style: solid;
-    margin: 0px 0px 5px 0px;
-    padding: 5px 5px 5px 5px;
+    margin: 0px 0px 0px 0px;
+    padding: 6px 3px;
     background-color: #ffffff;
     text-align: left;
 }
@@ -223,29 +225,31 @@ label {
     float: left;
     width: 100%;
     font-family: 'Futura ND for Nike 365 Cn XBd';
-    font-size: 1.1em;
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 .itemAuthor {
     float: left;
+    padding-left: 4px;
     width: 100%;
     font-family: 'Trade Gothic for Nike 365 BdCn';
-    font-size: 1em;
-    font-weight: bold;
-    color: #000000;
+    font-size: 0.9em;
+    color: #999;
 }
 
     .itemAuthor a {
         float: left;
+        padding-left: 4px;
         width: 100%;
         font-family: 'Trade Gothic for Nike 365 BdCn';
-        font-size: 1em;
-        font-weight: bold;
-        color: #000000;
+        font-size: 0.9em;
+        color: #999;
     }
 
 .itemDescript {
     float: left;
+    padding-left: 8px;
     width: 100%;
     font-family: 'Trade Gothic for Nike 365 BdCn';
     font-size: 0.9em;
